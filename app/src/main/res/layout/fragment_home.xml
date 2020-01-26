@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        tools:context=".Home"
+        android:id="@+id/content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/welcome"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/welcome"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                app:fontFamily="@font/poppins_regular" />
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/user"
+                android:layout_below="@+id/welcome"
+                android:textColor="@color/colorPrimary"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins" />
+
+                <SearchView
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    app:fontFamily="@font/poppins_light"
+                    android:searchIcon="@drawable/ic_search_icon"
+                    android:background="@drawable/rounded_search_bar"
+                    android:queryBackground="@android:color/transparent"
+                    android:iconifiedByDefault="false"
+                    android:queryHint="@string/searchBar"
+                    android:layout_below="@id/userName" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/search">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/specialties"
+                        class="androidx.appcompat.app.AlertController$RecycleListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/newIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/newIn"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/poppins_regular"
+                    android:layout_below="@id/linearLayout" />
+
+                <TextView
+                    android:id="@+id/doctorsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/doctorsTitle"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/poppins"
+                    android:layout_below="@id/newIn" />
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_toEndOf="@id/doctorsTitle"
+                android:src="@drawable/doctors_monster"
+                android:layout_marginStart="70dp"
+                android:layout_marginEnd="80dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/newIn"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/doctorsTitle">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/doctorsRecyclerView"
+                    class="androidx.appcompat.app.AlertController$RecycleListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/viewDoctors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_gradient"
+                app:fontFamily="@font/poppins"
+                android:textStyle="bold"
+                android:text="@string/allDoctors"
+                android:layout_margin="20dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_below="@id/linearLayout2"/>
+
+            <TextView
+                android:id="@+id/newIn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/newIn"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                app:fontFamily="@font/poppins_regular"
+                android:layout_below="@id/viewDoctors" />
+
+            <TextView
+                android:id="@+id/articlesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/articles"
+                android:textColor="@color/colorPrimary"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins"
+                android:layout_below="@id/newIn2" />
+           <ImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_toEndOf="@id/articlesTitle"
+            android:src="@drawable/article_monster"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/newIn2"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/articlesTitle">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/articlesRecyclerView"
+                    class="androidx.appcompat.app.AlertController$RecycleListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/viewArticles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_gradient"
+                app:fontFamily="@font/poppins"
+                android:textStyle="bold"
+                android:text="@string/allArticles"
+                android:layout_margin="20dp"
+                android:layout_marginBottom="80dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_below="@id/linearLayout3"/>
+
+            <TextView
+                android:id="@+id/newIn3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/newIn"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                app:fontFamily="@font/poppins_regular"
+                android:layout_below="@id/viewArticles" />
+
+            <TextView
+                android:id="@+id/shopTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@string/shop"
+                android:textColor="@color/colorPrimary"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins"
+                android:layout_below="@id/newIn3" />
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_toEndOf="@id/shopTitle"
+                android:src="@drawable/shop_monster"
+                android:layout_marginStart="70dp"
+                android:layout_marginEnd="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/newIn3"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/shopTitle">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/shopRecyclerView"
+                    class="androidx.appcompat.app.AlertController$RecycleListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/viewShop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_gradient"
+                app:fontFamily="@font/poppins"
+                android:textStyle="bold"
+                android:text="@string/allProducts"
+                android:layout_margin="20dp"
+                android:layout_marginBottom="80dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_below="@id/linearLayout4"/>
+            <TextView
+                android:id="@+id/newIn4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/newIn"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                app:fontFamily="@font/poppins_regular"
+                android:layout_below="@id/viewShop" />
+
+
+
+        </RelativeLayout>
+    </ScrollView>

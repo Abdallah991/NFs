@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/doctorsContent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="50dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:context=".Doctors">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/meetOur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:text="Meet our"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:fontFamily="@font/poppins_regular" />
+
+        <TextView
+            android:id="@+id/doctorsHeadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/meetOur"
+            android:layout_marginStart="20dp"
+            android:text="@string/doctorsTitle"
+            android:textColor="@color/colorPrimary"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/poppins" />
+
+        <SearchView
+            android:id="@+id/searchDoctors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/doctorsHeadline"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_search_bar"
+            android:iconifiedByDefault="false"
+            android:queryBackground="@android:color/transparent"
+            android:queryHint="@string/searchBar"
+            android:searchIcon="@drawable/ic_search_icon"
+            app:fontFamily="@font/poppins_light" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searchDoctors"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/subLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:padding="10dp"
+                    android:background="@drawable/button_filter"
+                    android:elevation="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/psychiatry"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="11sp"
+                    android:textStyle="italic"
+                    app:fontFamily="@font/poppins_semi_bold" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/button_filter"
+                    android:elevation="20dp"
+                    android:text="@string/psychology"
+                    android:padding="10dp"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="11sp"
+                    android:textStyle="italic"
+                    app:fontFamily="@font/poppins_semi_bold" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/button_filter"
+                    android:elevation="20dp"
+                    android:padding="10dp"
+                    android:text="@string/behavioral_therapy"
+                    android:textAllCaps="false"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="11sp"
+                    android:textStyle="italic"
+                    app:fontFamily="@font/poppins_semi_bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/subLinearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/button_filter"
+                    android:elevation="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:padding="10dp"
+                    android:text="@string/alternative_healing"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="11sp"
+                    android:textStyle="italic"
+                    app:fontFamily="@font/poppins_semi_bold" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/button_filter"
+                    android:elevation="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Counselor"
+                    android:padding="10dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="11sp"
+                    android:textStyle="italic"
+                    app:fontFamily="@font/poppins_semi_bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/subLinearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/button_filter"
+                    android:elevation="20dp"
+                    android:padding="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Female"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="11sp"
+                    android:textStyle="italic"
+                    app:fontFamily="@font/poppins_semi_bold" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/male"
+                    android:layout_marginStart="20dp"
+                    android:background="@drawable/button_filter"
+                    android:elevation="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:padding="10dp"
+                    android:text="Male"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="11sp"
+                    android:textStyle="italic"
+                    app:fontFamily="@font/poppins_semi_bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/newIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:fontFamily="@font/poppins_regular" />
+
+        <TextView
+            android:id="@+id/doctorsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/newIn"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/poppins" />
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_above="@id/linearLayout2"
+            android:layout_marginBottom="-80dp"
+            android:layout_marginStart="-210dp"
+            android:layout_toEndOf="@id/linearLayout2"
+            android:src="@drawable/doctors_monster" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/doctorsTitle"
+            android:layout_marginTop="10dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/allDoctorsRecyclerView"
+                class="androidx.appcompat.app.AlertController$RecycleListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/newIn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/newIn"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:fontFamily="@font/poppins_regular"
+            android:layout_below="@id/linearLayout2" />
+    </RelativeLayout>
+</ScrollView>

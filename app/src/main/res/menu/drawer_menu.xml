@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single"
+        >
+
+        <item
+            android:id="@id/appointmentsFragment"
+            android:icon="@drawable/notifications"
+            android:title="@string/appointments"
+            app:itemIconTint="@color/appGrey"
+
+            />
+
+        <item
+            android:id="@+id/accountSettings"
+            android:icon="@drawable/account"
+            android:title="@string/accountSettings" />
+
+        <item
+        android:id="@+id/faqs"
+        android:icon="@drawable/question"
+        android:title="@string/faqs" />
+
+        <item
+            android:id="@+id/bookmarks"
+            android:icon="@drawable/bookmark"
+            android:title="@string/bookmarks" />
+
+        <item
+            android:id="@+id/aboutNfs"
+            android:icon="@drawable/info"
+            android:title="@string/aboutNfs" />
+
+    </group>
+
+</menu>

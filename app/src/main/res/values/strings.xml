@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">Nfs</string>
+    <string name="action_settings">Settings</string>
+    <string name="on_boarding">Onboarding</string>
+    <string name="question1">Need help?</string>
+    <string name="question2">What?</string>
+    <string name="question3">Why?</string>
+    <string name="description1">The purpose of this application is to fulfill psychiatric needs as well as creating a knowledge base and network for the psychiatry and psychology community.</string>
+    <string name="description2">The purpose of this application is to fulfill psychiatric needs as well as creating a knowledge base and network for the psychiatry and psychology community. </string>
+    <string name="description3">The purpose of this application is to fulfill psychiatric needs as well as creating a knowledge base and network for the psychiatry and psychology community. </string>
+    <string name="skip">Skip</string>
+    <string name="singUp">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="login_space">Log In</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="forgot_password">Forgot Your Password?</string>
+    <string name="noAccount">Don\'t have an account?sign up!</string>
+    <string name="sendPassword">Send Password</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="welcome">Welcome</string>
+    <string name="search">Search</string>
+    <string name="searchBar">Search...</string>
+    <string name="doctorsTitle">Doctors</string>
+    <string name="appointments">Appointments</string>
+    <string name="accountSettings">Account Settings</string>
+    <string name="faqs">FAQs</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="aboutNfs">About Nfs</string>
+    <string name="home">Home</string>
+    <string name="helpLine">Help Line</string>
+    <string name="shop">Shop</string>
+    <string name="user">Abdallah</string>
+    <string name="newIn">New in</string>
+    <string name="logOut">Log Out</string>
+    <string name="psychology">Psychology</string>
+    <string name="psychiatry">Psychiatry</string>
+    <string name="blog">Blog</string>
+    <string name="alternative_healing">Alternative Healing</string>
+    <string name="behavioral_therapy">Behavioral Therapy</string>
+    <string name="allDoctors">View All Doctors</string>
+    <string name="allArticles">View All Articles</string>
+    <string name="allProducts">View All Products</string>
+    <string name="articles">Articles</string>
+    <string name="check">Check</string>
+    <string name="helpLines">Help Lines</string>
+    <string name="weAreHereToHelp">We are here to help</string>
+    <string name="checkOur">Check our</string>
+    <string name="books">Books</string>
+    <string name="toys">Toys</string>
+    <string name="viewToys">View All Toys</string>
+    <string name="viewBooks">View All Books</string>
+
+
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

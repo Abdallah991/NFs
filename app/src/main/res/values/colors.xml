@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6F62A9</color>
+    <color name="colorPrimaryShadow">#8C80B9</color>
+    <color name="colorPrimaryDark">#EBE8F2</color>
+    <color name="colorAccent">#F15D5F</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gradient_start">#7062A9</color>
+    <color name="gradient_end">#9867AB</color>
+    <color name="appGrey">#707070</color>
+    <color name="appGrey2">#A5A5A5</color>
+    <color name="appBlue">#65BAE8</color>
+    <color name="appBlueTransparent">#6665BAE8</color>
+    <color name="mustard">#66FCBB4B</color>
+    <color name="searchBackground">#e0e0e0</color>
+    <color name="searchHint">#616161</color>
+    <color name="searchText">#212121</color>
+
+    <color name="black_overlay">#66000000</color>
+</resources>

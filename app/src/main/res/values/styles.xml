@@ -1,0 +1,71 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="CustomToolbarStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:titleTextStyle">@style/NoTitleText</item>
+        <item name="android:subtitleTextStyle">@style/NoTitleText</item>
+    </style>
+
+    <style name="NoTitleText">
+        <item name="android:textSize">0sp</item>
+        <item name="android:textColor">#00000000</item>
+    </style>
+
+    <style name="ActionButton">
+        <item name="android:drawablePadding">@dimen/action_button_padding</item>
+    </style>
+
+    <dimen name="action_button_padding">40dp</dimen>
+
+
+    <style name="DrawerItemStyle">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="android:textColor">@color/appGrey</item>
+    </style>
+
+
+    <style name="CustomTheme" parent="Theme.AppCompat.Light">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetEnd">0dp</item>
+        <item name="android:logo">@drawable/action_bar_icon</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--Style for Splash Screen-->
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+
+
+</resources>

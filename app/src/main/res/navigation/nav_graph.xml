@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/aboutNfsFragment"
+        android:name="com.fathom.nfs.AboutNfs"
+        android:label="fragment_about_nfs"
+        tools:layout="@layout/fragment_about_nfs">
+
+    </fragment>
+    <fragment
+        android:id="@+id/accountSettingsFragment"
+        android:name="com.fathom.nfs.AccountSettings"
+        android:label="fragment_account_settings"
+        tools:layout="@layout/fragment_account_settings">
+
+    </fragment>
+    <fragment
+        android:id="@+id/bookMarksFragment"
+        android:name="com.fathom.nfs.BookMarks"
+        android:label="fragment_book_marks"
+        tools:layout="@layout/fragment_book_marks">
+    </fragment>
+    <fragment
+        android:id="@+id/FAQsFragment"
+        android:name="com.fathom.nfs.FAQs"
+        android:label="fragment_faqs"
+        tools:layout="@layout/fragment_faqs">
+    </fragment>
+    <fragment
+        android:id="@+id/helpLinesFragment"
+        android:name="com.fathom.nfs.HelpLines"
+        tools:layout="@layout/fragment_help_lines">
+        <action
+            android:id="@+id/action_helpLinesFragment_to_helpLineDescription"
+            app:destination="@id/helpLineDescription" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.fathom.nfs.Shop"
+        tools:layout="@layout/fragment_shop">
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.fathom.nfs.Home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_doctors"
+            app:destination="@id/doctors" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/appointmentsFragment"
+        android:name="com.fathom.nfs.Appointments"
+        tools:layout="@layout/fragment_appointments">
+
+    </fragment>
+    <fragment
+        android:id="@+id/doctors"
+        android:name="com.fathom.nfs.Doctors"
+        android:label="fragment_doctors"
+        tools:layout="@layout/fragment_doctors" />
+    <fragment
+        android:id="@+id/helpLineDescription"
+        android:name="com.fathom.nfs.HelpLineDescription"
+        android:label="fragment_help_line_description"
+        tools:layout="@layout/fragment_help_line_description" >
+        <action
+            android:id="@+id/action_helpLineDescription_to_helpLinesFragment"
+            app:destination="@id/helpLinesFragment" />
+        <argument
+            android:name="helpLineDescriptionPhoto"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="descriptionText"
+            app:argType="string"
+            android:defaultValue="suicide text" />
+    </fragment>
+</navigation>

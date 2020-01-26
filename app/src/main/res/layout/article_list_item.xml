@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="-20dp"
+        android:layout_gravity="end"
+        android:id="@+id/bookmarkArticle"
+        android:elevation="40dp"
+        android:src="@drawable/bookmark_image"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/articleCard"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="20dp"
+        app:cardPreventCornerOverlap="false"
+        app:contentPadding="-12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#C1E3F6"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/imageArticleLayout"
+                android:layout_width="130dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/articleImage"
+                    android:layout_width="130dp"
+                    android:layout_marginLeft="-5dp"
+                    android:layout_height="150dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/doctor1"/>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:id="@+id/articleDetails">
+
+                <TextView
+                    android:id="@+id/articleHeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#65BAE8"
+                    android:layout_marginEnd="60dp"
+                    android:textSize="22sp"
+                    android:lineHeight="@dimen/fab_margin"
+                    android:text="When to Test your Child for Autism?"
+                    app:fontFamily="@font/poppins_semi_bold" />
+
+                <TextView
+                    android:id="@+id/authorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="By DR MUNEERA"
+                    android:textColor="#65BAE8"
+                    android:textSize="11sp"
+                    app:fontFamily="@font/poppins_semi_bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
