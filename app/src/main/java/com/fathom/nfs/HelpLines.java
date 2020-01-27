@@ -38,11 +38,12 @@ public class HelpLines extends Fragment {
     private static final String TAG = "HelpLines";
 
     // Declaring the variables
-    private ArrayList<Integer> helpLineImages = new ArrayList<>();
+    private ArrayList<HelpLinesDataModel> helpLineItems = new ArrayList<>();
     private ScrollView helpLinesContent;
     private RecyclerView mRecyclerView;
     private NavController mNavController;
     private HelpLineViewModel mHelpLineViewModel;
+    private HelpLineRecycler mAdapter;
 
 
     public HelpLines() {
@@ -66,11 +67,16 @@ public class HelpLines extends Fragment {
         mRecyclerView = view.findViewById(R.id.helpLinesRecyclerView);
         helpLinesContent = view.findViewById(R.id.helpLines);
 
-        mHelpLineViewModel = ViewModelProviders.of(this).get(HelpLineViewModel.class);
+        mHelpLineViewModel = new ViewModelProvider(requireActivity()).get(HelpLineViewModel.class);
 
-        mHelpLineViewModel.getHelpLines().observe(getViewLifecycleOwner(), new Observer<List<HelpLinesDataModel>>() {
+        mHelpLineViewModel.init();
+
+        mHelpLineViewModel.getHelpLines().observe(getViewLifecycleOwner() , new Observer<List<HelpLinesDataModel>>() {
             @Override
             public void onChanged(List<HelpLinesDataModel> helpLinesDataModels) {
+
+                Log.d("MVVM"," Adpter is being notified with any CHANGE");
+                mAdapter.notifyDataSetChanged();
 
             }
         });
@@ -89,11 +95,6 @@ public class HelpLines extends Fragment {
 
         Log.d(TAG, "initialising the list");
 
-        if (helpLineImages.isEmpty()) {
-            helpLineImages.add(R.drawable.suicide);
-            helpLineImages.add(R.drawable.abuse);
-            helpLineImages.add(R.drawable.depression);
-        }
 
         initRecyclerView();
 
@@ -107,8 +108,9 @@ public class HelpLines extends Fragment {
 
         // TODO: adjust the data model and recycler viewer.
         // setting the adapter to recycler
-        HelpLineRecycler adapter = new HelpLineRecycler(helpLineImages, getContext(),mNavController);
-        mRecyclerView.setAdapter(adapter);
+        helpLineItems = (ArrayList<HelpLinesDataModel>)mHelpLineViewModel.getHelpLines().getValue();
+        mAdapter = new HelpLineRecycler(helpLineItems, getContext(),mNavController, mHelpLineViewModel);
+        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }

@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -15,7 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.fathom.nfs.DataModels.HelpLinesDataModel;
+import com.fathom.nfs.ViewModels.HelpLineViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -25,6 +35,10 @@ public class HelpLineDescription extends Fragment {
 
     private LinearLayout helpLineDescription;
     private ImageButton backButton;
+    private ArrayList<HelpLinesDataModel> helpLineItems;
+    private ImageView helpLineImage;
+    private TextView helpLineText;
+    private int position;
 
 
     public HelpLineDescription() {
@@ -45,8 +59,25 @@ public class HelpLineDescription extends Fragment {
 
         helpLineDescription = view.findViewById(R.id.helpLineDescription);
         backButton = view.findViewById(R.id.backButtonToHelpLines);
+        helpLineImage = view.findViewById(R.id.helpLineImage);
+        helpLineText = view.findViewById(R.id.helpLineText);
 
         ViewCompat.setLayoutDirection(helpLineDescription, ViewCompat.LAYOUT_DIRECTION_LTR);
+
+        HelpLineViewModel model = new ViewModelProvider(requireActivity()).get(HelpLineViewModel.class);
+        position = model.getPositionOfItems();
+        model.getmHelpLines().observe(getViewLifecycleOwner(), new Observer<List<HelpLinesDataModel>>() {
+            @Override
+            public void onChanged(List<HelpLinesDataModel> helpLinesDataModels) {
+
+                HelpLinesDataModel helpLine = helpLinesDataModels.get(position);
+                helpLineImage.setImageResource(helpLine.getDescriptionImage());
+                helpLineText.setText(helpLine.getHelpLineDescription());
+
+
+            }
+        });
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

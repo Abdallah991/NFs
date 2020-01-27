@@ -13,7 +13,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fathom.nfs.DataModels.HelpLinesDataModel;
 import com.fathom.nfs.R;
+import com.fathom.nfs.ViewModels.HelpLineViewModel;
 
 import java.util.ArrayList;
 
@@ -22,15 +24,23 @@ public class HelpLineRecycler extends RecyclerView.Adapter<HelpLineRecycler.Item
     private static final String TAG = "HelpLineRecycler";
 
     // Declare variables
-    private ArrayList<Integer> helpLineImages = new ArrayList<>();
+    private ArrayList<HelpLinesDataModel> helpLineItems;
     private Context mContext;
     private NavController mNavController;
+    private HelpLineViewModel mHelpLineViewModel;
+
 
     // Constructor
-    public HelpLineRecycler(ArrayList<Integer> images, Context context, NavController navController) {
-        helpLineImages = images;
-        mContext = context;
-        mNavController = navController;
+    public HelpLineRecycler(ArrayList<HelpLinesDataModel> items,
+                            Context context,
+                            NavController navController,
+                            HelpLineViewModel model)
+    {
+
+                            helpLineItems = items;
+                            mContext = context;
+                            mNavController = navController;
+                            mHelpLineViewModel= model;
 
     }
 
@@ -50,16 +60,19 @@ public class HelpLineRecycler extends RecyclerView.Adapter<HelpLineRecycler.Item
         Log.d(TAG, "OnBindViewHolder: Called.");
 
         // Tying the UI elements of the list item with their content
-        holder.image.setImageResource(helpLineImages.get(position));
+        holder.image.setImageResource(helpLineItems.get(position).getHelpLineImage());
+
 
         // Setting the list item on click listener
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "clicked on: " + helpLineImages.get(position));
-                Toast.makeText(mContext, "clicked "+ helpLineImages.get(position) , Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "clicked on: " + helpLineItems.get(position));
+                Toast.makeText(mContext, "clicked "+ helpLineItems.get(position) , Toast.LENGTH_SHORT).show();
 
                 mNavController.navigate(R.id.action_helpLinesFragment_to_helpLineDescription);
+                mHelpLineViewModel.select(helpLineItems, position);
+
 
 
             }
@@ -71,7 +84,7 @@ public class HelpLineRecycler extends RecyclerView.Adapter<HelpLineRecycler.Item
     // Setting the size of the list
     @Override
     public int getItemCount() {
-        return helpLineImages.size();
+        return helpLineItems.size();
     }
 
 
