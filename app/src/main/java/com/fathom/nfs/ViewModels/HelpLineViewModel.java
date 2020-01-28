@@ -18,6 +18,7 @@ public class HelpLineViewModel extends ViewModel {
     private HelpLineRepository mRepository;
     private int positionOfItems;
 
+    // Passing the array and the position of one element using the adapter
     public void select (List Items, int position) {
 
         mHelpLines.setValue(Items);
@@ -25,15 +26,17 @@ public class HelpLineViewModel extends ViewModel {
     }
 
 
+    // Getting the list
     public LiveData<List<HelpLinesDataModel>> getmHelpLines() {
         return mHelpLines;
     }
 
+    // Getting the position of the item in the list selected
     public int getPositionOfItems() {
         return positionOfItems;
     }
 
-
+    // Getting the data from the Repository
     public void init(){
 
         Log.d("MVVM"," init in ViewModel called.");

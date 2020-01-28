@@ -35,7 +35,6 @@ public class HelpLineDescription extends Fragment {
 
     private LinearLayout helpLineDescription;
     private ImageButton backButton;
-    private ArrayList<HelpLinesDataModel> helpLineItems;
     private ImageView helpLineImage;
     private TextView helpLineText;
     private int position;
@@ -57,6 +56,7 @@ public class HelpLineDescription extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Tying variables to layout
         helpLineDescription = view.findViewById(R.id.helpLineDescription);
         backButton = view.findViewById(R.id.backButtonToHelpLines);
         helpLineImage = view.findViewById(R.id.helpLineImage);
@@ -64,12 +64,16 @@ public class HelpLineDescription extends Fragment {
 
         ViewCompat.setLayoutDirection(helpLineDescription, ViewCompat.LAYOUT_DIRECTION_LTR);
 
+        // Calling the view model
         HelpLineViewModel model = new ViewModelProvider(requireActivity()).get(HelpLineViewModel.class);
+        // Getting the position of the array object
         position = model.getPositionOfItems();
+        // Observing the data and updating the UI
         model.getmHelpLines().observe(getViewLifecycleOwner(), new Observer<List<HelpLinesDataModel>>() {
             @Override
             public void onChanged(List<HelpLinesDataModel> helpLinesDataModels) {
 
+                // Retrieving the data model item from the list and updating the data
                 HelpLinesDataModel helpLine = helpLinesDataModels.get(position);
                 helpLineImage.setImageResource(helpLine.getDescriptionImage());
                 helpLineText.setText(helpLine.getHelpLineDescription());
@@ -79,6 +83,8 @@ public class HelpLineDescription extends Fragment {
         });
 
 
+
+        // back button to HelpLine list
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,13 +1,9 @@
 package com.fathom.nfs.Repositories;
 
 import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
-
 import com.fathom.nfs.DataModels.HelpLinesDataModel;
 import com.fathom.nfs.R;
-import com.fathom.nfs.ViewModels.HelpLineViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +11,11 @@ import java.util.List;
  *
  * Singleton pattern
  *
- * **/
+ **/
 
 public class HelpLineRepository {
 
+    // Creating one instance
     private static HelpLineRepository instance;
 
     private ArrayList<HelpLinesDataModel> mHelpLineItems = new ArrayList<>();
@@ -57,10 +54,10 @@ public class HelpLineRepository {
                 new HelpLinesDataModel(R.drawable.suicide, R.drawable.suicide_image, "suicide helpline")
         );
         mHelpLineItems.add (
-                new HelpLinesDataModel(R.drawable.abuse, R.drawable.suicide_image, "Abuse helpline")
+                new HelpLinesDataModel(R.drawable.abuse, R.drawable.abuse_image, "Abuse helpline")
         );
         mHelpLineItems.add (
-                new HelpLinesDataModel(R.drawable.depression, R.drawable.suicide_image,"Depression helpline")
+                new HelpLinesDataModel(R.drawable.depression, R.drawable.depression_image,"Depression helpline")
         );
 
         Log.d("MVVM"," Loading the data is DONE");
