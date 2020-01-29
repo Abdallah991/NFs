@@ -42,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="30dp"
-            android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
             android:textSize="14sp"
             android:textColor="@color/appGrey2"
             app:fontFamily="@font/poppins_regular"

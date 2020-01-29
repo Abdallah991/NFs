@@ -26,10 +26,6 @@ public class HelpLineViewModel extends ViewModel {
     }
 
 
-    // Getting the list
-    public LiveData<List<HelpLinesDataModel>> getmHelpLines() {
-        return mHelpLines;
-    }
 
     // Getting the position of the item in the list selected
     public int getPositionOfItems() {
@@ -50,6 +46,8 @@ public class HelpLineViewModel extends ViewModel {
         mRepository = HelpLineRepository.getInstance();
         mHelpLines = mRepository.getHelpLiens();
     }
+
+    // Getting the list
     // Live data that cant be changed
     public LiveData<List<HelpLinesDataModel>> getHelpLines() {
         return mHelpLines;

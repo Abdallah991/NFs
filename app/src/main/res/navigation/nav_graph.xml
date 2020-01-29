@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_homeFragment_to_doctors"
             app:destination="@id/doctors" />
+        <action
+            android:id="@+id/action_homeFragment_to_doctorsDetails"
+            app:destination="@id/doctorsDetails" />
     </fragment>
 
     <fragment
@@ -64,7 +67,11 @@
         android:id="@+id/doctors"
         android:name="com.fathom.nfs.Doctors"
         android:label="fragment_doctors"
-        tools:layout="@layout/fragment_doctors" />
+        tools:layout="@layout/fragment_doctors" >
+        <action
+            android:id="@+id/action_doctors_to_doctorsDetails"
+            app:destination="@id/doctorsDetails" />
+    </fragment>
     <fragment
         android:id="@+id/helpLineDescription"
         android:name="com.fathom.nfs.HelpLineDescription"
@@ -82,4 +89,9 @@
             app:argType="string"
             android:defaultValue="suicide text" />
     </fragment>
+    <fragment
+        android:id="@+id/doctorsDetails"
+        android:name="com.fathom.nfs.DoctorsDetails"
+        android:label="fragment_doctors_details"
+        tools:layout="@layout/fragment_doctors_details" />
 </navigation>

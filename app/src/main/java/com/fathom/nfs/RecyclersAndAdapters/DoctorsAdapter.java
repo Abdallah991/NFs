@@ -11,10 +11,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.R;
+import com.fathom.nfs.ViewModels.DoctorsViewModel;
 
 import java.util.ArrayList;
 
@@ -23,13 +25,26 @@ public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorHo
 private static final String TAG = "Doctors Adapter";
 
 // Declare variables
-private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>();
+private ArrayList<DoctorDataModel> mDoctors;
 private Context mContext;
+private NavController mNavController;
+// The navigation action Id constant
+private int actionId;
+// Injecting the View Model
+    private DoctorsViewModel mModel;
+
 
 // Constructor
-public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails, Context context) {
+public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
+                      Context context,
+                      NavController navController,
+                      int action,
+                      DoctorsViewModel model) {
         mDoctors = DoctorsDetails;
         mContext = context;
+        mNavController = navController;
+        actionId = action;
+        mModel = model;
 
         }
 
@@ -45,7 +60,7 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails, Context context
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DoctorHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DoctorHolder holder, final int position) {
 
         Log.d(TAG, "OnBindViewHolder: Called.");
         holder.firstName.setText(mDoctors.get(position).getDoctorFirstName());
@@ -54,6 +69,16 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails, Context context
         String mRating = Double.toString(rating);
         holder.rating.setText(mRating);
         holder.doctorImage.setImageResource(mDoctors.get(position).getImageUrl());
+
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mNavController.navigate(actionId);
+                mModel.selectDoctor(mDoctors, position);
+
+            }
+        });
 
     }
 

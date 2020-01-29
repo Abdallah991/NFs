@@ -69,7 +69,7 @@ public class HelpLineDescription extends Fragment {
         // Getting the position of the array object
         position = model.getPositionOfItems();
         // Observing the data and updating the UI
-        model.getmHelpLines().observe(getViewLifecycleOwner(), new Observer<List<HelpLinesDataModel>>() {
+        model.getHelpLines().observe(getViewLifecycleOwner(), new Observer<List<HelpLinesDataModel>>() {
             @Override
             public void onChanged(List<HelpLinesDataModel> helpLinesDataModels) {
 

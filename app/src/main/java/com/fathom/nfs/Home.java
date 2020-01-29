@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,8 +27,11 @@ import com.fathom.nfs.RecyclersAndAdapters.ArticleAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.DoctorsAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.HorizontalRecyclerView;
 import com.fathom.nfs.RecyclersAndAdapters.ShopItemAdapter;
+import com.fathom.nfs.ViewModels.DoctorsViewModel;
+import com.fathom.nfs.ViewModels.HelpLineViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Home extends Fragment {
@@ -48,8 +53,12 @@ public class Home extends Fragment {
     private ShopItemAdapter mShopItemAdapter;
     private ArrayList <Integer> mImageUrls = new ArrayList<>();
     private ScrollView content;
+    private NavController mNavController;
+    private DoctorsViewModel mDoctorsViewModel;
 
     private Button viewAllDoctors;
+
+    private final int actionId = R.id.action_homeFragment_to_doctorsDetails;
 
     public Home() {
 
@@ -73,7 +82,23 @@ public class Home extends Fragment {
          mArticlesRecycler = view.findViewById(R.id.articlesRecyclerView);
          mShopRecycler = view.findViewById(R.id.shopRecyclerView);
 
-         viewAllDoctors = view.findViewById(R.id.viewDoctors);
+         // Calling the View Model
+        mDoctorsViewModel = new ViewModelProvider(requireActivity()).get(DoctorsViewModel.class);
+        mDoctorsViewModel.initDoctors();
+
+        mDoctorsViewModel.getDoctors().observe(getViewLifecycleOwner(), new Observer<List<DoctorDataModel>>() {
+            @Override
+            public void onChanged(List<DoctorDataModel> doctorDataModels) {
+
+                Log.d("MVVM"," Adpter is being notified with any CHANGE");
+                mDoctorsAdapter.notifyDataSetChanged();
+            }
+        });
+
+
+        mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
+        viewAllDoctors = view.findViewById(R.id.viewDoctors);
         // Readjusting the position of layout elements
         ViewCompat.setLayoutDirection(content, ViewCompat.LAYOUT_DIRECTION_LTR);
 
@@ -81,8 +106,7 @@ public class Home extends Fragment {
         viewAllDoctors.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-                navController.navigate(R.id.action_homeFragment_to_doctors);
+                mNavController.navigate(R.id.action_homeFragment_to_doctors);
             }
         });
 
@@ -101,15 +125,15 @@ public class Home extends Fragment {
 //        DoctorDataModel doctor1 = new DoctorDataModel
 //                ("Narjes", "Kazerooni", R.drawable.doctor2, false, 4.8 ,"Psychaitry","best doctor ever", "6 years experience");
 
-        if (mDoctors.isEmpty()) {
-            DoctorDataModel doctor1 = new DoctorDataModel("Narjes", "Kazerooni", R.drawable.doctor2, 4.6);
-            DoctorDataModel doctor2 = new DoctorDataModel("Abdallah", "Alathamneh", R.drawable.user, 4.9);
-            DoctorDataModel doctor3 = new DoctorDataModel("Richard", "Chowne", R.drawable.doctor5, 4.8);
-
-            mDoctors.add(doctor1);
-            mDoctors.add(doctor2);
-            mDoctors.add(doctor3);
-        }
+//        if (mDoctors.isEmpty()) {
+//            DoctorDataModel doctor1 = new DoctorDataModel("Narjes", "Kazerooni", R.drawable.doctor2, 4.6);
+//            DoctorDataModel doctor2 = new DoctorDataModel("Abdallah", "Alathamneh", R.drawable.user, 4.9);
+//            DoctorDataModel doctor3 = new DoctorDataModel("Richard", "Chowne", R.drawable.doctor5, 4.8);
+//
+//            mDoctors.add(doctor1);
+//            mDoctors.add(doctor2);
+//            mDoctors.add(doctor3);
+//        }
 
         if (mArticles.isEmpty()) {
             ArticleDataModel article1 = new ArticleDataModel(R.drawable.autism_article, "When to Test your Child for Autism", "Dr MUNEERA");
@@ -170,7 +194,8 @@ public class Home extends Fragment {
         recyclerView.setAdapter(adapter);
 
         // setting the adapter to recycler
-        mDoctorsAdapter = new DoctorsAdapter(mDoctors, getContext());
+        mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
+        mDoctorsAdapter = new DoctorsAdapter(mDoctors, getContext(), mNavController, actionId, mDoctorsViewModel);
         mDcotrosRecycler.setAdapter(mDoctorsAdapter);
         mDcotrosRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 

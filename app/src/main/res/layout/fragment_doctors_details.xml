@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="50dp"
+    android:id="@+id/doctors_details"
+    tools:context=".DoctorsDetails">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/doctorsDescription"
+            android:weightSum="10">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/backButtonToDoctors"
+                android:layout_marginTop="60dp"
+                android:layout_marginStart="30dp"
+                android:elevation="1dp"
+                android:scaleType="fitXY"
+                android:background="@null"
+                android:src="@drawable/arrow_back">
+            </ImageButton>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:scaleType="fitXY"
+                android:src="@drawable/user"
+                android:id="@+id/DoctorImage"/>
+        </FrameLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:orientation="vertical"
+            android:id="@+id/appointmentCardLayout"
+            android:padding="30dp"
+            android:layout_marginTop="-150dp"
+            android:layout_below="@id/doctorsDescription">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="-20dp"
+                android:layout_gravity="end"
+                android:id="@+id/bookmark"
+                android:elevation="40dp"
+                android:src="@drawable/bookmark_image"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/doctorsCard"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp"
+                app:cardMaxElevation="20dp"
+                app:cardPreventCornerOverlap="false"
+                app:contentPadding="-12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="140dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:orientation="vertical"
+                        android:id="@+id/doctorDetails">
+
+
+                        <TextView
+                            android:id="@+id/doctorFirstName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Dr. Khulood"
+                            android:layout_marginStart="20dp"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp"
+                            app:fontFamily="@font/poppins_semi_bold" />
+                        <TextView
+                            android:id="@+id/doctorLastName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="-10dp"
+                            android:text="Ebrahim"
+                            android:layout_marginStart="20dp"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20sp"
+                            app:fontFamily="@font/poppins_semi_bold" />
+
+                        <TextView
+                            android:id="@+id/specialty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#FEE4B7"
+                            android:padding="8dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Psychiatrist "
+                            android:layout_marginStart="20dp"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="14sp"
+                            android:textStyle="italic"
+                            app:fontFamily="@font/poppins_light" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:layout_marginEnd="50dp"
+                            android:layout_marginTop="100dp"
+                            android:orientation="horizontal">
+                            <ImageView
+                                android:id="@+id/rating"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/star" />
+
+                            <TextView
+                                android:id="@+id/ratingValueDetailedDoctor"
+                                android:layout_width="35dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="1dp"
+                                android:layout_marginTop="-6dp"
+                                android:gravity="start"
+                                android:padding="5dp"
+                                android:text="4.8"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="16sp"
+                                android:textStyle="italic"
+                                app:fontFamily="@font/poppins_light" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                    <Button
+                        android:id="@+id/bookAppointment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_gradient"
+                        android:text="Book Appointment"
+                        android:textAllCaps="false"
+                        android:layout_marginRight="50dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:fontFamily="@font/poppins" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:id="@+id/buttonsLayout"
+            android:layout_below="@id/appointmentCardLayout">
+
+            <Button
+                android:id="@+id/overview"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="Overview"
+                android:background="@color/white"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                style="?android:attr/borderlessButtonStyle"
+                app:fontFamily="@font/poppins_light" />
+            <Button
+                android:id="@+id/contact"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Contact"
+                android:background="@color/white"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                style="?android:attr/borderlessButtonStyle"
+                app:fontFamily="@font/poppins_light" />
+            <Button
+                android:id="@+id/reviews"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="Reviews"
+                android:background="@color/white"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                style="?android:attr/borderlessButtonStyle"
+                app:fontFamily="@font/poppins_light" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:id="@+id/underlineButtonsLayout"
+            android:layout_below="@id/buttonsLayout">
+
+            <Button
+                android:id="@+id/overviewUnderline"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="10dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/button"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:fontFamily="@font/poppins_light" />
+            <Button
+                android:id="@+id/contactUnderline"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="10dp"
+                android:background="@drawable/button_light"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:fontFamily="@font/poppins_light" />
+            <Button
+                android:id="@+id/reviewsUnderline"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button_light"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:fontFamily="@font/poppins_light" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/overviewContent"
+            android:layout_marginTop="30dp"
+            android:visibility="visible"
+            android:layout_below="@id/underlineButtonsLayout">
+
+            <TextView
+                android:id="@+id/aboutTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About"
+                android:layout_margin="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                app:fontFamily="@font/poppins_regular"  />
+            <TextView
+                android:id="@+id/aboutContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+                android:layout_margin="20dp"
+                android:textColor="@color/appGrey2"
+                android:textSize="14sp"
+                app:fontFamily="@font/poppins_regular" />
+            <TextView
+                android:id="@+id/educationTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Education"
+                android:layout_margin="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                app:fontFamily="@font/poppins_regular"  />
+            <TextView
+                android:id="@+id/educationDegree1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B.cs in psychology with a minor in human Behiour "
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/appGrey2"
+                android:textSize="11sp"
+                app:fontFamily="@font/poppins" />
+            <TextView
+                android:id="@+id/educationDegree1Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lorem Ipsum University "
+                android:layout_margin="20dp"
+                android:textColor="@color/appGrey2"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:fontFamily="@font/poppins_light" />
+            <TextView
+                android:id="@+id/educationDegree2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="m.s in psychotherapy and cognitive Behavioral therapy "
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/appGrey2"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins" />
+            <TextView
+                android:id="@+id/educationDegree2Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lorem Ipsum University "
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/appGrey2"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:fontFamily="@font/poppins_light" />
+            <TextView
+                android:id="@+id/experienceTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Experience"
+                android:layout_margin="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                app:fontFamily="@font/poppins_regular" />
+            <TextView
+                android:id="@+id/experienceContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+                android:layout_margin="20dp"
+                android:textColor="@color/appGrey2"
+                android:textSize="14sp"
+                app:fontFamily="@font/poppins_regular" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/contactContent"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/overviewContent">
+
+            <Button
+                android:id="@+id/callButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/button_gradient"
+                android:text="Call"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins" />
+            <Button
+                android:id="@+id/emailButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/button_gradient"
+                android:text="Email"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins" />
+            <Button
+                android:id="@+id/locationButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/button_gradient"
+                android:text="Location"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins" />
+            <Button
+                android:id="@+id/chatButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/button_gradient"
+                android:text="Chat"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/reviewsContent"
+            android:layout_marginTop="30dp"
+            android:visibility="visible"
+            android:layout_below="@id/contactContent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reviewsRecyclerView"
+                    class="androidx.appcompat.app.AlertController$RecycleListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/writeReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/button_gradient"
+                android:text="Write a review"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/newIn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="100dp"
+            android:text="@string/newIn"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:fontFamily="@font/poppins_regular"
+            android:layout_below="@id/reviewsContent" />
+    </RelativeLayout>
+</ScrollView>

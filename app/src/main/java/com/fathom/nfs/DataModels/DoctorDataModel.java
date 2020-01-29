@@ -1,12 +1,11 @@
 package com.fathom.nfs.DataModels;
 
+import java.util.ArrayList;
+
 public class DoctorDataModel {
 
     private String doctorFirstName;
     private String doctorLastName;
-
-
-
     private int imageUrl;
     private boolean bookmark;
     private double rating;
@@ -14,6 +13,9 @@ public class DoctorDataModel {
     private String about;
     private String education;
     private String experience;
+    private ArrayList<ReviewDataModel> reviews = new ArrayList<>();
+
+
 
     public DoctorDataModel
             (String doctorFirstName,
@@ -23,7 +25,9 @@ public class DoctorDataModel {
              double rating,
              String specialty,
              String about,
-             String education, String experience)
+             String education,
+             String experience,
+             ArrayList<ReviewDataModel> reviews)
     {
         this.doctorFirstName = doctorFirstName;
         this.doctorLastName = doctorLastName;
@@ -34,6 +38,7 @@ public class DoctorDataModel {
         this.about = about;
         this.education = education;
         this.experience = experience;
+        this.reviews = reviews;
     }
 
     public DoctorDataModel(String doctorFirstName, String doctorLastName, int imageUrl, double rating) {
@@ -81,5 +86,9 @@ public class DoctorDataModel {
 
     public String getExperience() {
         return experience;
+    }
+
+    public ArrayList<ReviewDataModel> getReviews() {
+        return reviews;
     }
 }

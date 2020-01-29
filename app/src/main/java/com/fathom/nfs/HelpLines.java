@@ -67,6 +67,7 @@ public class HelpLines extends Fragment {
         mRecyclerView = view.findViewById(R.id.helpLinesRecyclerView);
         helpLinesContent = view.findViewById(R.id.helpLines);
 
+        // Calling the View Model
         mHelpLineViewModel = new ViewModelProvider(requireActivity()).get(HelpLineViewModel.class);
 
         mHelpLineViewModel.init();
