@@ -19,12 +19,12 @@ import com.fathom.nfs.ViewModels.ArticleViewModel;
 
 import java.util.ArrayList;
 
-public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleHolder> {
+public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder> {
 
     private static final String TAG = "Article Adapter";
 
     // Declare variables
-    private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
+    private ArrayList<ArticleDataModel> mVideos = new ArrayList<>();
     private Context mContext;
     private NavController mNavController;
     private int actionId;
@@ -32,8 +32,8 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
 
 
     // Constructor
-    public ArticleAdapter (ArrayList<ArticleDataModel> ArticleDetails, Context context, NavController navController, int action, ArticleViewModel model) {
-        mArticles = ArticleDetails;
+    public VideoAdapter(ArrayList<ArticleDataModel> ArticleDetails, Context context, NavController navController, int action, ArticleViewModel model) {
+        mVideos = ArticleDetails;
         mContext = context;
         mNavController = navController;
         actionId = action;
@@ -43,28 +43,28 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
 
     @NonNull
     @Override
-    public ArticleAdapter.ArticleHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public VideoAdapter.VideoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         Log.d(TAG, "OnCreateViewHolder: Called.");
         // Tying the list Item
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_list_item,parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_list_item, parent, false);
 
-        return new ArticleAdapter.ArticleHolder(view);
+        return new VideoAdapter.VideoHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ArticleAdapter.ArticleHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull VideoAdapter.VideoHolder holder, final int position) {
 
         Log.d(TAG, "OnBindViewHolder: Called.");
-        holder.articleImage.setImageResource(mArticles.get(position).getImageUrl());
-        holder.authorName.setText(mArticles.get(position).getAuthorName());
-        holder.articleTitle.setText(mArticles.get(position).getArticleTitle());
+        holder.videoImage.setImageResource(mVideos.get(position).getImageUrl());
+        holder.uploaderName.setText(mVideos.get(position).getAuthorName());
+        holder.videoTitle.setText(mVideos.get(position).getArticleTitle());
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mNavController.navigate(actionId);
-                mArticleViewModel.selectArticle(mArticles, position);
+                mArticleViewModel.selectArticle(mVideos, position);
             }
         });
 
@@ -73,27 +73,28 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
 
     @Override
     public int getItemCount() {
-        return mArticles.size();
+        return mVideos.size();
     }
 
-    public class ArticleHolder extends RecyclerView.ViewHolder{
+    public class VideoHolder extends RecyclerView.ViewHolder {
         CardView card;
-        ImageView articleImage;
-        TextView authorName;
-        TextView articleTitle;
+        ImageView videoImage;
+        TextView uploaderName;
+        TextView videoTitle;
         ImageView bookmark;
+        ImageView playButton;
 
-        public ArticleHolder (View itemView){
+        public VideoHolder(View itemView) {
             super(itemView);
 
             // binding the views with the list items
-            card = itemView.findViewById(R.id.articleCard);
-            authorName = itemView.findViewById(R.id.authorName);
-            articleTitle = itemView.findViewById(R.id.articleHeadline);
-            articleImage = itemView.findViewById(R.id.articleImage);
+            card = itemView.findViewById(R.id.videoCard);
+            uploaderName = itemView.findViewById(R.id.uploaderName);
+            videoTitle = itemView.findViewById(R.id.videoHeadline);
+            videoImage = itemView.findViewById(R.id.videoImage);
             bookmark = itemView.findViewById(R.id.bookmarkArticle);
+            playButton = itemView.findViewById(R.id.playImage);
         }
-
 
 
     }

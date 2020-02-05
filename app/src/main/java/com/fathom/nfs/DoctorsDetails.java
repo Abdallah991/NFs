@@ -16,11 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.DataModels.HelpLinesDataModel;
 import com.fathom.nfs.DataModels.ReviewDataModel;
@@ -48,6 +50,7 @@ public class DoctorsDetails extends Fragment {
     private TextView firstName;
     private TextView lastName;
     private TextView rating;
+    private ImageView doctorImage;
     private LinearLayout overviewContent;
     private LinearLayout contactContent;
     private LinearLayout reviewContent;
@@ -72,6 +75,7 @@ public class DoctorsDetails extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Trying with UI elements
         doctorsDetailsContent = view.findViewById(R.id.doctors_details);
         overviewButton = view.findViewById(R.id.overview);
         overviewUnderlineButton = view.findViewById(R.id.overviewUnderline);
@@ -86,6 +90,7 @@ public class DoctorsDetails extends Fragment {
         firstName = view.findViewById(R.id.doctorFirstName);
         lastName = view.findViewById(R.id.doctorLastName);
         rating = view.findViewById(R.id.ratingValueDetailedDoctor);
+        doctorImage = view.findViewById(R.id.DoctorImage);
 
         ViewCompat.setLayoutDirection(doctorsDetailsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
@@ -102,10 +107,11 @@ public class DoctorsDetails extends Fragment {
                 // Retrieving the data model item from the list and updating the data
                 DoctorDataModel doctor = doctorsList.get(position);
 
-                Toast.makeText(getContext(), "the size of the array " + doctorsList.size(), Toast.LENGTH_SHORT).show();
+                // Updating the UI of the Doctors details
                 firstName.setText(doctor.getDoctorFirstName());
                 lastName.setText(doctor.getDoctorLastName());
                 rating.setText(Double.toString(doctor.getRating()));
+                doctorImage.setImageResource(doctor.getImageUrl());
 
 
             }
@@ -113,11 +119,13 @@ public class DoctorsDetails extends Fragment {
 
 
 
+        // Adjusting the UI to display only the overview when the user access it
         contactContent.setVisibility(View.GONE);
         reviewContent.setVisibility(View.GONE);
         initRecycler();
 
 
+        // updating the UI when you click on each tab of the doctor details
         contactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +169,7 @@ public class DoctorsDetails extends Fragment {
     }
 
 
+    // initializing the review recycler
     private void initRecycler() {
 
         ReviewDataModel review1 = new ReviewDataModel(4,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.");

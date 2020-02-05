@@ -55,6 +55,18 @@
         <action
             android:id="@+id/action_homeFragment_to_doctorsDetails"
             app:destination="@id/doctorsDetails" />
+        <action
+            android:id="@+id/action_homeFragment_to_doctorsSpecialities"
+            app:destination="@id/doctorsSpecialities" />
+        <action
+            android:id="@+id/action_homeFragment_to_shopFragment"
+            app:destination="@id/shopFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_articles"
+            app:destination="@id/articles" />
+        <action
+            android:id="@+id/action_homeFragment_to_articleDetailed2"
+            app:destination="@id/articleDetailed2" />
     </fragment>
 
     <fragment
@@ -94,4 +106,35 @@
         android:name="com.fathom.nfs.DoctorsDetails"
         android:label="fragment_doctors_details"
         tools:layout="@layout/fragment_doctors_details" />
+    <fragment
+        android:id="@+id/doctorsSpecialities"
+        android:name="com.fathom.nfs.DoctorsSpecialities"
+        android:label="fragment_doctors_specialities"
+        tools:layout="@layout/fragment_doctors_specialities" >
+        <action
+            android:id="@+id/action_doctorsSpecialities_to_doctorsDetails"
+            app:destination="@id/doctorsDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/articles"
+        android:name="com.fathom.nfs.Articles"
+        android:label="fragment_articles"
+        tools:layout="@layout/fragment_articles" >
+        <action
+            android:id="@+id/action_articles_to_articleDetailed2"
+            app:destination="@id/articleDetailed2" />
+        <action
+            android:id="@+id/action_articles_to_videoDetailed2"
+            app:destination="@id/videoDetailed2" />
+    </fragment>
+    <fragment
+        android:id="@+id/articleDetailed2"
+        android:name="com.fathom.nfs.ArticleDetailed"
+        android:label="fragment_article_detailed"
+        tools:layout="@layout/fragment_article_detailed" />
+    <fragment
+        android:id="@+id/videoDetailed2"
+        android:name="com.fathom.nfs.VideoDetailed"
+        android:label="fragment_video_detailed"
+        tools:layout="@layout/fragment_video_detailed" />
 </navigation>

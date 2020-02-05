@@ -8,9 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.R;
+import com.fathom.nfs.ViewModels.CategoryViewModel;
+
 import java.util.ArrayList;
 
 
@@ -20,14 +24,28 @@ public class HorizontalRecyclerView extends RecyclerView.Adapter<HorizontalRecyc
     private static final String TAG = "Recycler View";
 
     // Declaring variables
-    private ArrayList <Integer> mImageUrls = new ArrayList<>();
+    private ArrayList <CategoryDataModel> mCategories;
     private Context mContext;
+    private int actionSpecialityId;
+    private int actionShop = R.id.action_homeFragment_to_shopFragment;
+    private int actionBlog = R.id.action_homeFragment_to_articles;
+    private NavController mNavController;
+    private CategoryViewModel mModel;
 
     // Constructor
-    public HorizontalRecyclerView(ArrayList<Integer> images, Context context) {
-        mImageUrls = images;
+    public HorizontalRecyclerView(ArrayList<CategoryDataModel> categories,
+                                  Context context,
+                                  int actionId,
+                                  NavController navController,
+                                  CategoryViewModel model) {
+        mCategories = categories;
         mContext = context;
+        actionSpecialityId = actionId;
+        mNavController = navController;
+        mModel = model;
+//        Toast.makeText(context, "categories are " + mCategories.size() , Toast.LENGTH_SHORT).show();
     }
+
 
 
 
@@ -48,13 +66,26 @@ public class HorizontalRecyclerView extends RecyclerView.Adapter<HorizontalRecyc
         Log.d(TAG, "onBindViewHolder: called.");
 
         // Tying the UI elements of the list item with their content
-        holder.image.setImageResource(mImageUrls.get(position));
+        holder.image.setImageResource(mCategories.get(position).getCategoryImage());
 
         // Setting the list item on click listener
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on an image: " + mImageUrls.get(position));
+                Log.d(TAG, "onClick: clicked on an image: " + mCategories.get(position));
+
+                if (position == 5 ){
+                    mNavController.navigate(actionShop);
+                }
+
+                else if (position == 4) {
+                    mNavController.navigate(actionBlog);
+                }
+                else {
+                mNavController.navigate(actionSpecialityId);
+                mModel.selectCategory(mCategories, position);
+
+                }
             }
         } );
 
@@ -64,7 +95,7 @@ public class HorizontalRecyclerView extends RecyclerView.Adapter<HorizontalRecyc
     // Setting the size of the list
     @Override
     public int getItemCount() {
-        return mImageUrls.size();
+        return mCategories.size();
     }
 
     // Tying the the variables to list item UI elements

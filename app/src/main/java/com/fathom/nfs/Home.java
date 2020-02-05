@@ -21,14 +21,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import com.fathom.nfs.DataModels.ArticleDataModel;
+import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.ArticleAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.DoctorsAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.HorizontalRecyclerView;
 import com.fathom.nfs.RecyclersAndAdapters.ShopItemAdapter;
+import com.fathom.nfs.ViewModels.ArticleViewModel;
+import com.fathom.nfs.ViewModels.CategoryViewModel;
 import com.fathom.nfs.ViewModels.DoctorsViewModel;
-import com.fathom.nfs.ViewModels.HelpLineViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,20 +47,26 @@ public class Home extends Fragment {
     private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>();
     private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
     private ArrayList<ShopItemDataModel> mShopItems = new ArrayList<>();
-    private RecyclerView mDcotrosRecycler;
+    private ArrayList<CategoryDataModel> mCategories = new ArrayList<>();
+    private RecyclerView mDoctorsRecycler;
     private RecyclerView mArticlesRecycler;
     private RecyclerView mShopRecycler;
     private DoctorsAdapter mDoctorsAdapter;
     private ArticleAdapter mArticleAdapter;
     private ShopItemAdapter mShopItemAdapter;
+    private HorizontalRecyclerView horizontalAdapter;
     private ArrayList <Integer> mImageUrls = new ArrayList<>();
     private ScrollView content;
     private NavController mNavController;
     private DoctorsViewModel mDoctorsViewModel;
+    private CategoryViewModel mCategoryViewModel;
+    private ArticleViewModel mArticleViewModel;
 
     private Button viewAllDoctors;
 
     private final int actionId = R.id.action_homeFragment_to_doctorsDetails;
+    private int actionSpecialityId = R.id.action_homeFragment_to_doctorsSpecialities;
+    private int actionArticle = R.id.action_homeFragment_to_articleDetailed2;
 
     public Home() {
 
@@ -78,7 +86,7 @@ public class Home extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
          content = view.findViewById(R.id.content);
-         mDcotrosRecycler = view.findViewById(R.id.doctorsRecyclerView);
+         mDoctorsRecycler = view.findViewById(R.id.doctorsRecyclerView);
          mArticlesRecycler = view.findViewById(R.id.articlesRecyclerView);
          mShopRecycler = view.findViewById(R.id.shopRecyclerView);
 
@@ -95,6 +103,28 @@ public class Home extends Fragment {
             }
         });
 
+        mCategoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
+        mCategoryViewModel.initCategories();
+
+        mCategoryViewModel.getCategories().observe(getViewLifecycleOwner(), new Observer<List<CategoryDataModel>>() {
+            @Override
+            public void onChanged(List<CategoryDataModel> categoryDataModels) {
+
+                horizontalAdapter.notifyDataSetChanged();
+
+            }
+        });
+
+        mArticleViewModel = new ViewModelProvider(requireActivity()).get(ArticleViewModel.class);
+        mArticleViewModel.initArticles();
+
+        mArticleViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleDataModel>>() {
+            @Override
+            public void onChanged(List<ArticleDataModel> articleDataModels) {
+
+                mArticleAdapter.notifyDataSetChanged();
+            }
+        });
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
@@ -122,28 +152,7 @@ public class Home extends Fragment {
     private void getImages(){
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
 
-//        DoctorDataModel doctor1 = new DoctorDataModel
-//                ("Narjes", "Kazerooni", R.drawable.doctor2, false, 4.8 ,"Psychaitry","best doctor ever", "6 years experience");
 
-//        if (mDoctors.isEmpty()) {
-//            DoctorDataModel doctor1 = new DoctorDataModel("Narjes", "Kazerooni", R.drawable.doctor2, 4.6);
-//            DoctorDataModel doctor2 = new DoctorDataModel("Abdallah", "Alathamneh", R.drawable.user, 4.9);
-//            DoctorDataModel doctor3 = new DoctorDataModel("Richard", "Chowne", R.drawable.doctor5, 4.8);
-//
-//            mDoctors.add(doctor1);
-//            mDoctors.add(doctor2);
-//            mDoctors.add(doctor3);
-//        }
-
-        if (mArticles.isEmpty()) {
-            ArticleDataModel article1 = new ArticleDataModel(R.drawable.autism_article, "When to Test your Child for Autism", "Dr MUNEERA");
-            ArticleDataModel article2 = new ArticleDataModel(R.drawable.abuse_article, "Suicid Awareness in the Middle East", "Dr EMAD");
-            ArticleDataModel article3 = new ArticleDataModel(R.drawable.suicide_article, "5 Steps to Deal with Domestic Abuse", "Dr KHULOOD");
-
-            mArticles.add(article1);
-            mArticles.add(article2);
-            mArticles.add(article3);
-        }
 
         if (mShopItems.isEmpty()) {
             ShopItemDataModel item1 = new ShopItemDataModel(R.drawable.shop_item_1, "BHD 6.000", "Meebie - For Play & Emotional Expression");
@@ -190,17 +199,19 @@ public class Home extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = getView().findViewById(R.id.specialties);
         recyclerView.setLayoutManager(layoutManager);
-        HorizontalRecyclerView adapter = new HorizontalRecyclerView( mImageUrls, getContext());
-        recyclerView.setAdapter(adapter);
+        mCategories = (ArrayList<CategoryDataModel>)  mCategoryViewModel.getCategories().getValue();
+        horizontalAdapter = new HorizontalRecyclerView( mCategories, getContext(), actionSpecialityId, mNavController, mCategoryViewModel);
+        recyclerView.setAdapter(horizontalAdapter);
 
         // setting the adapter to recycler
         mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
         mDoctorsAdapter = new DoctorsAdapter(mDoctors, getContext(), mNavController, actionId, mDoctorsViewModel);
-        mDcotrosRecycler.setAdapter(mDoctorsAdapter);
-        mDcotrosRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mDoctorsRecycler.setAdapter(mDoctorsAdapter);
+        mDoctorsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // setting the adapter to recycler
-        mArticleAdapter = new ArticleAdapter(mArticles, getContext());
+        mArticles = (ArrayList<ArticleDataModel>) mArticleViewModel.getArticles().getValue();
+        mArticleAdapter = new ArticleAdapter(mArticles, getContext(), mNavController, actionArticle, mArticleViewModel);
         mArticlesRecycler.setAdapter(mArticleAdapter);
         mArticlesRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 

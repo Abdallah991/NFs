@@ -18,10 +18,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
+import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.DoctorsAdapter;
+import com.fathom.nfs.ViewModels.CategoryViewModel;
 import com.fathom.nfs.ViewModels.DoctorsViewModel;
 
 import java.util.ArrayList;
@@ -31,25 +35,29 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Doctors extends Fragment {
+public class DoctorsSpecialities extends Fragment {
+
 
     // TAG for Debugging
     private static final String TAG = "Doctors";
 
     // declaring member variables
     private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>();
-    private RecyclerView mDcotrosRecycler;
+    private RecyclerView mDcotrosSpecialityRecycler;
     private DoctorsAdapter mDoctorsAdapter;
-    private ScrollView doctorsContent;
+    private ScrollView doctorsSpecialityContent;
     private NavController mNavController;
-    private final int actionId= R.id.action_doctors_to_doctorsDetails;
     private DoctorsViewModel mDoctorsViewModel;
+    private CategoryViewModel mCategoryViewModel;
+    private final int actionId= R.id.action_doctorsSpecialities_to_doctorsDetails;
+    private TextView specialityQ;
+    private ImageView specialityImage;
+    private TextView SpecialityText;
+    private int position;
 
 
 
-
-
-    public Doctors() {
+    public DoctorsSpecialities() {
         // Required empty public constructor
     }
 
@@ -58,17 +66,20 @@ public class Doctors extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_doctors, container, false);
+        return inflater.inflate(R.layout.fragment_doctors_specialities, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        doctorsContent = view.findViewById(R.id.doctorsContent);
-        mDcotrosRecycler = view.findViewById(R.id.allDoctorsRecyclerView);
-
+        doctorsSpecialityContent = view.findViewById(R.id.doctors_specialities);
+        mDcotrosSpecialityRecycler = view.findViewById(R.id.doctorsSpecialityRecyclerView);
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
+        specialityQ = view.findViewById(R.id.specialityQuestion);
+        specialityImage = view.findViewById(R.id.quesionImage);
+        SpecialityText = view.findViewById(R.id.doctorsSpecialityText);
 
         // Calling the View Model
         mDoctorsViewModel = new ViewModelProvider(requireActivity()).get(DoctorsViewModel.class);
@@ -83,12 +94,30 @@ public class Doctors extends Fragment {
             }
         });
 
-        // Readjusting the position of layout elements
-        ViewCompat.setLayoutDirection(doctorsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
+        mCategoryViewModel = new ViewModelProvider(requireActivity()).get(CategoryViewModel.class);
+        mCategoryViewModel.initCategories();
+        position = mCategoryViewModel.getPositionOfCategory();
+        mCategoryViewModel.getCategories().observe(getViewLifecycleOwner(), new Observer<List<CategoryDataModel>>() {
+            @Override
+            public void onChanged(List<CategoryDataModel> categoryDataModels) {
 
-        // Calling Recycler
+                 CategoryDataModel category = categoryDataModels.get(position);
+                 String categoryName = category.getCategory();
+                 specialityQ.setText("What is "+ categoryName + " ?");
+                 specialityImage.setImageResource(category.getCategoryMonster());
+                SpecialityText.setText(category.getCategoryDescription());
+
+
+            }
+        });
+
+        // Readjusting the position of layout elements
+        ViewCompat.setLayoutDirection(doctorsSpecialityContent, ViewCompat.LAYOUT_DIRECTION_LTR);
+
         initRecycler();
     }
+
+
 
     private void initRecycler() {
 
@@ -96,7 +125,7 @@ public class Doctors extends Fragment {
         // setting the adapter to recycler
         mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
         mDoctorsAdapter = new DoctorsAdapter(mDoctors, getContext(), mNavController, actionId, mDoctorsViewModel);
-        mDcotrosRecycler.setAdapter(mDoctorsAdapter);
-        mDcotrosRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mDcotrosSpecialityRecycler.setAdapter(mDoctorsAdapter);
+        mDcotrosSpecialityRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

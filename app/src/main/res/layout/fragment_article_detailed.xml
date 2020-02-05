@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".ArticleDetailed"
+    android:layout_marginTop="50dp"
+    android:id="@+id/articleDetailed">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="12"
+   >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/backButtonToArticlesFromDetailedArticle"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="30dp"
+            android:elevation="1dp"
+            android:scaleType="fitXY"
+            android:background="@null"
+            android:src="@drawable/arrow_back">
+        </ImageButton>
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:id="@+id/bookmarkArticle"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_gravity="end"
+            android:elevation="1dp"
+            android:scaleType="fitXY"
+            android:background="@null"
+            android:src="@drawable/bookmark_image_white">
+        </ImageButton>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/suicide_article"
+            android:id="@+id/articleDetailedImage"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="80dp"
+            android:id="@+id/articleTitleLayout"
+            android:background="@color/blackOpacity"
+            android:layout_gravity="bottom"
+            android:elevation="1dp"
+            >
+
+            <TextView
+                android:id="@+id/articleDetailedTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Suicide Awareness in the Middle East and North Africa"
+                android:lineHeight="@dimen/fab_margin"
+                android:textSize="20sp"
+                app:fontFamily="@font/poppins_semi_bold"
+                android:textColor="@color/white"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="40dp"/>
+            <TextView
+                android:id="@+id/articleDetailedAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="By Dr Muneera"
+                android:textAllCaps="true"
+                android:textSize="11sp"
+                app:fontFamily="@font/poppins"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="40dp"/>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:textSize="14sp"
+            android:text="@string/articleContent"
+            android:textColor="@color/appGrey2"
+            app:fontFamily="@font/poppins_regular"
+            android:id="@+id/articleContent"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/appGrey2Opacity">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/doctor1"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/writerDetailedName"
+                    android:text="Dr. Muneera Al Shiakh"
+                    android:textColor="@color/colorPrimary"
+                    android:textAllCaps="true"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/poppins"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/uploaderDetailedSpeciality"
+                    android:text="@string/psychiatry"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    app:fontFamily="@font/poppins_light"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:id="@+id/nextArticle"
+            app:fontFamily="@font/poppins"
+            android:textAllCaps="false"
+            android:layout_margin="30dp"
+            android:text="Next"
+            android:background="@drawable/button"/>
+
+        <TextView
+            android:id="@+id/newIn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="100dp"
+            android:text="@string/newIn"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:fontFamily="@font/poppins_regular" />
+
+    </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>

@@ -8,7 +8,10 @@
     <color name="gradient_start">#7062A9</color>
     <color name="gradient_end">#9867AB</color>
     <color name="appGrey">#707070</color>
+    <color name="appGreyOpacity">#99707070</color>
     <color name="appGrey2">#A5A5A5</color>
+    <color name="appGrey2Opacity">#33A5A5A5</color>
+    <color name="blackOpacity">#8C000000</color>
     <color name="appBlue">#65BAE8</color>
     <color name="appBlueTransparent">#6665BAE8</color>
     <color name="mustard">#66FCBB4B</color>

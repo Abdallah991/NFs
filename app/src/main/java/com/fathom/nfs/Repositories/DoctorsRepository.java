@@ -1,12 +1,9 @@
 package com.fathom.nfs.Repositories;
 
 import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
-
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,13 +45,13 @@ public class DoctorsRepository {
 
         if (mDoctorsItems.isEmpty()) {
             mDoctorsItems.add (
-                    new DoctorDataModel("Narjes", "Kazerooni", R.drawable.doctor2, 4.6)
+                    new DoctorDataModel("Narjes", "Kazerooni", R.drawable.doctor1, 4.6)
             );
             mDoctorsItems.add (
                     new DoctorDataModel("Abdallah", "Alathamneh", R.drawable.user, 4.9)
             );
             mDoctorsItems.add (
-                    new DoctorDataModel("Richard", "Chowne", R.drawable.doctor5, 4.8)
+                    new DoctorDataModel("Richard", "Chowne", R.drawable.doctor_s, 4.8)
             );
 
             Log.d("MVVM"," Loading the data is DONE");

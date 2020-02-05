@@ -17,6 +17,7 @@ public class DoctorsViewModel extends ViewModel {
     private DoctorsRepository mRepository;
     private int positionOfItems;
 
+    // select the data list and pass the position of list item
     public void selectDoctor (List Items, int position) {
 
         mDoctors.setValue(Items);

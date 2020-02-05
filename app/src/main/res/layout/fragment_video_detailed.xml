@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/videoDetailed"
+    android:weightSum="12"
+    tools:context=".VideoDetailed">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6">
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/backButtonToArticles"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="30dp"
+            android:elevation="1dp"
+            android:scaleType="fitXY"
+            android:background="@null"
+            android:src="@drawable/arrow_back">
+        </ImageButton>
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:id="@+id/bookmarkVideo"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="30dp"
+            android:layout_gravity="end"
+            android:elevation="1dp"
+            android:scaleType="fitXY"
+            android:background="@null"
+            android:src="@drawable/bookmark_image_white">
+        </ImageButton>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/suicide_article"
+            android:id="@+id/videoDetailedImage"/>
+        <ImageView
+            android:id="@+id/playImageDetailed"
+            android:layout_width="65dp"
+            android:layout_height="75dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            android:src="@drawable/play_icon"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="120dp"
+            android:id="@+id/videoTitleLayout"
+            android:background="@color/blackOpacity"
+            android:layout_gravity="bottom"
+            android:elevation="1dp"
+            >
+
+            <TextView
+                android:id="@+id/videoDetailedTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Suicide Awareness in the Middle East"
+                android:textSize="20sp"
+                app:fontFamily="@font/poppins_semi_bold"
+                android:textColor="@color/white"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="40dp"/>
+            <TextView
+                android:id="@+id/videoDetailedAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="By Dr Muneera"
+                android:textAllCaps="true"
+                android:textSize="11sp"
+                app:fontFamily="@font/poppins"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="40dp"/>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="20dp">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/doctor1"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/uploaderDetailedName"
+                    android:text="Dr. Muneera Al Shiakh"
+                    android:textAllCaps="true"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/poppins"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/uploaderDetailedSpeciality"
+                    android:text="@string/psychiatry"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    app:fontFamily="@font/poppins_light"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:textSize="14sp"
+            android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
+            android:textColor="@color/appGrey2"
+            app:fontFamily="@font/poppins_regular"
+            android:id="@+id/videoDescription"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:id="@+id/nextVideo"
+            app:fontFamily="@font/poppins"
+            android:textAllCaps="false"
+            android:layout_margin="30dp"
+            android:text="Next"
+            android:background="@drawable/button"/>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -54,6 +54,13 @@
     <string name="toys">Toys</string>
     <string name="viewToys">View All Toys</string>
     <string name="viewBooks">View All Books</string>
+    <string name="articleContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quam nulla porttitor massa id. Ultricies leo integer malesuada nunc vel risus commodo viverra.
+
+Euismod elementum nisi quis eleifend. Donec pretium vulputate sapien nec. Aliquet lectus proin nibh nisl condimentum id venenatis a condimentum. Tortor aliquam nulla facilisi cras fermentum odio.
+
+Gravida neque convallis a cras semper auctor neque vitae. Feugiat nisl pretium fusce id velit. Et netus et malesuada fames ac turpis egestas. Pellentesque habitant morbi tristique senectus et netus et malesuada fames.
+
+Sapien faucibus et molestie ac feugiat. Est placerat in egestas erat imperdiet sed euismod. Sem nulla pharetra diam sit amet. Tristique magna sit amet purus gravida quis blandit turpis cursus.</string>
 
 
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
