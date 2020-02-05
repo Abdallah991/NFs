@@ -2,10 +2,8 @@ package com.fathom.nfs;
 
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -31,6 +29,7 @@ import com.fathom.nfs.RecyclersAndAdapters.ShopItemAdapter;
 import com.fathom.nfs.ViewModels.ArticleViewModel;
 import com.fathom.nfs.ViewModels.CategoryViewModel;
 import com.fathom.nfs.ViewModels.DoctorsViewModel;
+import com.fathom.nfs.ViewModels.ShopItemsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,12 +60,15 @@ public class Home extends Fragment {
     private DoctorsViewModel mDoctorsViewModel;
     private CategoryViewModel mCategoryViewModel;
     private ArticleViewModel mArticleViewModel;
+    private ShopItemsViewModel mShopItemsViewModel;
 
     private Button viewAllDoctors;
 
     private final int actionId = R.id.action_homeFragment_to_doctorsDetails;
     private int actionSpecialityId = R.id.action_homeFragment_to_doctorsSpecialities;
     private int actionArticle = R.id.action_homeFragment_to_articleDetailed2;
+    private int actionToDetailedShopItem = R.id.action_homeFragment_to_shopItemDetailed;
+
 
     public Home() {
 
@@ -126,6 +128,17 @@ public class Home extends Fragment {
             }
         });
 
+        mShopItemsViewModel = new ViewModelProvider(requireActivity()).get(ShopItemsViewModel.class);
+        mShopItemsViewModel.initShopItem();
+
+        mShopItemsViewModel.getShopItems().observe(getViewLifecycleOwner(), new Observer<List<ShopItemDataModel>>() {
+            @Override
+            public void onChanged(List<ShopItemDataModel> shopItemDataModels) {
+
+                mShopItemAdapter.notifyDataSetChanged();
+            }
+        });
+
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         viewAllDoctors = view.findViewById(R.id.viewDoctors);
@@ -141,55 +154,13 @@ public class Home extends Fragment {
         });
 
             // initializing the recycler
-            getImages();
+            initRecyclerView();
 
 
 
 
     }
 
-    // adding the images
-    private void getImages(){
-        Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
-
-
-
-        if (mShopItems.isEmpty()) {
-            ShopItemDataModel item1 = new ShopItemDataModel(R.drawable.shop_item_1, "BHD 6.000", "Meebie - For Play & Emotional Expression");
-            ShopItemDataModel item2 = new ShopItemDataModel(R.drawable.shop_item_2, "BHD 7.375", "Kimochis Mixed Feelings Pack…");
-            ShopItemDataModel item3 = new ShopItemDataModel(R.drawable.shop_item_3, "BHD 4.720", "Meebie - For Play & Emotional Expression");
-
-            mShopItems.add(item1);
-            mShopItems.add(item2);
-            mShopItems.add(item3);
-        }
-
-        if (mImageUrls.isEmpty() ) {
-            mImageUrls.add(R.drawable.psychaitry);
-
-            mImageUrls.add(R.drawable.psychology);
-
-
-            mImageUrls.add(R.drawable.behavioral_therapy);
-
-
-            mImageUrls.add(R.drawable.alternative_healing);
-
-
-            mImageUrls.add(R.drawable.blog);
-
-            mImageUrls.add(R.drawable.shop_card);
-
-        }
-
-
-
-
-        // calling the horizontal recycler
-        initRecyclerView();
-
-
-    }
 
     private void initRecyclerView(){
 
@@ -216,7 +187,8 @@ public class Home extends Fragment {
         mArticlesRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // setting the adapter to recycler
-        mShopItemAdapter = new ShopItemAdapter(mShopItems, getContext());
+        mShopItems = (ArrayList<ShopItemDataModel>) mShopItemsViewModel.getShopItems().getValue();
+        mShopItemAdapter = new ShopItemAdapter(mShopItems, getContext(), mNavController, actionToDetailedShopItem, mShopItemsViewModel);
         mShopRecycler.setAdapter(mShopItemAdapter);
         mShopRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }

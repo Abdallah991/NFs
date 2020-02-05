@@ -6,26 +6,39 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fathom.nfs.DataModels.BookDataModel;
+import com.fathom.nfs.DataModels.BookRowDataModel;
+import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.R;
+import com.fathom.nfs.ViewModels.BookArrayViewModel;
 
 import java.util.ArrayList;
 
 public class BookParentAdapter extends RecyclerView.Adapter<BookParentAdapter.BookHolder> {
 
     private Context mContext;
-    private ArrayList<BookDataModel> mBooks;
+    private ArrayList<BookRowDataModel> mBooks;
     private BookChildAdapter horizentalAdapter;
+    private NavController mNavController;
+    private int actionId;
+    private BookArrayViewModel mBookArrayViewModel;
     private RecyclerView.RecycledViewPool recycledViewPool;
 
-    public BookParentAdapter(ArrayList<BookDataModel> books, Context context) {
+    public BookParentAdapter(ArrayList<BookRowDataModel> books,
+                             Context context,
+                             NavController navController,
+                             int action,
+                             BookArrayViewModel bookArrayViewModel) {
 
         this.mBooks = books;
         this.mContext = context;
+        mNavController = navController;
+        actionId = action;
+        mBookArrayViewModel= bookArrayViewModel;
     }
 
     @NonNull
@@ -41,10 +54,11 @@ public class BookParentAdapter extends RecyclerView.Adapter<BookParentAdapter.Bo
     @Override
     public void onBindViewHolder(@NonNull BookHolder holder, int position) {
 
-        horizentalAdapter = new BookChildAdapter(mBooks.get(position),mContext);
+
+        horizentalAdapter = new BookChildAdapter(mBooks.get(position).getBooks(),mContext, mNavController, actionId);
         holder.recyclerViewHorizontal.setAdapter(horizentalAdapter);
 
-        holder.recyclerViewHorizontal.setRecycledViewPool(recycledViewPool);
+//        holder.recyclerViewHorizontal.setRecycledViewPool(recycledViewPool);
     }
 
     @Override

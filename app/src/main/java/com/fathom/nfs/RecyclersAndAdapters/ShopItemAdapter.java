@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.R;
+import com.fathom.nfs.ViewModels.ShopItemsViewModel;
 
 import java.util.ArrayList;
 
@@ -25,11 +27,21 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
     // Declare variables
     private ArrayList<ShopItemDataModel> mShopItems = new ArrayList<>();
     private Context mContext;
+    private NavController mNavController;
+    private int mShopItemId;
+    private ShopItemsViewModel mShopItemsViewModel;
 
     // Constructor
-    public ShopItemAdapter (ArrayList<ShopItemDataModel> ShopItemDetails, Context context) {
+    public ShopItemAdapter (ArrayList<ShopItemDataModel> ShopItemDetails,
+                            Context context,
+                            NavController navController,
+                            int actionId,
+                            ShopItemsViewModel shopItemsViewModel) {
         mShopItems = ShopItemDetails;
         mContext = context;
+        mNavController = navController;
+        mShopItemId = actionId;
+        mShopItemsViewModel = shopItemsViewModel;
 
     }
 
@@ -45,12 +57,20 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShopItemAdapter.ShopItemHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ShopItemAdapter.ShopItemHolder holder, final int position) {
 
         Log.d(TAG, "OnBindViewHolder: Called.");
         holder.shopItemImage.setImageResource(mShopItems.get(position).getImageUrl());
         holder.price.setText(mShopItems.get(position).getPrice());
         holder.shopItemDescription.setText(mShopItems.get(position).getItemDescription());
+
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNavController.navigate(mShopItemId);
+                mShopItemsViewModel.selectShopItems(mShopItems, position);
+            }
+        });
 
 
     }

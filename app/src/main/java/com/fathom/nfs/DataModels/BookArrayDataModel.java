@@ -6,13 +6,13 @@ import java.util.List;
 public class BookArrayDataModel {
 
     // depends on data received
-    ArrayList<BookDataModel> books;
+    private ArrayList<BookRowDataModel> booksArray;
 
-    public BookArrayDataModel(ArrayList<BookDataModel> books) {
-        this.books = books;
+    public BookArrayDataModel(ArrayList<BookRowDataModel> books) {
+        this.booksArray = books;
     }
 
-    public List<BookDataModel> getBooks() {
-        return books;
+    public List<BookRowDataModel> getBooksArray() {
+        return booksArray;
     }
 }

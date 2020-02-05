@@ -43,6 +43,9 @@
         android:id="@+id/shopFragment"
         android:name="com.fathom.nfs.Shop"
         tools:layout="@layout/fragment_shop">
+        <action
+            android:id="@+id/action_shopFragment_to_shopItemDetailed"
+            app:destination="@id/shopItemDetailed" />
     </fragment>
 
     <fragment
@@ -67,6 +70,9 @@
         <action
             android:id="@+id/action_homeFragment_to_articleDetailed2"
             app:destination="@id/articleDetailed2" />
+        <action
+            android:id="@+id/action_homeFragment_to_shopItemDetailed"
+            app:destination="@id/shopItemDetailed" />
     </fragment>
 
     <fragment
@@ -137,4 +143,13 @@
         android:name="com.fathom.nfs.VideoDetailed"
         android:label="fragment_video_detailed"
         tools:layout="@layout/fragment_video_detailed" />
+    <fragment
+        android:id="@+id/shopItemDetailed"
+        android:name="com.fathom.nfs.ShopItemDetailed"
+        android:label="fragment_shop_item_detailed"
+        tools:layout="@layout/fragment_shop_item_detailed" >
+        <action
+            android:id="@+id/action_shopItemDetailed_self"
+            app:destination="@id/shopItemDetailed" />
+    </fragment>
 </navigation>

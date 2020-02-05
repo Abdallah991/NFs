@@ -7,6 +7,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,19 +20,26 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 import com.fathom.nfs.DataModels.BookArrayDataModel;
-import com.fathom.nfs.DataModels.BookDataModel;
+import com.fathom.nfs.DataModels.BookRowDataModel;
 import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.BookParentAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.ShopItemAdapter;
+import com.fathom.nfs.ViewModels.BookArrayViewModel;
+import com.fathom.nfs.ViewModels.ShopItemsViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Shop extends Fragment {
 
 
     private ArrayList<ShopItemDataModel> mShopItems = new ArrayList<>();
-    private ArrayList<BookDataModel> mBooks = new ArrayList<>();
+    private ArrayList<ShopItemDataModel> mBooks = new ArrayList<>();
+    private ArrayList<ShopItemDataModel> row1 = new ArrayList<>();
+    private ArrayList<ShopItemDataModel> row2 = new ArrayList<>();
+    private ArrayList<ShopItemDataModel> row3 = new ArrayList<>();
+    private ArrayList<BookRowDataModel> bookArray = new ArrayList<>();
     private ArrayList<BookArrayDataModel> booksArray = new ArrayList<>();
 
     private ScrollView shopContent;
@@ -38,6 +49,12 @@ public class Shop extends Fragment {
 
     private ShopItemAdapter mShopItemAdapter;
     private BookParentAdapter mBookParentAdapter;
+
+    private NavController mNavController;
+    private BookArrayViewModel mBookArrayViewModel;
+    private ShopItemsViewModel mShopItemsViewModel;
+
+    private int actionToDetailedShopItem = R.id.action_shopFragment_to_shopItemDetailed;
 
 
     public Shop() {
@@ -61,6 +78,27 @@ public class Shop extends Fragment {
         mShopRecycler = view.findViewById(R.id.toysRecyclerView);
         mBookRecycler = view.findViewById(R.id.booksRecyclerView);
 
+        mBookArrayViewModel = new ViewModelProvider(requireActivity()).get(BookArrayViewModel.class);
+        mBookArrayViewModel.initBookArrays();
+        mBookArrayViewModel.getBookArrays().observe(getViewLifecycleOwner(), new Observer<List<BookRowDataModel>>() {
+            @Override
+            public void onChanged(List<BookRowDataModel> bookRowDataModels) {
+                mBookParentAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mShopItemsViewModel = new ViewModelProvider(requireActivity()).get(ShopItemsViewModel.class);
+        mShopItemsViewModel.initShopItem();
+
+        mShopItemsViewModel.getShopItems().observe(getViewLifecycleOwner(), new Observer<List<ShopItemDataModel>>() {
+            @Override
+            public void onChanged(List<ShopItemDataModel> shopItemDataModels) {
+
+                mShopItemAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         ViewCompat.setLayoutDirection(shopContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
         initRecyclers();
@@ -69,30 +107,16 @@ public class Shop extends Fragment {
 
     private void initRecyclers() {
 
-        ShopItemDataModel item1 = new ShopItemDataModel(R.drawable.shop_item_1, "BHD 6.000", "Meebie - For Play & Emotional Expression");
-        ShopItemDataModel item2 = new ShopItemDataModel(R.drawable.shop_item_2, "BHD 7.375", "Kimochis Mixed Feelings Pack…");
-        ShopItemDataModel item3 = new ShopItemDataModel(R.drawable.shop_item_3, "BHD 4.720", "Meebie - For Play & Emotional Expression");
-
-        mShopItems.add(item1);
-        mShopItems.add(item2);
-        mShopItems.add(item3);
-
-
-        BookDataModel book1 = new BookDataModel(R.drawable.book3, "BHD 7.500", "This book is great");
-        BookDataModel book2 = new BookDataModel(R.drawable.book1, "BHD 9.765", "Meebie - For Play And Emotional Expression");
-        BookDataModel book3 = new BookDataModel(R.drawable.book2, "BHD 5.243", "This book is About scaling your business");
-
-        mBooks.add(book1);
-        mBooks.add(book2);
-        mBooks.add(book3);
 
         // setting the adapter to recycler
-        mShopItemAdapter = new ShopItemAdapter(mShopItems, getContext());
+        mShopItems = (ArrayList<ShopItemDataModel>) mShopItemsViewModel.getShopItems().getValue();
+        mShopItemAdapter = new ShopItemAdapter(mShopItems, getContext(), mNavController,actionToDetailedShopItem, mShopItemsViewModel);
         mShopRecycler.setAdapter(mShopItemAdapter);
         mShopRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // setting the adapter to recycler
-        mBookParentAdapter = new BookParentAdapter(mBooks, getContext());
+        bookArray = (ArrayList<BookRowDataModel>) mBookArrayViewModel.getBookArrays().getValue();
+        mBookParentAdapter = new BookParentAdapter(bookArray, getContext(), mNavController,actionToDetailedShopItem, mBookArrayViewModel);
         mBookRecycler.setAdapter(mBookParentAdapter);
         mBookRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
