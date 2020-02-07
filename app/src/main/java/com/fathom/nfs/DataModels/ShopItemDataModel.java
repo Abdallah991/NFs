@@ -2,6 +2,7 @@ package com.fathom.nfs.DataModels;
 
 public class ShopItemDataModel {
 
+    // TODO: add ShopItem name
     private int imageUrl;
     private String price;
     private String itemDescription;
