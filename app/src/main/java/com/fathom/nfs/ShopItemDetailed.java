@@ -17,18 +17,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.BookChildAdapter;
 import com.fathom.nfs.ViewModels.ShopItemsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.fathom.nfs.DataModels.CartDataModel.shoppingCartItems;
 
 
 public class ShopItemDetailed extends Fragment {
@@ -37,14 +39,17 @@ public class ShopItemDetailed extends Fragment {
     private ImageView shopItemImage;
     private TextView price;
     private TextView shopItemDescription;
+    private Button addToCart;
     private int position;
     private ArrayList<ShopItemDataModel> mShopItems;
+    private ShopItemDataModel shopItem;
     private BookChildAdapter mShopItemAdapter;
     private RecyclerView horizontalShopItemRecycler;
     private ShopItemsViewModel model;
     private NavController mNavController;
     private int actionId = R.id.action_shopItemDetailed_self;
-
+    private int actionToCart = R.id.action_shopItemDetailed_to_cart;
+    private ArrayList<ShopItemDataModel> mShopItemDataModels;
 
     public ShopItemDetailed() {
         // Required empty public constructor
@@ -68,6 +73,7 @@ public class ShopItemDetailed extends Fragment {
         price = view.findViewById(R.id.shopItemDetailedPrice);
         shopItemDescription = view.findViewById(R.id.ShopItemDetailedDescription);
         horizontalShopItemRecycler = view.findViewById(R.id.ShopItemDetailedRecyclerView);
+        addToCart = view.findViewById(R.id.addToCart);
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
@@ -80,7 +86,7 @@ public class ShopItemDetailed extends Fragment {
 
                 mShopItemAdapter.notifyDataSetChanged();
 
-                ShopItemDataModel shopItem = shopItemDataModels.get(position);
+                 shopItem = shopItemDataModels.get(position);
 
                 shopItemImage.setImageResource(shopItem.getImageUrl());
                 price.setText(shopItem.getPrice());
@@ -89,6 +95,17 @@ public class ShopItemDetailed extends Fragment {
         });
 
 
+        addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mNavController.navigate(actionToCart);
+                shoppingCartItems.add(shopItem);
+                Toast.makeText(getContext(), "Items in cart "+ shoppingCartItems.size() , Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
 
 
 

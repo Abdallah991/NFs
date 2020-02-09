@@ -32,8 +32,13 @@ public class BookArrayViewModel  extends ViewModel {
 
     // Getting the position of the item in the list selected
     public int getPositionOfRow() {
+        return positionOfRow;
+    }
+
+    public int getPositionOfItems() {
         return positionOfItems;
     }
+
 
     // Getting the data from the Repository
     public void initBookArrays(){

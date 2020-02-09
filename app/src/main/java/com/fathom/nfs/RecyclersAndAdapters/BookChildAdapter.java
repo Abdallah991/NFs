@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fathom.nfs.DataModels.BookRowDataModel;
 import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.R;
 import com.fathom.nfs.ViewModels.BookArrayViewModel;
@@ -22,10 +23,31 @@ public class BookChildAdapter extends RecyclerView.Adapter<BookChildAdapter.Book
 
 
     private ArrayList<ShopItemDataModel> mBook;
+    private ArrayList<BookRowDataModel> mRow;
     private Context mContext;
     private NavController mNavController;
     private int actionId;
+    private int rowPosition;
     private BookArrayViewModel mBookArrayViewModel;
+
+
+    public BookChildAdapter(ArrayList<ShopItemDataModel> books,
+                            Context context,
+                            NavController navController,
+                            int action,
+                            BookArrayViewModel bookArrayViewModel,
+                            int position,
+                            ArrayList<BookRowDataModel> row) {
+
+        this.mBook = books;
+        this.mContext = context;
+        mNavController = navController;
+        actionId = action;
+        mBookArrayViewModel = bookArrayViewModel;
+        rowPosition = position;
+        mRow = row;
+
+    }
 
 
     public BookChildAdapter(ArrayList<ShopItemDataModel> books,
@@ -37,7 +59,6 @@ public class BookChildAdapter extends RecyclerView.Adapter<BookChildAdapter.Book
         this.mContext = context;
         mNavController = navController;
         actionId = action;
-//        mBookArrayViewModel = bookArrayViewModel;
 
     }
 
@@ -49,7 +70,7 @@ public class BookChildAdapter extends RecyclerView.Adapter<BookChildAdapter.Book
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BookChildHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BookChildHolder holder, final int position) {
 
         holder.bookImage.setImageResource(mBook.get(position).getImageUrl());
         holder.price.setText(mBook.get(position).getPrice());
@@ -58,7 +79,10 @@ public class BookChildAdapter extends RecyclerView.Adapter<BookChildAdapter.Book
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mBookArrayViewModel.SelectRow(mRow, rowPosition);
+                mBookArrayViewModel.SelectBook(mBook, position);
                 mNavController.navigate(actionId);
+
 
             }
         });

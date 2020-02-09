@@ -42,13 +42,13 @@ public class ShopItemsRepository {
 
         if (mShopItems.isEmpty()) {
             mShopItems.add (
-                    new ShopItemDataModel(R.drawable.shop_item_1, "BHD 6.000", "Meebie - For Play & Emotional Expression")
+                    new ShopItemDataModel(R.drawable.shop_item_1, "6.000", "Meebie - For Play & Emotional Expression")
             );
             mShopItems.add (
-                    new ShopItemDataModel(R.drawable.shop_item_2, "BHD 7.375", "Kimochis Mixed Feelings Pack…")
+                    new ShopItemDataModel(R.drawable.shop_item_2, "7.375", "Kimochis Mixed Feelings Pack…")
             );
             mShopItems.add (
-                    new ShopItemDataModel(R.drawable.shop_item_3, "BHD 4.720", "Meebie - For Play & Emotional Expression")
+                    new ShopItemDataModel(R.drawable.shop_item_3, "4.720", "Meebie - For Play & Emotional Expression")
             );
 
             Log.d("MVVM"," Loading the data is DONE");

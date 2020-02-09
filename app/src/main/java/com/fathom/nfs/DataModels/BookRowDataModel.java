@@ -2,7 +2,7 @@ package com.fathom.nfs.DataModels;
 
 import java.util.ArrayList;
 
-public class BookRowDataModel {
+public class BookRowDataModel extends ArrayList<BookRowDataModel> {
 
     private ArrayList<ShopItemDataModel> books;
 

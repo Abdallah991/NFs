@@ -3,6 +3,7 @@ package com.fathom.nfs;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
@@ -35,12 +36,7 @@ public class Shop extends Fragment {
 
 
     private ArrayList<ShopItemDataModel> mShopItems = new ArrayList<>();
-    private ArrayList<ShopItemDataModel> mBooks = new ArrayList<>();
-    private ArrayList<ShopItemDataModel> row1 = new ArrayList<>();
-    private ArrayList<ShopItemDataModel> row2 = new ArrayList<>();
-    private ArrayList<ShopItemDataModel> row3 = new ArrayList<>();
     private ArrayList<BookRowDataModel> bookArray = new ArrayList<>();
-    private ArrayList<BookArrayDataModel> booksArray = new ArrayList<>();
 
     private ScrollView shopContent;
 
@@ -55,6 +51,7 @@ public class Shop extends Fragment {
     private ShopItemsViewModel mShopItemsViewModel;
 
     private int actionToDetailedShopItem = R.id.action_shopFragment_to_shopItemDetailed;
+    private int actionToDetailedBook = R.id.action_shopFragment_to_bookItemDetailed;
 
 
     public Shop() {
@@ -103,6 +100,9 @@ public class Shop extends Fragment {
 
         initRecyclers();
 
+
+
+
     }
 
     private void initRecyclers() {
@@ -116,7 +116,7 @@ public class Shop extends Fragment {
 
         // setting the adapter to recycler
         bookArray = (ArrayList<BookRowDataModel>) mBookArrayViewModel.getBookArrays().getValue();
-        mBookParentAdapter = new BookParentAdapter(bookArray, getContext(), mNavController,actionToDetailedShopItem, mBookArrayViewModel);
+        mBookParentAdapter = new BookParentAdapter(bookArray, getContext(), mNavController,actionToDetailedBook, mBookArrayViewModel);
         mBookRecycler.setAdapter(mBookParentAdapter);
         mBookRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
