@@ -16,6 +16,8 @@ public class ArticleDataModel {
 
     }
 
+
+
     public int getImageUrl() {
         return imageUrl;
     }
@@ -38,5 +40,9 @@ public class ArticleDataModel {
 
     public String getVideoUrl() {
         return VideoUrl;
+    }
+
+    public void setBookemark(boolean bookemark) {
+        this.bookemark = bookemark;
     }
 }

@@ -24,12 +24,18 @@
         android:name="com.fathom.nfs.BookMarks"
         android:label="fragment_book_marks"
         tools:layout="@layout/fragment_book_marks">
+        <action
+            android:id="@+id/action_bookMarksFragment_to_doctorsDetails2"
+            app:destination="@id/doctorsDetails" />
     </fragment>
     <fragment
         android:id="@+id/FAQsFragment"
         android:name="com.fathom.nfs.FAQs"
         android:label="fragment_faqs"
         tools:layout="@layout/fragment_faqs">
+        <action
+            android:id="@+id/action_FAQsFragment_to_FAQsDetailed"
+            app:destination="@id/FAQsDetailed" />
     </fragment>
     <fragment
         android:id="@+id/helpLinesFragment"
@@ -175,4 +181,9 @@
             android:id="@+id/action_cart_to_shopFragment"
             app:destination="@id/shopFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/FAQsDetailed"
+        android:name="com.fathom.nfs.FAQsDetailed"
+        android:label="fragment_faqs_detailed"
+        tools:layout="@layout/fragment_faqs_detailed" />
 </navigation>

@@ -18,6 +18,7 @@ public class CategoryDataModel {
         this.categoryImage = categoryImage;
     }
 
+
     public String getCategory() {
         return category;
     }

@@ -54,7 +54,6 @@ public class Home extends Fragment {
     private ArticleAdapter mArticleAdapter;
     private ShopItemAdapter mShopItemAdapter;
     private HorizontalRecyclerView horizontalAdapter;
-    private ArrayList <Integer> mImageUrls = new ArrayList<>();
     private ScrollView content;
     private NavController mNavController;
     private DoctorsViewModel mDoctorsViewModel;

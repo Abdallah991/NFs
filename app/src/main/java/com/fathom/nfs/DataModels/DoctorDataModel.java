@@ -91,4 +91,8 @@ public class DoctorDataModel {
     public ArrayList<ReviewDataModel> getReviews() {
         return reviews;
     }
+
+    public void setBookmark(boolean bookmark) {
+        this.bookmark = bookmark;
+    }
 }

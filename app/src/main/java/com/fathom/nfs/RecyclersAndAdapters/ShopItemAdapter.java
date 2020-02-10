@@ -20,6 +20,9 @@ import com.fathom.nfs.ViewModels.ShopItemsViewModel;
 
 import java.util.ArrayList;
 
+import static com.fathom.nfs.DataModels.BookmarkDataModel.doctorItemsBookmarked;
+import static com.fathom.nfs.DataModels.BookmarkDataModel.shopItemsBookmarked;
+
 public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopItemHolder> {
 
     private static final String TAG = "ShopItem Adapter";
@@ -57,7 +60,7 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ShopItemAdapter.ShopItemHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ShopItemAdapter.ShopItemHolder holder, final int position) {
 
         Log.d(TAG, "OnBindViewHolder: Called.");
         holder.shopItemImage.setImageResource(mShopItems.get(position).getImageUrl());
@@ -71,6 +74,28 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
                 mShopItemsViewModel.selectShopItems(mShopItems, position);
             }
         });
+
+
+        holder.bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mShopItems.get(position).isBookmark()){
+                    holder.bookmark.setImageResource(R.drawable.bookmark_image);
+                    mShopItems.get(position).setBookmark(false);
+                    shopItemsBookmarked.remove(mShopItems.get(position));
+
+                } else if (!mShopItems.get(position).isBookmark()){
+                    holder.bookmark.setImageResource(R.drawable.bookmarked);
+                    mShopItems.get(position).setBookmark(true);
+                    shopItemsBookmarked.add(mShopItems.get(position));
+                }
+            }
+        });
+
+        if(mShopItems.get(position).isBookmark()){
+
+            holder.bookmark.setImageResource(R.drawable.bookmarked);
+        }
 
 
     }
@@ -95,7 +120,7 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
             price = itemView.findViewById(R.id.itemPrice);
             shopItemDescription = itemView.findViewById(R.id.itemDescription);
             shopItemImage = itemView.findViewById(R.id.shopItemImage);
-            bookmark = itemView.findViewById(R.id.bookmarkArticle);
+            bookmark = itemView.findViewById(R.id.bookmarkShopItem);
         }
 
 

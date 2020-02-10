@@ -19,6 +19,8 @@ import com.fathom.nfs.ViewModels.ArticleViewModel;
 
 import java.util.ArrayList;
 
+import static com.fathom.nfs.DataModels.BookmarkDataModel.articleItemsBookmarked;
+
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleHolder> {
 
     private static final String TAG = "Article Adapter";
@@ -53,7 +55,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ArticleAdapter.ArticleHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ArticleAdapter.ArticleHolder holder, final int position) {
 
         Log.d(TAG, "OnBindViewHolder: Called.");
         holder.articleImage.setImageResource(mArticles.get(position).getImageUrl());
@@ -67,6 +69,27 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
                 mArticleViewModel.selectArticle(mArticles, position);
             }
         });
+
+        holder.bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mArticles.get(position).isBookemark()){
+                    holder.bookmark.setImageResource(R.drawable.bookmark_image);
+                    mArticles.get(position).setBookemark(false);
+                    articleItemsBookmarked.remove(mArticles.get(position));
+
+                } else if (!mArticles.get(position).isBookemark()){
+                    holder.bookmark.setImageResource(R.drawable.bookmarked);
+                    mArticles.get(position).setBookemark(true);
+                    articleItemsBookmarked.add(mArticles.get(position));
+                }
+            }
+        });
+
+        if(mArticles.get(position).isBookemark()){
+
+            holder.bookmark.setImageResource(R.drawable.bookmarked);
+        }
 
 
     }

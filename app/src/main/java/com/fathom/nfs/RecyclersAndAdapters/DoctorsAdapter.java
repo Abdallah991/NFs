@@ -20,6 +20,9 @@ import com.fathom.nfs.ViewModels.DoctorsViewModel;
 
 import java.util.ArrayList;
 
+import static com.fathom.nfs.DataModels.BookmarkDataModel.articleItemsBookmarked;
+import static com.fathom.nfs.DataModels.BookmarkDataModel.doctorItemsBookmarked;
+
 public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorHolder> {
 
 private static final String TAG = "Doctors Adapter";
@@ -60,7 +63,7 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DoctorHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final DoctorHolder holder, final int position) {
 
         Log.d(TAG, "OnBindViewHolder: Called.");
         holder.firstName.setText(mDoctors.get(position).getDoctorFirstName());
@@ -74,11 +77,38 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
             @Override
             public void onClick(View v) {
 
-                mNavController.navigate(actionId);
-                mModel.selectDoctor(mDoctors, position);
-
+                if (!mDoctors.get(position).isBookmark()) {
+                    mNavController.navigate(actionId);
+                    mModel.selectDoctor(mDoctors, position);
+                }
+                else if(mDoctors.get(position).isBookmark()){
+                    mNavController.navigate(R.id.action_bookMarksFragment_to_doctorsDetails2);
+                }
             }
         });
+
+        holder.bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mDoctors.get(position).isBookmark()){
+                    holder.bookmark.setImageResource(R.drawable.bookmark_image);
+                    mDoctors.get(position).setBookmark(false);
+                    doctorItemsBookmarked.remove(mDoctors.get(position));
+
+                } else if (!mDoctors.get(position).isBookmark()){
+                    holder.bookmark.setImageResource(R.drawable.bookmarked);
+                    mDoctors.get(position).setBookmark(true);
+                    doctorItemsBookmarked.add(mDoctors.get(position));
+                }
+            }
+        });
+
+        if(mDoctors.get(position).isBookmark()){
+
+            holder.bookmark.setImageResource(R.drawable.bookmarked);
+        }
+
+
 
     }
 

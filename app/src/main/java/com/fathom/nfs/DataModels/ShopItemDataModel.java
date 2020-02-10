@@ -26,4 +26,12 @@ public class ShopItemDataModel {
     public String getItemDescription() {
         return itemDescription;
     }
+
+    public boolean isBookmark() {
+        return bookmark;
+    }
+
+    public void setBookmark(boolean bookmark) {
+        this.bookmark = bookmark;
+    }
 }
