@@ -34,6 +34,10 @@ import com.fathom.nfs.ViewModels.HelpLineViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fathom.nfs.DataModels.BookmarkDataModel.doctorItemsBookmarked;
+import static com.fathom.nfs.DataModels.BookmarkDataModel.getPositionOfBookMark;
+import static com.fathom.nfs.DataModels.BookmarkDataModel.isClickedFromBookmarks;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,6 +62,8 @@ public class DoctorsDetails extends Fragment {
     private ReviewAdapter mReviewAdapter;
     private ArrayList<ReviewDataModel> mReviews = new ArrayList<>();
     private int position;
+    private int positionOfBookmarked;
+
 
     public DoctorsDetails() {
         // Required empty public constructor
@@ -105,13 +111,23 @@ public class DoctorsDetails extends Fragment {
             public void onChanged(List<DoctorDataModel> doctorsList) {
 
                 // Retrieving the data model item from the list and updating the data
-                DoctorDataModel doctor = doctorsList.get(position);
+                if (!isClickedFromBookmarks()) {
+                    DoctorDataModel doctor = doctorsList.get(position);
 
-                // Updating the UI of the Doctors details
-                firstName.setText(doctor.getDoctorFirstName());
-                lastName.setText(doctor.getDoctorLastName());
-                rating.setText(Double.toString(doctor.getRating()));
-                doctorImage.setImageResource(doctor.getImageUrl());
+                    // Updating the UI of the Doctors details
+                    firstName.setText(doctor.getDoctorFirstName());
+                    lastName.setText(doctor.getDoctorLastName());
+                    rating.setText(Double.toString(doctor.getRating()));
+                    doctorImage.setImageResource(doctor.getImageUrl());
+                }
+
+                if (isClickedFromBookmarks()) {
+                    positionOfBookmarked = getPositionOfBookMark();
+                    firstName.setText(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorFirstName());
+                    lastName.setText(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorLastName());
+                    rating.setText(Double.toString(doctorItemsBookmarked.get(positionOfBookmarked).getRating()));
+                    doctorImage.setImageResource(doctorItemsBookmarked.get(positionOfBookmarked).getImageUrl());
+                }
 
 
             }

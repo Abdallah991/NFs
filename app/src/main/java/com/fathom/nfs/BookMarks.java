@@ -16,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
@@ -50,16 +52,28 @@ public class BookMarks extends Fragment {
     private ArticleAdapter mArticleAdapter;
     private ShopItemAdapter mShopItemAdapter;
     private NavController mNavController;
+    private TextView bookmarkedTitle;
+    private TextView doctorsTitleBookmark;
+    private ImageView monster1;
     private LinearLayout doctors;
-    private LinearLayout articles;
-    private LinearLayout shop;
     private Button allDoctors;
+    private TextView bookmarkedTitle2;
+    private TextView articlesBookmarkedTitle;
+    private ImageView monster2;
+    private LinearLayout linearLayout3;
     private Button allArticles;
+    private TextView bookmarkedTitle3;
+    private TextView shopBookmarkTitle;
+    private ImageView monster3;
+    private LinearLayout linearLayout4;
     private Button allShop;
+    private Button filterDoctors;
+    private Button filterShops;
+    private Button filterArticles;
     private ArticleViewModel mArticleViewModel;
     private DoctorsViewModel mDoctorsViewModel;
     private ShopItemsViewModel mShopItemsViewModel;
-    private final int actionId = R.id.action_homeFragment_to_doctorsDetails;
+    private final int actionId = R.id.action_bookMarksFragment_to_doctorsDetails2;
     private int actionArticle = R.id.action_homeFragment_to_articleDetailed2;
     private int actionToDetailedShopItem = R.id.action_homeFragment_to_shopItemDetailed;
 
@@ -89,9 +103,185 @@ public class BookMarks extends Fragment {
         allDoctors = view.findViewById(R.id.viewAllDoctors);
         allArticles = view.findViewById(R.id.viewAllArticles);
         allShop = view.findViewById(R.id.viewAllShop);
+        bookmarkedTitle = view.findViewById(R.id.bookmarkedTitle);
+        doctorsTitleBookmark = view.findViewById(R.id.doctorsTitleBookmark);
+        monster1 = view.findViewById(R.id.monster1);
+        doctors = view.findViewById(R.id.linearLayout2);
+        bookmarkedTitle2 = view.findViewById(R.id.bookmarkedTitle2);
+        articlesBookmarkedTitle = view.findViewById(R.id.articlesBookmarkedTitle);
+        monster2 = view.findViewById(R.id.monster2);
+        linearLayout3 = view.findViewById(R.id.linearLayout3);
+
+        bookmarkedTitle3 = view.findViewById(R.id.bookmarkedTitle3);
+        shopBookmarkTitle = view.findViewById(R.id.shopBookmarkTitle);
+        monster3 = view.findViewById(R.id.monster3);
+        linearLayout4 = view.findViewById(R.id.linearLayout4);
+
+        filterDoctors = view.findViewById(R.id.filterDoctors);
+        filterArticles = view.findViewById(R.id.filterArticles);
+        filterShops = view.findViewById(R.id.filterShopItems);
+
+
+        filterDoctors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                filterDoctors.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                filterArticles.setBackgroundColor(getResources().getColor(R.color.white));
+                filterShops.setBackgroundColor(getResources().getColor(R.color.white));
+                filterDoctors.setTextColor(getResources().getColor(R.color.white));
+                filterShops.setTextColor(getResources().getColor(R.color.colorPrimary));
+                filterArticles.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                bookmarkedTitle.setVisibility(View.VISIBLE);
+                doctorsTitleBookmark.setVisibility(View.VISIBLE);
+                monster1.setVisibility(View.VISIBLE);
+                doctors.setVisibility(View.VISIBLE);
+                allDoctors.setVisibility(View.VISIBLE);
+
+                bookmarkedTitle2.setVisibility(View.GONE);
+                articlesBookmarkedTitle.setVisibility(View.GONE);
+                monster2.setVisibility(View.GONE);
+                linearLayout3.setVisibility(View.GONE);
+                allArticles.setVisibility(View.GONE);
+
+                bookmarkedTitle3.setVisibility(View.GONE);
+                shopBookmarkTitle.setVisibility(View.GONE);
+                monster3.setVisibility(View.GONE);
+                linearLayout4.setVisibility(View.GONE);
+                allShop.setVisibility(View.GONE);
+
+                if (doctorItemsBookmarked.isEmpty()){
+
+                    bookmarkedTitle.setVisibility(View.GONE);
+                    doctorsTitleBookmark.setVisibility(View.GONE);
+                    monster1.setVisibility(View.GONE);
+                    doctors.setVisibility(View.GONE);
+                    allDoctors.setVisibility(View.GONE);
+
+                }
+            }
+        });
+
+        filterArticles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                filterDoctors.setBackgroundColor(getResources().getColor(R.color.white));
+                filterArticles.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                filterShops.setBackgroundColor(getResources().getColor(R.color.white));
+                filterArticles.setTextColor(getResources().getColor(R.color.white));
+                filterShops.setTextColor(getResources().getColor(R.color.colorPrimary));
+                filterDoctors.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                bookmarkedTitle.setVisibility(View.GONE);
+                doctorsTitleBookmark.setVisibility(View.GONE);
+                monster1.setVisibility(View.GONE);
+                doctors.setVisibility(View.GONE);
+                allDoctors.setVisibility(View.GONE);
+
+                bookmarkedTitle2.setVisibility(View.VISIBLE);
+                articlesBookmarkedTitle.setVisibility(View.VISIBLE);
+                monster2.setVisibility(View.VISIBLE);
+                linearLayout3.setVisibility(View.VISIBLE);
+                allArticles.setVisibility(View.VISIBLE);
+
+                bookmarkedTitle3.setVisibility(View.GONE);
+                shopBookmarkTitle.setVisibility(View.GONE);
+                monster3.setVisibility(View.GONE);
+                linearLayout4.setVisibility(View.GONE);
+                allShop.setVisibility(View.GONE);
+
+                if (articleItemsBookmarked.isEmpty()){
+
+                    bookmarkedTitle2.setVisibility(View.GONE);
+                    articlesBookmarkedTitle.setVisibility(View.GONE);
+                    monster2.setVisibility(View.GONE);
+                    linearLayout3.setVisibility(View.GONE);
+                    allArticles.setVisibility(View.GONE);
+
+                }
+
+            }
+        });
+
+        filterShops.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                filterDoctors.setBackgroundColor(getResources().getColor(R.color.white));
+                filterArticles.setBackgroundColor(getResources().getColor(R.color.white));
+                filterShops.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                filterShops.setTextColor(getResources().getColor(R.color.white));
+                filterDoctors.setTextColor(getResources().getColor(R.color.colorPrimary));
+                filterArticles.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                bookmarkedTitle.setVisibility(View.GONE);
+                doctorsTitleBookmark.setVisibility(View.GONE);
+                monster1.setVisibility(View.GONE);
+                doctors.setVisibility(View.GONE);
+                allDoctors.setVisibility(View.GONE);
+
+                bookmarkedTitle2.setVisibility(View.GONE);
+                articlesBookmarkedTitle.setVisibility(View.GONE);
+                monster2.setVisibility(View.GONE);
+                linearLayout3.setVisibility(View.GONE);
+                allArticles.setVisibility(View.GONE);
+
+                bookmarkedTitle3.setVisibility(View.VISIBLE);
+                shopBookmarkTitle.setVisibility(View.VISIBLE);
+                monster3.setVisibility(View.VISIBLE);
+                linearLayout4.setVisibility(View.VISIBLE);
+                allShop.setVisibility(View.VISIBLE);
+
+                if (shopItemsBookmarked.isEmpty()){
+
+                    bookmarkedTitle3.setVisibility(View.GONE);
+                    shopBookmarkTitle.setVisibility(View.GONE);
+                    monster3.setVisibility(View.GONE);
+                    linearLayout4.setVisibility(View.GONE);
+                    allShop.setVisibility(View.GONE);
+
+                }
+            }
+        });
+
+
+
+
 
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
+        if (doctorItemsBookmarked.isEmpty()){
+
+            bookmarkedTitle.setVisibility(View.GONE);
+            doctorsTitleBookmark.setVisibility(View.GONE);
+            monster1.setVisibility(View.GONE);
+            doctors.setVisibility(View.GONE);
+            allDoctors.setVisibility(View.GONE);
+
+        }
+
+        if (articleItemsBookmarked.isEmpty()){
+
+            bookmarkedTitle2.setVisibility(View.GONE);
+            articlesBookmarkedTitle.setVisibility(View.GONE);
+            monster2.setVisibility(View.GONE);
+            linearLayout3.setVisibility(View.GONE);
+            allArticles.setVisibility(View.GONE);
+
+        }
+
+        if (shopItemsBookmarked.isEmpty()){
+
+            bookmarkedTitle3.setVisibility(View.GONE);
+            shopBookmarkTitle.setVisibility(View.GONE);
+            monster3.setVisibility(View.GONE);
+            linearLayout4.setVisibility(View.GONE);
+            allShop.setVisibility(View.GONE);
+
+        }
 
 
 

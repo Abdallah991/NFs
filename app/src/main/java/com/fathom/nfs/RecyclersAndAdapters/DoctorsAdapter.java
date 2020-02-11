@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 import static com.fathom.nfs.DataModels.BookmarkDataModel.articleItemsBookmarked;
 import static com.fathom.nfs.DataModels.BookmarkDataModel.doctorItemsBookmarked;
+import static com.fathom.nfs.DataModels.BookmarkDataModel.setClickedFromBookmarks;
+import static com.fathom.nfs.DataModels.BookmarkDataModel.setPositionOfBookMark;
 
 public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorHolder> {
 
@@ -78,11 +80,22 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
             public void onClick(View v) {
 
                 if (!mDoctors.get(position).isBookmark()) {
+                    setClickedFromBookmarks(false);
                     mNavController.navigate(actionId);
                     mModel.selectDoctor(mDoctors, position);
                 }
                 else if(mDoctors.get(position).isBookmark()){
-                    mNavController.navigate(R.id.action_bookMarksFragment_to_doctorsDetails2);
+                    if (actionId == R.id.action_homeFragment_to_doctorsDetails) {
+                        
+                        mModel.selectDoctor(mDoctors, position);
+                        setClickedFromBookmarks(true);
+                        mNavController.navigate(actionId);
+                    }
+                    else {
+                        setPositionOfBookMark(position);
+                        setClickedFromBookmarks(true);
+                        mNavController.navigate(actionId);
+                    }
                 }
             }
         });
