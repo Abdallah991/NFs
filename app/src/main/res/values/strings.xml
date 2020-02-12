@@ -52,6 +52,8 @@
     <string name="checkOur">Check our</string>
     <string name="books">Books</string>
     <string name="toys">Toys</string>
+    <string name="map_key" translatable="false">AIzaSyCen1S_fKDTTjM5qxRX-hr51NlSdBPS4Ik</string>
+
     <string name="viewToys">View All Toys</string>
     <string name="viewBooks">View All Books</string>
     <string name="articleContent">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quam nulla porttitor massa id. Ultricies leo integer malesuada nunc vel risus commodo viverra.

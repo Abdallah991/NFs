@@ -2,6 +2,8 @@ package com.fathom.nfs.DataModels;
 
 import java.util.ArrayList;
 
+
+// this class is for the doctors category
 public class CategoryDataModel {
 
     private String category;

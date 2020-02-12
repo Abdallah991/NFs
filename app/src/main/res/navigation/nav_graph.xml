@@ -120,7 +120,11 @@
         android:id="@+id/doctorsDetails"
         android:name="com.fathom.nfs.DoctorsDetails"
         android:label="fragment_doctors_details"
-        tools:layout="@layout/fragment_doctors_details" />
+        tools:layout="@layout/fragment_doctors_details" >
+        <action
+            android:id="@+id/action_doctorsDetails_to_doctorLocation"
+            app:destination="@id/doctorLocation" />
+    </fragment>
     <fragment
         android:id="@+id/doctorsSpecialities"
         android:name="com.fathom.nfs.DoctorsSpecialities"
@@ -186,4 +190,9 @@
         android:name="com.fathom.nfs.FAQsDetailed"
         android:label="fragment_faqs_detailed"
         tools:layout="@layout/fragment_faqs_detailed" />
+    <fragment
+        android:id="@+id/doctorLocation"
+        android:name="com.fathom.nfs.DoctorLocation"
+        android:label="fragment_doctor_location"
+        tools:layout="@layout/fragment_doctor_location" />
 </navigation>

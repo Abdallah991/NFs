@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class ArticleCategoryDataModel {
 
+    // Categories are articles, videos, blogs and community
+
     private String articleCategory;
     private int categoryImage;
     private ArrayList<ArticleDataModel> articles;

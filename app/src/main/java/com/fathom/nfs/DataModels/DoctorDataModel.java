@@ -14,6 +14,7 @@ public class DoctorDataModel {
     private String education;
     private String experience;
     private ArrayList<ReviewDataModel> reviews = new ArrayList<>();
+    public static ArrayList<AppointmentDataModel> doctorAppointments = new ArrayList<>();
 
 
 

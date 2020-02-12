@@ -9,6 +9,8 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,6 +65,11 @@ public class DoctorsDetails extends Fragment {
     private ArrayList<ReviewDataModel> mReviews = new ArrayList<>();
     private int position;
     private int positionOfBookmarked;
+    private Button doctorLocation;
+    private Button doctorChat;
+    private Button doctorEmail;
+    private NavController mNavController;
+
 
 
     public DoctorsDetails() {
@@ -97,6 +104,20 @@ public class DoctorsDetails extends Fragment {
         lastName = view.findViewById(R.id.doctorLastName);
         rating = view.findViewById(R.id.ratingValueDetailedDoctor);
         doctorImage = view.findViewById(R.id.DoctorImage);
+        doctorLocation = view.findViewById(R.id.doctorLocation);
+        doctorChat = view.findViewById(R.id.chatButton);
+        doctorEmail = view.findViewById(R.id.emailButton);
+
+        mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
+//        doctorLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+
+
 
         ViewCompat.setLayoutDirection(doctorsDetailsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
@@ -135,10 +156,10 @@ public class DoctorsDetails extends Fragment {
 
 
 
+
         // Adjusting the UI to display only the overview when the user access it
         contactContent.setVisibility(View.GONE);
         reviewContent.setVisibility(View.GONE);
-        initRecycler();
 
 
         // updating the UI when you click on each tab of the doctor details
@@ -152,6 +173,18 @@ public class DoctorsDetails extends Fragment {
                 reviewContent.setVisibility(View.GONE);
                 contactContent.setVisibility(View.VISIBLE);
 
+
+
+                contactContent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        mNavController.navigate(R.id.action_doctorsDetails_to_doctorLocation);
+                    }
+                });
+
+
+
             }
         });
 
@@ -164,6 +197,8 @@ public class DoctorsDetails extends Fragment {
                 overviewContent.setVisibility(View.VISIBLE);
                 contactContent.setVisibility(View.GONE);
                 reviewContent.setVisibility(View.GONE);
+
+
 
 
             }
@@ -180,6 +215,11 @@ public class DoctorsDetails extends Fragment {
                 overviewContent.setVisibility(View.GONE);
             }
         });
+
+
+
+        initRecycler();
+
 
 
     }
@@ -202,5 +242,8 @@ public class DoctorsDetails extends Fragment {
 
 
 
+
     }
+
+
 }

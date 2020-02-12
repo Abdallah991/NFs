@@ -7,6 +7,7 @@ public class AppointmentDataModel {
     private String doctorName;
     private String specialty;
     private String timing;
+    private boolean bookedAppointemnt;
 
 
     public AppointmentDataModel(String day, String month, String doctorName, String specialty, String timing) {
@@ -58,5 +59,13 @@ public class AppointmentDataModel {
 
     public void setTiming(String timing) {
         this.timing = timing;
+    }
+
+    public boolean isBookedAppointemnt() {
+        return bookedAppointemnt;
+    }
+
+    public void setBookedAppointemnt(boolean bookedAppointemnt) {
+        this.bookedAppointemnt = bookedAppointemnt;
     }
 }
