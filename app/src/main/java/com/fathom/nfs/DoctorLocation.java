@@ -33,7 +33,7 @@ import static com.fathom.nfs.R.*;
 public class DoctorLocation extends Fragment implements OnMapReadyCallback {
 
     private LinearLayout doctorLocationContent;
-    private Location doctorLocation;
+    private LatLng doctorLocation;
 
 
 

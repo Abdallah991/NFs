@@ -110,12 +110,14 @@ public class DoctorsDetails extends Fragment {
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
+        // TODO: figure out a way to activate the on click for buttons in contact tab
 //        doctorLocation.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //
 //            }
 //        });
+
 
 
 
