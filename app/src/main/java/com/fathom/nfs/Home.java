@@ -318,7 +318,6 @@ public class Home extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        Toast.makeText(getContext(),"onPause "   , Toast.LENGTH_SHORT).show();
 
         searchList.setVisibility(View.GONE);
 
@@ -327,7 +326,6 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Toast.makeText(getContext(),"onPause "   , Toast.LENGTH_SHORT).show();
 
         searchList.setVisibility(View.GONE);
     }

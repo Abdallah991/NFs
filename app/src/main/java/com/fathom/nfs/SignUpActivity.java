@@ -41,16 +41,11 @@ public class SignUpActivity extends AppCompatActivity {
         // linking the variables with the view components
         appName = findViewById(R.id.appTitle);
         login = findViewById(R.id.sendPassword);
-        signUp = findViewById(R.id.login);
+        signUp = findViewById(R.id.signUp);
         firstName = findViewById(R.id.firstName);
         lastName = findViewById(R.id.lastName);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-
-        final Editable userName = firstName.getText();
-        final Editable userPassword = password.getText();
-        final Map<String, Editable> attributes = new HashMap<>();
-        attributes.put("email", email.getText());
 
         // go back to Login Activity
         login.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +58,41 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 finish();
+
+            }
+        });
+
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // sign UP
+                final String username = email.getText().toString();
+                final String userPassword = password.getText().toString();
+                final Map<String, String> attributes = new HashMap<>();
+                attributes.put("email", email.getText().toString());
+                AWSMobileClient.getInstance().signUp(username, userPassword, attributes, null, new Callback<SignUpResult>() {
+                    @Override
+                    public void onResult(final SignUpResult signUpResult) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d(TAG, "Sign-up callback state: " + signUpResult.getConfirmationState());
+                                if (!signUpResult.getConfirmationState()) {
+                                    final UserCodeDeliveryDetails details = signUpResult.getUserCodeDeliveryDetails();
+                                    Log.e(TAG ,"Confirm sign-up with: " + details.getDestination());
+                                } else {
+                                    Log.e(TAG ,"Sign-up done.");
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e(TAG, "Sign-up error", e);
+                    }
+                });
 
             }
         });

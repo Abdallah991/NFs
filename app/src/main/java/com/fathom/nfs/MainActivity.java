@@ -1,6 +1,8 @@
 package com.fathom.nfs;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.Callback;
+import com.amazonaws.mobile.client.SignOutOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView bottomNavigationView;
     private Button logOut;
     private ImageView closeDrawerButton;
+    private String TAG = "SIGN OUT";
 
 
     @Override
@@ -79,7 +85,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "User Logging Out", Toast.LENGTH_SHORT).show();
+
+                AWSMobileClient.getInstance().signOut();
+                if (!AWSMobileClient.getInstance().isSignedIn()){
+                    Intent intent = new Intent(getApplicationContext(),
+                                LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                }
+
+                Toast.makeText(getApplicationContext()," "+AWSMobileClient.getInstance().getUsername(),Toast.LENGTH_LONG).show();
+
+
             }
         });
 
