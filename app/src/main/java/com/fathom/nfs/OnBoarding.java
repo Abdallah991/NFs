@@ -7,11 +7,25 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.Callback;
+import com.amazonaws.mobile.client.SignInUIOptions;
+import com.amazonaws.mobile.client.UserStateDetails;
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.GraphQLResponse;
+import com.amplifyframework.api.graphql.SubscriptionType;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.core.ResultListener;
+import com.amplifyframework.core.StreamListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +50,6 @@ public class OnBoarding extends AppCompatActivity {
         skipView = findViewById(R.id.skip);
         appName = findViewById(R.id.appTitle);
 
-
         // fill List for OnBoarding
         final List<ScreenItem> mList = new ArrayList<>();
         mList.add(new ScreenItem(R.drawable.nfs_monsters03, R.string.question1, R.string.description1));
@@ -48,10 +61,6 @@ public class OnBoarding extends AppCompatActivity {
         mViewPager = findViewById(R.id.viewPager);
         mOnBoardingAdapter = new OnBoardingAdapter(this, mList);
         mViewPager.setAdapter(mOnBoardingAdapter);
-
-        // set the fonts to light since the Poppins light font cant be set frm xml
-//        Helper.setTypeFace(this, skipView);
-//        Helper.setTypeFace(this, appName);
 
         // next button click Listener
         btnNext.setOnClickListener(new View.OnClickListener() {

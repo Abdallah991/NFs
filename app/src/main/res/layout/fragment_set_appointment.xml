@@ -1,14 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/setAppointmentContent"
+    android:weightSum="12"
     tools:context=".SetAppointment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/appointmentCard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            android:elevation="20dp"
+            app:cardMaxElevation="20dp"
+            app:cardPreventCornerOverlap="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical"
+                android:weightSum="10">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1.5"
+                    android:layout_gravity="center"
+                    android:src="@drawable/arrow_back_purple"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="8"
+                    android:layout_marginStart="20dp"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/doctorNameInAppointment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Dr. Khulood Ebrahim"
+                        app:fontFamily="@font/poppins_semi_bold" />
+
+                    <TextView
+                        android:id="@+id/specialtyInAppointment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#FEE4B7"
+                        android:padding="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:text="Psychiatrist "
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
+                        android:textStyle="italic"
+                        android:layout_marginBottom="10dp"
+                        app:fontFamily="@font/poppins_light" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/appointmentTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:layout_margin="20dp"
+                android:layout_gravity="center_vertical"
+                android:text="Schedule Appointment"
+                app:fontFamily="@font/poppins_regular" />
+
+            <com.applandeo.materialcalendarview.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                app:type="one_day_picker"
+                android:layout_height="match_parent"
+                app:headerColor="@color/white"
+                app:headerLabelColor="@color/colorPrimary"
+                app:previousButtonSrc="@drawable/backward_calender"
+                app:forwardButtonSrc="@drawable/forward_calender"
+                app:selectionColor="@color/colorPrimary"
+                android:padding="20dp"
+                app:fontFamily="@font/poppins_regular"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

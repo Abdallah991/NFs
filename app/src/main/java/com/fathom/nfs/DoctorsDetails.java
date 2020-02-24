@@ -65,9 +65,22 @@ public class DoctorsDetails extends Fragment {
     private ArrayList<ReviewDataModel> mReviews = new ArrayList<>();
     private int position;
     private int positionOfBookmarked;
+    private TextView aboutTitle;
+    private TextView aboutContent;
+    private TextView educationTitle;
+    private TextView educationDegree1;
+    private TextView educationDegree1Description;
+    private TextView educationDegree2;
+    private TextView educationDegree2Description;
+    private TextView experienceTitle;
+    private TextView experienceContent;
     private Button doctorLocation;
     private Button doctorChat;
     private Button doctorEmail;
+    private Button callButton;
+    private Button writeReview;
+    private Button bookAppointment;
+
     private NavController mNavController;
 
 
@@ -104,21 +117,27 @@ public class DoctorsDetails extends Fragment {
         lastName = view.findViewById(R.id.doctorLastName);
         rating = view.findViewById(R.id.ratingValueDetailedDoctor);
         doctorImage = view.findViewById(R.id.DoctorImage);
-        doctorLocation = view.findViewById(R.id.doctorLocation);
+
+        aboutTitle = view.findViewById(R.id.aboutTitle);
+        aboutContent = view.findViewById(R.id.aboutContent);
+        educationTitle = view.findViewById(R.id.educationTitle);
+        educationDegree1 = view.findViewById(R.id.educationDegree1);
+        educationDegree1Description = view.findViewById(R.id.educationDegree1Description);
+        educationDegree2 = view.findViewById(R.id.educationDegree2);
+        educationDegree2Description = view.findViewById(R.id.educationDegree2Description);
+        experienceTitle = view.findViewById(R.id.experienceTitle);
+        experienceContent = view.findViewById(R.id.experienceContent);
+
+        doctorLocation = view.findViewById(R.id.locationButton);
         doctorChat = view.findViewById(R.id.chatButton);
         doctorEmail = view.findViewById(R.id.emailButton);
+        callButton = view.findViewById(R.id.callButton);
+
+        writeReview = view.findViewById(R.id.writeReview);
+
+        bookAppointment = view.findViewById(R.id.bookAppointment);
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
-
-        // TODO: figure out a way to activate the on click for buttons in contact tab
-//        doctorLocation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-
-
 
 
         ViewCompat.setLayoutDirection(doctorsDetailsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
@@ -160,8 +179,15 @@ public class DoctorsDetails extends Fragment {
 
 
         // Adjusting the UI to display only the overview when the user access it
-        contactContent.setVisibility(View.GONE);
-        reviewContent.setVisibility(View.GONE);
+                        contactContent.setVisibility(View.GONE);
+        doctorLocation.setVisibility(View.GONE);
+        doctorChat.setVisibility(View.GONE);
+        doctorEmail.setVisibility(View.GONE);
+        callButton.setVisibility(View.GONE);
+
+                        reviewContent.setVisibility(View.GONE);
+        writeReview.setVisibility(View.GONE);
+        mReviewRecycler.setVisibility(View.GONE);
 
 
         // updating the UI when you click on each tab of the doctor details
@@ -171,20 +197,40 @@ public class DoctorsDetails extends Fragment {
                 overviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 reviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 contactUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button));
-                overviewContent.setVisibility(View.GONE);
+
+                                overviewContent.setVisibility(View.GONE);
+                aboutTitle.setVisibility(View.GONE);
+                aboutContent.setVisibility(View.GONE);
+                educationTitle.setVisibility(View.GONE);
+                educationDegree1.setVisibility(View.GONE);
+                educationDegree1Description.setVisibility(View.GONE);
+                educationDegree2.setVisibility(View.GONE);
+                educationDegree2Description.setVisibility(View.GONE);
+                experienceTitle.setVisibility(View.GONE);
+                experienceContent.setVisibility(View.GONE);
+
                 reviewContent.setVisibility(View.GONE);
+                writeReview.setVisibility(View.GONE);
+                mReviewRecycler.setVisibility(View.GONE);
+
+
+
                 contactContent.setVisibility(View.VISIBLE);
+                doctorLocation.setVisibility(View.VISIBLE);
+                doctorChat.setVisibility(View.VISIBLE);
+                doctorEmail.setVisibility(View.VISIBLE);
+                callButton.setVisibility(View.VISIBLE);
 
 
-
-                contactContent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        mNavController.navigate(R.id.action_doctorsDetails_to_doctorLocation);
-                    }
-                });
-
+//
+//                contactContent.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//
+//                    mNavController.navigate(R.id.action_doctorsDetails_to_doctorLocation);
+//
+//                    }
+//                });
 
 
             }
@@ -193,12 +239,32 @@ public class DoctorsDetails extends Fragment {
         overviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 overviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button));
                 contactUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 reviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
-                overviewContent.setVisibility(View.VISIBLE);
-                contactContent.setVisibility(View.GONE);
-                reviewContent.setVisibility(View.GONE);
+
+                                overviewContent.setVisibility(View.VISIBLE);
+                aboutTitle.setVisibility(View.VISIBLE);
+                aboutContent.setVisibility(View.VISIBLE);
+                educationTitle.setVisibility(View.VISIBLE);
+                educationDegree1.setVisibility(View.VISIBLE);
+                educationDegree1Description.setVisibility(View.VISIBLE);
+                educationDegree2.setVisibility(View.VISIBLE);
+                educationDegree2Description.setVisibility(View.VISIBLE);
+                experienceTitle.setVisibility(View.VISIBLE);
+                experienceContent.setVisibility(View.VISIBLE);
+
+                                contactContent.setVisibility(View.GONE);
+                doctorLocation.setVisibility(View.GONE);
+                doctorChat.setVisibility(View.GONE);
+                doctorEmail.setVisibility(View.GONE);
+                callButton.setVisibility(View.GONE);
+
+
+                                reviewContent.setVisibility(View.GONE);
+                writeReview.setVisibility(View.GONE);
+                mReviewRecycler.setVisibility(View.GONE);
 
 
 
@@ -212,12 +278,46 @@ public class DoctorsDetails extends Fragment {
                 reviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button));
                 contactUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 overviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
-                reviewContent.setVisibility(View.VISIBLE);
-                contactContent.setVisibility(View.GONE);
-                overviewContent.setVisibility(View.GONE);
+
+                                reviewContent.setVisibility(View.VISIBLE);
+                writeReview.setVisibility(View.VISIBLE);
+                mReviewRecycler.setVisibility(View.VISIBLE);
+
+                                contactContent.setVisibility(View.GONE);
+                doctorLocation.setVisibility(View.GONE);
+                doctorChat.setVisibility(View.GONE);
+                doctorEmail.setVisibility(View.GONE);
+                callButton.setVisibility(View.GONE);
+
+
+                                overviewContent.setVisibility(View.GONE);
+                aboutTitle.setVisibility(View.GONE);
+                aboutContent.setVisibility(View.GONE);
+                educationTitle.setVisibility(View.GONE);
+                educationDegree1.setVisibility(View.GONE);
+                educationDegree1Description.setVisibility(View.GONE);
+                educationDegree2.setVisibility(View.GONE);
+                educationDegree2Description.setVisibility(View.GONE);
+                experienceTitle.setVisibility(View.GONE);
+                experienceContent.setVisibility(View.GONE);
             }
         });
 
+        doctorLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNavController.navigate(R.id.action_doctorsDetails_to_doctorLocation);
+            }
+        });
+
+        bookAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mNavController.navigate(R.id.action_doctorsDetails_to_setAppointment);
+
+            }
+        });
 
 
         initRecycler();

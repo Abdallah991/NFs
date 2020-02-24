@@ -200,14 +200,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    public void callMap() {
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync((OnMapReadyCallback) this);
-    }
-
-
 
 }
 

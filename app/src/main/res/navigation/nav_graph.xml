@@ -82,6 +82,15 @@
         <action
             android:id="@+id/action_homeFragment_to_shopItemDetailed"
             app:destination="@id/shopItemDetailed" />
+        <action
+            android:id="@+id/action_homeFragment_to_appointmentsFragment"
+            app:destination="@id/appointmentsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_helpLinesFragment"
+            app:destination="@id/helpLinesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_bookMarksFragment"
+            app:destination="@id/bookMarksFragment" />
     </fragment>
 
     <fragment
@@ -124,6 +133,9 @@
         <action
             android:id="@+id/action_doctorsDetails_to_doctorLocation"
             app:destination="@id/doctorLocation" />
+        <action
+            android:id="@+id/action_doctorsDetails_to_setAppointment"
+            app:destination="@id/setAppointment" />
     </fragment>
     <fragment
         android:id="@+id/doctorsSpecialities"
@@ -195,4 +207,9 @@
         android:name="com.fathom.nfs.DoctorLocation"
         android:label="fragment_doctor_location"
         tools:layout="@layout/fragment_doctor_location" />
+    <fragment
+        android:id="@+id/setAppointment"
+        android:name="com.fathom.nfs.SetAppointment"
+        android:label="fragment_set_appointment"
+        tools:layout="@layout/fragment_set_appointment" />
 </navigation>

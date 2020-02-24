@@ -1,6 +1,8 @@
 package com.fathom.nfs;
 
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,8 +18,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
@@ -32,6 +41,7 @@ import com.fathom.nfs.ViewModels.DoctorsViewModel;
 import com.fathom.nfs.ViewModels.ShopItemsViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -60,6 +70,10 @@ public class Home extends Fragment {
     private CategoryViewModel mCategoryViewModel;
     private ArticleViewModel mArticleViewModel;
     private ShopItemsViewModel mShopItemsViewModel;
+    private SearchView mSearchView;
+    private ListView searchList;
+    private ArrayAdapter<String> searchAdapter;
+    private ArrayList<String> searchListItems = new ArrayList<>();
 
     private Button viewAllDoctors;
 
@@ -82,6 +96,7 @@ public class Home extends Fragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -90,6 +105,115 @@ public class Home extends Fragment {
          mDoctorsRecycler = view.findViewById(R.id.doctorsRecyclerView);
          mArticlesRecycler = view.findViewById(R.id.articlesRecyclerView);
          mShopRecycler = view.findViewById(R.id.shopRecyclerView);
+
+         mSearchView = view.findViewById(R.id.search);
+         searchList = view.findViewById(R.id.searchResults);
+
+        int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView textView = mSearchView.findViewById(id);
+        textView.setTextColor(R.color.colorPrimary);
+
+        mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
+        if (searchListItems.isEmpty()) {
+
+            searchListItems.addAll(Arrays.asList(getResources().getStringArray(R.array.home_searchables)));
+        }
+
+        searchAdapter = new ArrayAdapter<>(
+                getContext(),
+                R.layout.search_list_item,
+                searchListItems
+        );
+
+        searchList.setAdapter(searchAdapter);
+
+
+        searchList.setVisibility(View.GONE);
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+             @Override
+             public boolean onQueryTextSubmit(String s) {
+                 Toast.makeText(getContext(),"Submit "   , Toast.LENGTH_SHORT).show();
+
+
+
+
+                 searchList.setVisibility(View.GONE);
+
+                 return false;
+             }
+
+             @Override
+             public boolean onQueryTextChange(String s) {
+
+                 searchList.setVisibility(View.VISIBLE);
+                 searchAdapter.getFilter().filter(s);
+//                 Toast.makeText(getContext(),"Text change "   , Toast.LENGTH_SHORT).show();
+
+
+                 return false;
+             }
+         });
+
+        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+
+                searchList.setVisibility(View.GONE);
+
+                return false;
+            }
+        });
+
+        searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+               String listItem = (String) searchList.getItemAtPosition(i);
+
+                Toast.makeText(getContext(),"Selected item is " +listItem   , Toast.LENGTH_SHORT).show();
+
+
+                switch (listItem) {
+
+                    case "Shop":
+//                    case 0:
+                        mNavController.navigate(R.id.action_homeFragment_to_shopFragment);
+                        break;
+//                    case 1:
+                    case "Appointments":
+                        mNavController.navigate(R.id.action_homeFragment_to_appointmentsFragment);
+                        break;
+
+                    case "Articles":
+//                    case 2:
+                        mNavController.navigate(R.id.action_homeFragment_to_articles);
+                        break;
+
+                    case "Help Lines":
+//                    case 3:
+                        mNavController.navigate(R.id.action_homeFragment_to_helpLinesFragment);
+                        break;
+
+                    case "Book Marks":
+//                    case 4:
+                        mNavController.navigate(R.id.action_homeFragment_to_bookMarksFragment);
+                        break;
+
+                    case "Doctors":
+//                    case 5:
+                        mNavController.navigate(R.id.action_homeFragment_to_doctors);
+                        break;
+
+
+                }
+
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        });
+
 
          // Calling the View Model
         mDoctorsViewModel = new ViewModelProvider(requireActivity()).get(DoctorsViewModel.class);
@@ -138,7 +262,6 @@ public class Home extends Fragment {
             }
         });
 
-        mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         viewAllDoctors = view.findViewById(R.id.viewDoctors);
         // Readjusting the position of layout elements
@@ -190,5 +313,22 @@ public class Home extends Fragment {
         mShopItemAdapter = new ShopItemAdapter(mShopItems, getContext(), mNavController, actionToDetailedShopItem, mShopItemsViewModel);
         mShopRecycler.setAdapter(mShopItemAdapter);
         mShopRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Toast.makeText(getContext(),"onPause "   , Toast.LENGTH_SHORT).show();
+
+        searchList.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Toast.makeText(getContext(),"onPause "   , Toast.LENGTH_SHORT).show();
+
+        searchList.setVisibility(View.GONE);
     }
 }

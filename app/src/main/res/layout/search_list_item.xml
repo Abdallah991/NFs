@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TextView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/searchItem"
+    android:text="chocolate"
+    android:textSize="20sp"
+    android:textColor="@color/colorPrimary"
+    app:fontFamily="@font/poppins_light"
+    android:layout_marginStart="30dp"
+    android:padding="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

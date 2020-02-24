@@ -4,10 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.Callback;
+import com.amazonaws.mobile.client.results.SignUpResult;
+import com.amazonaws.mobile.client.results.UserCodeDeliveryDetails;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -19,6 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText lastName;
     private EditText email;
     private EditText password;
+    private final String TAG = "SIGN UP";
 
 
     @Override
@@ -35,14 +47,10 @@ public class SignUpActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
 
-        // setting the type face to light poppins
-//        Helper.setTypeFace(this, appName);
-//        Helper.setTypeFace(this, login);
-//        Helper.setTypeFace(this, signUp);
-//        Helper.setTypeFace(this, firstName);
-//        Helper.setTypeFace(this, lastName);
-//        Helper.setTypeFace(this, email);
-//        Helper.setTypeFace(this, password);
+        final Editable userName = firstName.getText();
+        final Editable userPassword = password.getText();
+        final Map<String, Editable> attributes = new HashMap<>();
+        attributes.put("email", email.getText());
 
         // go back to Login Activity
         login.setOnClickListener(new View.OnClickListener() {

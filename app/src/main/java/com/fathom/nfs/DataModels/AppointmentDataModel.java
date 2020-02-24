@@ -8,6 +8,8 @@ public class AppointmentDataModel {
     private String specialty;
     private String timing;
     private boolean bookedAppointemnt;
+    private String AMPM;
+    private String dayOfTheWeek;
 
 
     public AppointmentDataModel(String day, String month, String doctorName, String specialty, String timing) {
@@ -67,5 +69,13 @@ public class AppointmentDataModel {
 
     public void setBookedAppointemnt(boolean bookedAppointemnt) {
         this.bookedAppointemnt = bookedAppointemnt;
+    }
+
+    public String getAMPM() {
+        return AMPM;
+    }
+
+    public void setAMPM(String AMPM) {
+        this.AMPM = AMPM;
     }
 }

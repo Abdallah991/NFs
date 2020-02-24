@@ -1,0 +1,65 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "amplify-nfs-amplify-150434-authRole",
+			"UnauthRoleArn": "arn:aws:iam::476234578752:role/amplify-nfs-amplify-150434-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::476234578752:role/amplify-nfs-amplify-150434-authRole",
+			"Region": "us-east-1",
+			"DeploymentBucketName": "amplify-nfs-amplify-150434-deployment",
+			"UnauthRoleName": "amplify-nfs-amplify-150434-unauthRole",
+			"StackName": "amplify-nfs-amplify-150434",
+			"StackId": "arn:aws:cloudformation:us-east-1:476234578752:stack/amplify-nfs-amplify-150434/ac188e40-5634-11ea-a087-0e1cfc6fd327",
+			"AmplifyAppId": "d38tvmtv6q7fk8"
+		}
+	},
+	"api": {
+		"amplifyDatasource": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "API_KEY",
+						"apiKeyConfig": {
+							"description": "",
+							"apiKeyExpirationDays": 7
+						}
+					}
+				},
+				"GraphQLAPIIdOutput": "dpiy5aaxonhfbiprgfymnglxh4",
+				"GraphQLAPIEndpointOutput": "https://y53b5u3lsrc5tnjdto472mxbfe.appsync-api.us-east-1.amazonaws.com/graphql",
+				"GraphQLAPIKeyOutput": "da2-pfbdgj2invedzi67wbj6pa2c3m"
+			},
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-nfs-amplify-150434-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"logicalId": "apiamplifyDatasource"
+			},
+			"lastPushTimeStamp": "2020-02-24T06:02:48.230Z",
+			"lastPushDirHash": "WackMgwcC3WQt3vEPyOiv4P/g2w="
+		}
+	},
+	"auth": {
+		"nfs367df6e3": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false,
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-nfs-amplify-150434-deployment/amplify-cfn-templates/auth/nfs367df6e3-cloudformation-template.yml",
+				"logicalId": "authnfs367df6e3"
+			},
+			"lastPushTimeStamp": "2020-02-24T06:02:48.233Z",
+			"output": {
+				"AppClientSecret": "1pf6atl366fbpei89tfep070iot5gkmss6p49rtan5klvd6kcs5q",
+				"UserPoolId": "us-east-1_T5nzDU0iB",
+				"AppClientIDWeb": "5rrmvk6v5g7pa3rl82mpvdgt7j",
+				"AppClientID": "6n37qugtkor95c3vn445nrq61f",
+				"IdentityPoolId": "us-east-1:253bd102-875b-4c9a-950e-e98a158d9049",
+				"IdentityPoolName": "nfs367df6e3_identitypool_367df6e3__amplify",
+				"UserPoolName": "nfs367df6e3_userpool_367df6e3"
+			},
+			"lastPushDirHash": "IPyLt49w6nCJedVSXBKcEG1Uwu0="
+		}
+	}
+}
