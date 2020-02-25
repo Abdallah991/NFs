@@ -91,6 +91,26 @@ public class OnBoarding extends AppCompatActivity {
             }
         });
 
+        AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
+
+                    @Override
+                    public void onResult(UserStateDetails userStateDetails) {
+                        Log.i("INIT", "onResult: " + userStateDetails.getUserState());
+
+                        if(AWSMobileClient.getInstance().isSignedIn()) {
+                            Intent intent = new Intent(getApplicationContext(),
+                                    MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e("INIT", "Initialization error.", e);
+                    }
+                }
+        );
+
 
     }
 

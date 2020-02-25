@@ -41,19 +41,19 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.login);
 
         // initialising login
-        AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
-
-                    @Override
-                    public void onResult(UserStateDetails userStateDetails) {
-                        Log.i("INIT", "onResult: " + userStateDetails.getUserState());
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("INIT", "Initialization error.", e);
-                    }
-                }
-        );
+//        AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
+//
+//                    @Override
+//                    public void onResult(UserStateDetails userStateDetails) {
+//                        Log.i("INIT", "onResult: " + userStateDetails.getUserState());
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//                        Log.e("INIT", "Initialization error.", e);
+//                    }
+//                }
+//        );
         // Go to SignUp Activity
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override

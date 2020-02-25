@@ -86,6 +86,12 @@ Sapien faucibus et molestie ac feugiat. Est placerat in egestas erat imperdiet s
         <item>Book Marks</item>
         <item>Doctors</item>
     </string-array>
+    <string name="title_activity_sign_up_confirm">SignUpConfirmActivity</string>
+    <string name="confirm_signup">Confirm Sign Up</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="confirmation_code">Confirmation Code</string>
 
 
 </resources>

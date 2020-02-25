@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.Callback;
+import com.amazonaws.mobile.client.UserStateDetails;
 import com.amazonaws.mobile.client.results.SignUpResult;
 import com.amazonaws.mobile.client.results.UserCodeDeliveryDetails;
 
@@ -46,6 +47,20 @@ public class SignUpActivity extends AppCompatActivity {
         lastName = findViewById(R.id.lastName);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+
+        AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
+
+                    @Override
+                    public void onResult(UserStateDetails userStateDetails) {
+                        Log.i("INIT", "onResult: " + userStateDetails.getUserState());
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e("INIT", "Initialization error.", e);
+                    }
+                }
+        );
 
         // go back to Login Activity
         login.setOnClickListener(new View.OnClickListener() {
@@ -81,8 +96,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 if (!signUpResult.getConfirmationState()) {
                                     final UserCodeDeliveryDetails details = signUpResult.getUserCodeDeliveryDetails();
                                     Log.e(TAG ,"Confirm sign-up with: " + details.getDestination());
+                                    Intent intent = new Intent(getApplicationContext(),
+                                            SignUpConfirmActivity.class);
+                                    startActivity(intent);
                                 } else {
                                     Log.e(TAG ,"Sign-up done.");
+                                    Intent intent = new Intent(getApplicationContext(),
+                                            LoginActivity.class);
+                                    startActivity(intent);
                                 }
                             }
                         });

@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.mobile.client.Callback;
+import com.amazonaws.mobile.client.results.ForgotPasswordResult;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
@@ -17,6 +22,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private EditText email;
     private Button login;
     private Button sendPassword;
+    private String TAG = "SIGN-Forget Password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +36,41 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         login = findViewById(R.id.login);
         sendPassword = findViewById(R.id.sendPassword);
 
-//        // setting the font
-//        Helper.setTypeFace(this, appName);
-//        Helper.setTypeFace(this, noAccount);
-//        Helper.setTypeFace(this, email);
-//        Helper.setTypeFace(this, login);
-//        Helper.setTypeFace(this, sendPassword);
+        sendPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final String username = email.getText().toString();
+
+                AWSMobileClient.getInstance().forgotPassword(username, new Callback<ForgotPasswordResult>() {
+                    @Override
+                    public void onResult(final ForgotPasswordResult result) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d(TAG, "forgot password state: " + result.getState());
+                                switch (result.getState()) {
+                                    case CONFIRMATION_CODE:
+                                        Log.e(TAG,"Confirmation code is sent to reset password");
+                                        Intent intent = new Intent(getApplicationContext(),
+                                                NewPasswordActivity.class);
+                                        startActivity(intent);
+                                        break;
+                                    default:
+                                        Log.e(TAG, "un-supported forgot password state");
+                                        break;
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.e(TAG, "forgot password error", e);
+                    }
+                });
+            }
+        });
 
 
         // go back to Login Activity
