@@ -1,8 +1,10 @@
 package com.fathom.nfs;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -17,6 +19,12 @@ import com.amazonaws.mobile.client.Callback;
 import com.amazonaws.mobile.client.UserStateDetails;
 import com.amazonaws.mobile.client.results.SignUpResult;
 import com.amazonaws.mobile.client.results.UserCodeDeliveryDetails;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private final String TAG = "SIGN UP";
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -47,6 +56,8 @@ public class SignUpActivity extends AppCompatActivity {
         lastName = findViewById(R.id.lastName);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+        mAuth = FirebaseAuth.getInstance();
+
 
         AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
 
@@ -81,42 +92,63 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // sign UP
-                final String username = email.getText().toString();
-                final String userPassword = password.getText().toString();
-                final Map<String, String> attributes = new HashMap<>();
-                attributes.put("email", email.getText().toString());
-                AWSMobileClient.getInstance().signUp(username, userPassword, attributes, null, new Callback<SignUpResult>() {
-                    @Override
-                    public void onResult(final SignUpResult signUpResult) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.d(TAG, "Sign-up callback state: " + signUpResult.getConfirmationState());
-                                if (!signUpResult.getConfirmationState()) {
-                                    final UserCodeDeliveryDetails details = signUpResult.getUserCodeDeliveryDetails();
-                                    Log.e(TAG ,"Confirm sign-up with: " + details.getDestination());
-                                    Intent intent = new Intent(getApplicationContext(),
-                                            SignUpConfirmActivity.class);
-                                    startActivity(intent);
-                                } else {
-                                    Log.e(TAG ,"Sign-up done.");
-                                    Intent intent = new Intent(getApplicationContext(),
-                                            LoginActivity.class);
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e(TAG, "Sign-up error", e);
-                    }
-                });
+                SignUp();
 
             }
         });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Log.e(TAG, "User is" +currentUser);
+    }
+
+
+    private void SignUp() {
+
+        String username = email.getText().toString();
+        String userPassword = password.getText().toString();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        mAuth.createUserWithEmailAndPassword(username, userPassword)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                    .setDisplayName(firstName.getText().toString())
+                                    .build();
+                            user.updateProfile(profileUpdates)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d(TAG, "User profile updated.");
+                                                Intent intent = new Intent(getApplicationContext(),
+                                                        LoginActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }
+                                    });
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+
 
     }
 

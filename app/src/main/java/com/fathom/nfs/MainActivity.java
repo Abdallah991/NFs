@@ -28,6 +28,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -86,15 +88,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
 
-                AWSMobileClient.getInstance().signOut();
-                if (!AWSMobileClient.getInstance().isSignedIn()){
-                    Intent intent = new Intent(getApplicationContext(),
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseAuth.getInstance().signOut();
+
+
+                Intent intent = new Intent(getApplicationContext(),
                                 LoginActivity.class);
                         startActivity(intent);
                         finish();
-                }
 
-                Toast.makeText(getApplicationContext()," "+AWSMobileClient.getInstance().getUsername(),Toast.LENGTH_LONG).show();
+
 
 
             }

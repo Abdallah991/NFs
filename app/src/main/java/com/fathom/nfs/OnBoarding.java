@@ -26,6 +26,8 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.core.ResultListener;
 import com.amplifyframework.core.StreamListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,25 +93,19 @@ public class OnBoarding extends AppCompatActivity {
             }
         });
 
-        AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
 
-                    @Override
-                    public void onResult(UserStateDetails userStateDetails) {
-                        Log.i("INIT", "onResult: " + userStateDetails.getUserState());
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
 
-                        if(AWSMobileClient.getInstance().isSignedIn()) {
-                            Intent intent = new Intent(getApplicationContext(),
+            String name = user.getDisplayName();
+            boolean emailVerified = user.isEmailVerified();
+            Toast.makeText(getApplicationContext(), name +" "+ emailVerified, Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getApplicationContext(),
                                     MainActivity.class);
                             startActivity(intent);
-                        }
-                    }
+        }
 
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("INIT", "Initialization error.", e);
-                    }
-                }
-        );
 
 
     }

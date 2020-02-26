@@ -7,13 +7,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.Callback;
 import com.amazonaws.mobile.client.UserStateDetails;
 import com.amazonaws.mobile.client.results.SignInResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -25,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private Button signUp;
     private Button login;
+    private FirebaseAuth mAuth;
     private final String TAG = "SIGN IN";
 
     @Override
@@ -39,21 +47,9 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.lastName);
         signUp = findViewById(R.id.signUp);
         login = findViewById(R.id.login);
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
-        // initialising login
-//        AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
-//
-//                    @Override
-//                    public void onResult(UserStateDetails userStateDetails) {
-//                        Log.i("INIT", "onResult: " + userStateDetails.getUserState());
-//                    }
-//
-//                    @Override
-//                    public void onError(Exception e) {
-//                        Log.e("INIT", "Initialization error.", e);
-//                    }
-//                }
-//        );
         // Go to SignUp Activity
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,48 +76,88 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                SignIn();
+//                AWSMobileClient.getInstance().signIn(userName.getText().toString(), password.getText().toString(), null, new Callback<SignInResult>() {
+//                    @Override
+//                    public void onResult(final SignInResult signInResult) {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Log.d(TAG, "Sign-in callback state: " + signInResult.getSignInState());
+//                                switch (signInResult.getSignInState()) {
+//                                    case DONE:
+//                                        Intent intent = new Intent(getApplicationContext(),
+//                                                MainActivity.class);
+//                                        startActivity(intent);
+//                                        finish();
+//                                        break;
+//                                    case SMS_MFA:
+//                                        Log.e(TAG ,"Please confirm sign in with SMS");
+//                                        break;
+//                                    case NEW_PASSWORD_REQUIRED:
+//                                        Log.e(TAG ,"Please confirm sign-in with new password.");
+//                                        break;
+//                                    default:
+//                                        Log.e(TAG ,"Unsupported sign-in confirmation: " + signInResult.getSignInState());
+//                                        break;
+//                                }
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//                        Log.e(TAG, "Sign-in error", e);
+//                    }
+//                });
 
-                AWSMobileClient.getInstance().signIn(userName.getText().toString(), password.getText().toString(), null, new Callback<SignInResult>() {
-                    @Override
-                    public void onResult(final SignInResult signInResult) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Log.d(TAG, "Sign-in callback state: " + signInResult.getSignInState());
-                                switch (signInResult.getSignInState()) {
-                                    case DONE:
-                                        Intent intent = new Intent(getApplicationContext(),
-                                                MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                        break;
-                                    case SMS_MFA:
-                                        Log.e(TAG ,"Please confirm sign in with SMS");
-                                        break;
-                                    case NEW_PASSWORD_REQUIRED:
-                                        Log.e(TAG ,"Please confirm sign-in with new password.");
-                                        break;
-                                    default:
-                                        Log.e(TAG ,"Unsupported sign-in confirmation: " + signInResult.getSignInState());
-                                        break;
-                                }
-                            }
-                        });
-                    }
 
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e(TAG, "Sign-in error", e);
-                    }
-                });
 
-                
 
             }
         });
 
 
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Log.e(TAG, "User is " +currentUser);
+
+    }
+
+    private void SignIn() {
+
+        String username = userName.getText().toString();
+        String userPassword = password.getText().toString();
+        mAuth.signInWithEmailAndPassword(username, userPassword)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            String name = user.getDisplayName();
+                            Toast.makeText(getApplicationContext(), name, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(),
+                                                MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
     }
 
 }

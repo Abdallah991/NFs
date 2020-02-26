@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1013389679732",
+    "firebase_url": "https://nfsapp-390d4.firebaseio.com",
+    "project_id": "nfsapp-390d4",
+    "storage_bucket": "nfsapp-390d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013389679732:android:a8cd611623e99111e5c521",
+        "android_client_info": {
+          "package_name": "com.fathom.nfs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1013389679732-earapjc97cjvh4arn625aga3jffisr0t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgntLQC6FBsUBoQWiCb0t19KDXkZ9YGoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1013389679732-earapjc97cjvh4arn625aga3jffisr0t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
