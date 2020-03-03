@@ -3,6 +3,7 @@ package com.fathom.nfs;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -82,6 +83,8 @@ public class Home extends Fragment {
     private int actionArticle = R.id.action_homeFragment_to_articleDetailed2;
     private int actionToDetailedShopItem = R.id.action_homeFragment_to_shopItemDetailed;
 
+    private TextView userName;
+
 
     public Home() {
 
@@ -108,6 +111,10 @@ public class Home extends Fragment {
 
          mSearchView = view.findViewById(R.id.search);
          searchList = view.findViewById(R.id.searchResults);
+
+         userName = view.findViewById(R.id.userName);
+
+//         setUpDisplayName();
 
         int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         TextView textView = mSearchView.findViewById(id);
@@ -328,5 +335,17 @@ public class Home extends Fragment {
         super.onResume();
 
         searchList.setVisibility(View.GONE);
+    }
+
+    private void setUpDisplayName() {
+
+        SharedPreferences preferences = this.getActivity().getSharedPreferences(SignUpActivity.USER, getContext().MODE_PRIVATE);
+        String name = preferences.getString("FIRST_NAME", null);
+        Log.d(TAG, name);
+        userName.setText(name);
+
+
+
+
     }
 }

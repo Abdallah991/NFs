@@ -77,42 +77,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 SignIn();
-//                AWSMobileClient.getInstance().signIn(userName.getText().toString(), password.getText().toString(), null, new Callback<SignInResult>() {
-//                    @Override
-//                    public void onResult(final SignInResult signInResult) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Log.d(TAG, "Sign-in callback state: " + signInResult.getSignInState());
-//                                switch (signInResult.getSignInState()) {
-//                                    case DONE:
-//                                        Intent intent = new Intent(getApplicationContext(),
-//                                                MainActivity.class);
-//                                        startActivity(intent);
-//                                        finish();
-//                                        break;
-//                                    case SMS_MFA:
-//                                        Log.e(TAG ,"Please confirm sign in with SMS");
-//                                        break;
-//                                    case NEW_PASSWORD_REQUIRED:
-//                                        Log.e(TAG ,"Please confirm sign-in with new password.");
-//                                        break;
-//                                    default:
-//                                        Log.e(TAG ,"Unsupported sign-in confirmation: " + signInResult.getSignInState());
-//                                        break;
-//                                }
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(Exception e) {
-//                        Log.e(TAG, "Sign-in error", e);
-//                    }
-//                });
-
-
-
 
             }
         });
@@ -134,30 +98,33 @@ public class LoginActivity extends AppCompatActivity {
 
         String username = userName.getText().toString();
         String userPassword = password.getText().toString();
-        mAuth.signInWithEmailAndPassword(username, userPassword)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String name = user.getDisplayName();
-                            Toast.makeText(getApplicationContext(), name, Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(),
-                                                MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
 
-                        // ...
-                    }
-                });
+        if (username.isEmpty() || userPassword.isEmpty()) return;
+            mAuth.signInWithEmailAndPassword(username, userPassword)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                String name = user.getDisplayName();
+                                Toast.makeText(getApplicationContext(), name, Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(),
+                                        MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
+                            // ...
+                        }
+                    });
+
     }
 
 }

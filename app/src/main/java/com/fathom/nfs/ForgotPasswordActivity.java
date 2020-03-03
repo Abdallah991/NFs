@@ -1,5 +1,6 @@
 package com.fathom.nfs;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,10 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.Callback;
 import com.amazonaws.mobile.client.results.ForgotPasswordResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
@@ -42,33 +47,48 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                 final String username = email.getText().toString();
 
-                AWSMobileClient.getInstance().forgotPassword(username, new Callback<ForgotPasswordResult>() {
-                    @Override
-                    public void onResult(final ForgotPasswordResult result) {
-                        runOnUiThread(new Runnable() {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(username)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void run() {
-                                Log.d(TAG, "forgot password state: " + result.getState());
-                                switch (result.getState()) {
-                                    case CONFIRMATION_CODE:
-                                        Log.e(TAG,"Confirmation code is sent to reset password");
-                                        Intent intent = new Intent(getApplicationContext(),
-                                                NewPasswordActivity.class);
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "Email sent.");
+                                    Toast.makeText(getApplicationContext(), "You will receive an email to reset your password", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(),
+                                                LoginActivity.class);
                                         startActivity(intent);
-                                        break;
-                                    default:
-                                        Log.e(TAG, "un-supported forgot password state");
-                                        break;
+
                                 }
                             }
                         });
-                    }
 
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e(TAG, "forgot password error", e);
-                    }
-                });
+//                AWSMobileClient.getInstance().forgotPassword(username, new Callback<ForgotPasswordResult>() {
+//                    @Override
+//                    public void onResult(final ForgotPasswordResult result) {
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Log.d(TAG, "forgot password state: " + result.getState());
+//                                switch (result.getState()) {
+//                                    case CONFIRMATION_CODE:
+//                                        Log.e(TAG,"Confirmation code is sent to reset password");
+//                                        Intent intent = new Intent(getApplicationContext(),
+//                                                NewPasswordActivity.class);
+//                                        startActivity(intent);
+//                                        break;
+//                                    default:
+//                                        Log.e(TAG, "un-supported forgot password state");
+//                                        break;
+//                                }
+//                            }
+//                        });
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//                        Log.e(TAG, "forgot password error", e);
+//                    }
+//                });
             }
         });
 

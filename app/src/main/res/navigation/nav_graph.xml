@@ -136,6 +136,9 @@
         <action
             android:id="@+id/action_doctorsDetails_to_setAppointment"
             app:destination="@id/setAppointment" />
+        <action
+            android:id="@+id/action_doctorsDetails_to_chat"
+            app:destination="@id/chat" />
     </fragment>
     <fragment
         android:id="@+id/doctorsSpecialities"
@@ -212,4 +215,9 @@
         android:name="com.fathom.nfs.SetAppointment"
         android:label="fragment_set_appointment"
         tools:layout="@layout/fragment_set_appointment" />
+    <fragment
+        android:id="@+id/chat"
+        android:name="com.fathom.nfs.Chat"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
 </navigation>

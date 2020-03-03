@@ -319,6 +319,13 @@ public class DoctorsDetails extends Fragment {
             }
         });
 
+        doctorChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNavController.navigate(R.id.action_doctorsDetails_to_chat);
+            }
+        });
+
 
         initRecycler();
 

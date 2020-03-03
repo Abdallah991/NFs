@@ -4,9 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,20 +13,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.client.Callback;
-import com.amazonaws.mobile.client.UserStateDetails;
-import com.amazonaws.mobile.client.results.SignUpResult;
-import com.amazonaws.mobile.client.results.UserCodeDeliveryDetails;
+import com.fathom.nfs.DataModels.UserDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -41,6 +34,9 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText password;
     private final String TAG = "SIGN UP";
     private FirebaseAuth mAuth;
+    private ActionCodeSettings actionCodeSettings;
+    public static final String USER = "User";
+
 
 
     @Override
@@ -59,19 +55,19 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
 
-        AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
+        actionCodeSettings =
+                ActionCodeSettings.newBuilder()
+                        // URL you want to redirect back to. The domain (www.example.com) for this
+                        // URL must be whitelisted in the Firebase Console.
+                        .setUrl("https://www.example.com/finishSignUp?cartId=1234")
+                        // This must be true
+                        .setHandleCodeInApp(true)
+                        .setAndroidPackageName(
+                                "com.fathom.nfs",
+                                true, /* installIfNotAvailable */
+                                "12"    /* minimumVersion */)
+                        .build();
 
-                    @Override
-                    public void onResult(UserStateDetails userStateDetails) {
-                        Log.i("INIT", "onResult: " + userStateDetails.getUserState());
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e("INIT", "Initialization error.", e);
-                    }
-                }
-        );
 
         // go back to Login Activity
         login.setOnClickListener(new View.OnClickListener() {
@@ -92,12 +88,23 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                SignUp();
+                if (isEmailValid(email.getText().toString())
+                        && isPasswordValid(password.getText().toString())) {
+                    SignUp();
+                } else
+                    {
+                        Toast.makeText(getApplicationContext(), "Email And/or password are invalid",
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+//                sendEmailVerification();
 
             }
         });
 
     }
+
+
 
     @Override
     public void onStart() {
@@ -132,9 +139,10 @@ public class SignUpActivity extends AppCompatActivity {
                                             if (task.isSuccessful()) {
                                                 Log.d(TAG, "User profile updated.");
                                                 Intent intent = new Intent(getApplicationContext(),
-                                                        LoginActivity.class);
-                                                startActivity(intent);
-                                                finish();
+                                    LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+
                                             }
                                         }
                                     });
@@ -148,6 +156,54 @@ public class SignUpActivity extends AppCompatActivity {
                         // ...
                     }
                 });
+
+
+    }
+
+//    private void sendEmailVerification() {
+//
+//        mAuth.sendSignInLinkToEmail(email.getText().toString(), actionCodeSettings)
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d(TAG, "Email sent.");
+//                            Toast.makeText(getApplicationContext(), "Verification email sent.",
+//                                    Toast.LENGTH_SHORT).show();
+//                            Intent intent = new Intent(getApplicationContext(),
+//                                    LoginActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//                        }
+//                    }
+//                });
+//
+//    }
+
+    private boolean isEmailValid(String email) {
+        return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+
+        return password.length() > 6;
+    }
+
+    private void saveUserInfo() {
+        String FirstName = firstName.getText().toString();
+        String LastName = lastName.getText().toString();
+        String Email = email.getText().toString();
+        String Password = password.getText().toString();
+//        UserDataModel user = new UserDataModel();
+//        user.setFirstName(FirstName);
+//        user.setLastName(LastName);
+//        user.setEmail(Email);
+//        user.setPassword(Password);
+        SharedPreferences userPrefs = getSharedPreferences(USER, 0);
+        userPrefs.edit().putString("FIRST_NAME", FirstName).apply();
+        userPrefs.edit().putString("LAST_NAME", LastName).apply();
+        userPrefs.edit().putString("EMAIL", Email).apply();
+        userPrefs.edit().putString("PASSWORD", Password).apply();
 
 
     }
