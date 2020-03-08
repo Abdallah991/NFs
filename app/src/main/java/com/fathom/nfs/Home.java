@@ -40,19 +40,28 @@ import com.fathom.nfs.ViewModels.ArticleViewModel;
 import com.fathom.nfs.ViewModels.CategoryViewModel;
 import com.fathom.nfs.ViewModels.DoctorsViewModel;
 import com.fathom.nfs.ViewModels.ShopItemsViewModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Home extends Fragment {
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // TAG for Debugging
     private static final String TAG = "Recycler View";
     private static final String TAG2 = "Doctors";
     private static final String TAG3 = "Articles";
     private static final String TAG4 = "ShopItems";
+    private static final String TAG5 = "FIREBASE";
     // declaring member variables
     private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>();
     private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
@@ -84,6 +93,7 @@ public class Home extends Fragment {
     private int actionToDetailedShopItem = R.id.action_homeFragment_to_shopItemDetailed;
 
     private TextView userName;
+    private DoctorDataModel doctor = new DoctorDataModel();
 
 
     public Home() {
@@ -113,6 +123,8 @@ public class Home extends Fragment {
          searchList = view.findViewById(R.id.searchResults);
 
          userName = view.findViewById(R.id.userName);
+
+
 
 //         setUpDisplayName();
 
@@ -279,6 +291,8 @@ public class Home extends Fragment {
             @Override
             public void onClick(View v) {
                 mNavController.navigate(R.id.action_homeFragment_to_doctors);
+
+//                pushData();
             }
         });
 
@@ -289,6 +303,32 @@ public class Home extends Fragment {
 
 
     }
+
+//    private void pushData() {
+//
+//        // Create a new user with a first and last name
+//        Map<String, Object> user = new HashMap<>();
+//        user.put("first", "Ada");
+//        user.put("last", "Lovelace");
+//        user.put("born", 1815);
+//        user.put("Object", doctor);
+//
+//// Add a new document with a generated ID
+//        db.collection("users")
+//                .add(user)
+//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                    @Override
+//                    public void onSuccess(DocumentReference documentReference) {
+//                        Log.d(TAG5, "DocumentSnapshot added with ID: " + documentReference.getId());
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.w(TAG5, "Error adding document", e);
+//                    }
+//                });
+//    }
 
 
     private void initRecyclerView(){

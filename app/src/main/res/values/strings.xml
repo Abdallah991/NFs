@@ -92,6 +92,8 @@ Sapien faucibus et molestie ac feugiat. Est placerat in egestas erat imperdiet s
     <string name="confirm_new_password">Confirm New Password</string>
     <string name="change_password">Change Password</string>
     <string name="confirmation_code">Confirmation Code</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="edit">Edit</string>
 
 
 </resources>

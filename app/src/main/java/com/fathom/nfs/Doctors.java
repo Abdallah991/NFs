@@ -23,6 +23,7 @@ import android.widget.ScrollView;
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.DoctorsAdapter;
 import com.fathom.nfs.ViewModels.DoctorsViewModel;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,8 @@ public class Doctors extends Fragment {
     private NavController mNavController;
     private final int actionId= R.id.action_doctors_to_doctorsDetails;
     private DoctorsViewModel mDoctorsViewModel;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
 
 
