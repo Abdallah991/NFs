@@ -73,7 +73,8 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
         double rating = mDoctors.get(position).getRating();
         String mRating = Double.toString(rating);
         holder.rating.setText(mRating);
-        holder.doctorImage.setImageResource(mDoctors.get(position).getImageUrl());
+        // setting image bitmap
+        holder.doctorImage.setImageBitmap(mDoctors.get(position).getDoctorImage());
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override

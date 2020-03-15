@@ -3,6 +3,7 @@ package com.fathom.nfs;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.DataModels.ShopItemDataModel;
+import com.fathom.nfs.DataModels.UserDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.ArticleAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.DoctorsAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.HorizontalRecyclerView;
@@ -43,6 +45,7 @@ import com.fathom.nfs.ViewModels.ShopItemsViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -51,10 +54,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.fathom.nfs.SignUpActivity.USER;
+
 
 public class Home extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private UserDataModel user = new UserDataModel();
 
     // TAG for Debugging
     private static final String TAG = "Recycler View";
@@ -292,43 +299,38 @@ public class Home extends Fragment {
             public void onClick(View v) {
                 mNavController.navigate(R.id.action_homeFragment_to_doctors);
 
-//                pushData();
             }
         });
 
             // initializing the recycler
             initRecyclerView();
 
+            pullData();
+
 
 
 
     }
 
-//    private void pushData() {
-//
-//        // Create a new user with a first and last name
-//        Map<String, Object> user = new HashMap<>();
-//        user.put("first", "Ada");
-//        user.put("last", "Lovelace");
-//        user.put("born", 1815);
-//        user.put("Object", doctor);
-//
-//// Add a new document with a generated ID
-//        db.collection("users")
-//                .add(user)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d(TAG5, "DocumentSnapshot added with ID: " + documentReference.getId());
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG5, "Error adding document", e);
-//                    }
-//                });
-//    }
+    // TODO: create a user repo and view model
+
+    private void pullData() {
+
+        SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
+        String docName = prefs.getString("EMAIL", "No name");
+
+        Toast.makeText(getContext(), docName, Toast.LENGTH_SHORT).show();
+
+        DocumentReference docRef = db.collection("Users").document(docName);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                user = documentSnapshot.toObject(UserDataModel.class);
+                userName.setText(user.getFirstName());
+
+            }
+        });
+    }
 
 
     private void initRecyclerView(){
@@ -379,7 +381,7 @@ public class Home extends Fragment {
 
     private void setUpDisplayName() {
 
-        SharedPreferences preferences = this.getActivity().getSharedPreferences(SignUpActivity.USER, getContext().MODE_PRIVATE);
+        SharedPreferences preferences = this.getActivity().getSharedPreferences(USER, getContext().MODE_PRIVATE);
         String name = preferences.getString("FIRST_NAME", null);
         Log.d(TAG, name);
         userName.setText(name);

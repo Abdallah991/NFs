@@ -1,6 +1,7 @@
 package com.fathom.nfs;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,11 +17,16 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.Callback;
 import com.amazonaws.mobile.client.UserStateDetails;
 import com.amazonaws.mobile.client.results.SignInResult;
+import com.fathom.nfs.DataModels.DoctorDataModel;
+import com.fathom.nfs.DataModels.UserDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import static com.fathom.nfs.SignUpActivity.USER;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -34,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button login;
     private FirebaseAuth mAuth;
     private final String TAG = "SIGN IN";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DoctorDataModel doctor = new DoctorDataModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 SignIn();
+//                uploadDoctors();
 
             }
         });
@@ -98,6 +107,10 @@ public class LoginActivity extends AppCompatActivity {
 
         String username = userName.getText().toString();
         String userPassword = password.getText().toString();
+
+        SharedPreferences userPrefs = getSharedPreferences(USER, 0);
+        userPrefs.edit().putString("EMAIL", username).apply();
+
 
         if (username.isEmpty() || userPassword.isEmpty()) return;
             mAuth.signInWithEmailAndPassword(username, userPassword)
@@ -125,6 +138,20 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
 
+    }
+
+    private void uploadDoctors() {
+
+        doctor.setEmail("norah.ahmed@gmail.com");
+        doctor.setAbout("I have nothing to say");
+        doctor.setDoctorFirstName("Norah");
+        doctor.setDoctorLastName("Ahmed");
+        doctor.setGender("female");
+        doctor.setEducation("Studying Psychology");
+        doctor.setExperience("I have no experience");
+        doctor.setSpecialty("Psychology");
+        db.collection("Doctors")
+                .document(doctor.getEmail()).set(doctor);
     }
 
 }

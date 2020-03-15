@@ -2,6 +2,8 @@ package com.fathom.nfs;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -27,10 +29,16 @@ import com.amazonaws.mobile.client.Callback;
 import com.amazonaws.mobile.client.SignOutOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import static com.fathom.nfs.SignUpActivity.USER;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView bottomNavigationView;
     private Button logOut;
     private ImageView closeDrawerButton;
-    private String TAG = "SIGN OUT";
+    private ImageView sliderUserImage;
+    private String TAG = "HOME";
 
 
     @Override
@@ -63,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView = findViewById(R.id.bottom_nav);
         logOut = findViewById(R.id.logOut);
         closeDrawerButton = findViewById(R.id.close_btn);
+        sliderUserImage = findViewById(R.id.sliderUserImage);
 
         // Shifting the Action bar, Drawer Layout and Navigation view to the right side
         ViewCompat.setLayoutDirection(toolbar, ViewCompat.LAYOUT_DIRECTION_RTL);
@@ -119,21 +129,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-        /*
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        */
 
         setupNavigation();
 
+
+    }
+
+    private void persistImage() {
+
+
+        // naming the path as email
+        SharedPreferences prefs = getSharedPreferences(USER, MODE_PRIVATE);
+        String docName = prefs.getString("EMAIL", "No name");
+
+         FirebaseStorage storage;
+        StorageReference storageRef;
+        StorageReference userImageRef;
+
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
+
+        userImageRef = storageRef.child(docName);
+
+
+        Log.d(TAG, "Persist image called");
+
+        userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Use the bytes to display the image
+
+                Log.d(TAG, "Success");
+
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // TODO: Set a way where you save an image locally
+//                sliderUserImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, sliderUserImage.getWidth(),
+//                        sliderUserImage.getHeight(), false));
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+                Log.d(TAG, "Failure");
+
+                // Handle any errors
+            }
+        });
     }
 
     // Setting Up One Time Navigation
     private void setupNavigation() {
 
-        // This line caused the navController to effect the action bar behaviour
-//        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
 
         // Setting up the drawer navigation
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -145,6 +192,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // Setting the title in the start to empty
         getSupportActionBar().setTitle("");
+
+        persistImage();
+
 
 
     }

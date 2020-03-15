@@ -1,18 +1,23 @@
 package com.fathom.nfs.DataModels;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 public class DoctorDataModel {
 
     private String doctorFirstName;
     private String doctorLastName;
+    private String email;
     private int imageUrl;
+    private Bitmap doctorImage;
     private boolean bookmark;
     private double rating;
     private String specialty;
     private String about;
     private String education;
     private String experience;
+    private String gender;
     private ArrayList<ReviewDataModel> reviews = new ArrayList<>();
     public static ArrayList<AppointmentDataModel> doctorAppointments = new ArrayList<>();
 
@@ -95,5 +100,73 @@ public class DoctorDataModel {
 
     public void setBookmark(boolean bookmark) {
         this.bookmark = bookmark;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public static ArrayList<AppointmentDataModel> getDoctorAppointments() {
+        return doctorAppointments;
+    }
+
+    public void setDoctorFirstName(String doctorFirstName) {
+        this.doctorFirstName = doctorFirstName;
+    }
+
+    public void setDoctorLastName(String doctorLastName) {
+        this.doctorLastName = doctorLastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setImageUrl(int imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void setSpecialty(String specialty) {
+        this.specialty = specialty;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setReviews(ArrayList<ReviewDataModel> reviews) {
+        this.reviews = reviews;
+    }
+
+    public static void setDoctorAppointments(ArrayList<AppointmentDataModel> doctorAppointments) {
+        DoctorDataModel.doctorAppointments = doctorAppointments;
+    }
+
+    public Bitmap getDoctorImage() {
+        return doctorImage;
+    }
+
+    public void setDoctorImage(Bitmap doctorImage) {
+        this.doctorImage = doctorImage;
     }
 }

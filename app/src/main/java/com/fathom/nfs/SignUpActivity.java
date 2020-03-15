@@ -3,6 +3,7 @@ package com.fathom.nfs;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,12 +16,19 @@ import android.widget.Toast;
 
 import com.fathom.nfs.DataModels.UserDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -35,7 +43,11 @@ public class SignUpActivity extends AppCompatActivity {
     private final String TAG = "SIGN UP";
     private FirebaseAuth mAuth;
     private ActionCodeSettings actionCodeSettings;
+    private UserDataModel user = new UserDataModel();
     public static final String USER = "User";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
 
 
 
@@ -55,18 +67,18 @@ public class SignUpActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
 
-        actionCodeSettings =
-                ActionCodeSettings.newBuilder()
-                        // URL you want to redirect back to. The domain (www.example.com) for this
-                        // URL must be whitelisted in the Firebase Console.
-                        .setUrl("https://www.example.com/finishSignUp?cartId=1234")
-                        // This must be true
-                        .setHandleCodeInApp(true)
-                        .setAndroidPackageName(
-                                "com.fathom.nfs",
-                                true, /* installIfNotAvailable */
-                                "12"    /* minimumVersion */)
-                        .build();
+//        actionCodeSettings =
+//                ActionCodeSettings.newBuilder()
+//                        // URL you want to redirect back to. The domain (www.example.com) for this
+//                        // URL must be whitelisted in the Firebase Console.
+//                        .setUrl("https://www.example.com/finishSignUp?cartId=1234")
+//                        // This must be true
+//                        .setHandleCodeInApp(true)
+//                        .setAndroidPackageName(
+//                                "com.fathom.nfs",
+//                                true, /* installIfNotAvailable */
+//                                "12"    /* minimumVersion */)
+//                        .build();
 
 
         // go back to Login Activity
@@ -88,9 +100,19 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                SharedPreferences.Editor editor = getSharedPreferences(USER ,Context.MODE_PRIVATE).edit();
+                editor.putString("Email", email.getText().toString());
+                editor.putString("FirstName", firstName.getText().toString());
+                editor.putString("LastName", lastName.getText().toString());
+                editor.putString("Password", password.getText().toString());
+                editor.apply();
+
+//                Toast.makeText(getApplicationContext(), email.getText().toString(), Toast.LENGTH_SHORT).show();
+
                 if (isEmailValid(email.getText().toString())
                         && isPasswordValid(password.getText().toString())) {
                     SignUp();
+                    uploadUser();
                 } else
                     {
                         Toast.makeText(getApplicationContext(), "Email And/or password are invalid",
@@ -160,6 +182,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    private void uploadUser() {
+        // Create a new user with a first and last name
+
+        db.collection("Users")
+                .document(user.getEmail()).set(user);
+    }
+
+
 //    private void sendEmailVerification() {
 //
 //        mAuth.sendSignInLinkToEmail(email.getText().toString(), actionCodeSettings)
@@ -181,11 +211,22 @@ public class SignUpActivity extends AppCompatActivity {
 //    }
 
     private boolean isEmailValid(String email) {
+
+        if (email.contains("@")) {
+            user.setEmail(email);
+            user.setFirstName(firstName.getText().toString());
+            user.setLastName(lastName.getText().toString());
+            user.setPassword(password.getText().toString());
+        }
+
         return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
 
+        if (password.length() >6) {
+            user.setPassword(password);
+        }
         return password.length() > 6;
     }
 

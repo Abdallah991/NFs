@@ -24,8 +24,7 @@
         android:scaleType="centerCrop"
         android:foreground="@drawable/round_edges"
         android:contentDescription="profilePicture"
-        android:src="@drawable/user"
-        />
+        android:id="@+id/sliderUserImage"        />
 
     </com.google.android.material.card.MaterialCardView>
 
