@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 SignIn();
-//                uploadDoctors();
+                uploadDoctors();
 
             }
         });
@@ -142,14 +142,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void uploadDoctors() {
 
-        doctor.setEmail("norah.ahmed@gmail.com");
-        doctor.setAbout("I have nothing to say");
-        doctor.setDoctorFirstName("Norah");
-        doctor.setDoctorLastName("Ahmed");
-        doctor.setGender("female");
-        doctor.setEducation("Studying Psychology");
-        doctor.setExperience("I have no experience");
-        doctor.setSpecialty("Psychology");
+        doctor.setEmail("paul.gastro@gmail.com");
+        doctor.setAbout("Alternative healing specialist although I have 30 years experience, I worked in all around the world");
+        doctor.setDoctorFirstName("Paul");
+        doctor.setDoctorLastName("Gastro");
+        doctor.setGender("male");
+        doctor.setEducation("Phd in Alternative healing");
+        doctor.setExperience("10 years experience all over the world");
+        doctor.setSpecialty("Alternative Healing");
         db.collection("Doctors")
                 .document(doctor.getEmail()).set(doctor);
     }

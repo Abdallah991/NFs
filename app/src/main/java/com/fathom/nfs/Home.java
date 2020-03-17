@@ -3,7 +3,6 @@ package com.fathom.nfs;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -16,6 +15,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,17 +43,14 @@ import com.fathom.nfs.ViewModels.ArticleViewModel;
 import com.fathom.nfs.ViewModels.CategoryViewModel;
 import com.fathom.nfs.ViewModels.DoctorsViewModel;
 import com.fathom.nfs.ViewModels.ShopItemsViewModel;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.fathom.nfs.SignUpActivity.USER;
@@ -70,7 +68,7 @@ public class Home extends Fragment {
     private static final String TAG4 = "ShopItems";
     private static final String TAG5 = "FIREBASE";
     // declaring member variables
-    private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>();
+    private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>(3);
     private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
     private ArrayList<ShopItemDataModel> mShopItems = new ArrayList<>();
     private ArrayList<CategoryDataModel> mCategories = new ArrayList<>();
@@ -133,6 +131,7 @@ public class Home extends Fragment {
 
 
 
+
 //         setUpDisplayName();
 
         int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
@@ -161,8 +160,6 @@ public class Home extends Fragment {
              @Override
              public boolean onQueryTextSubmit(String s) {
                  Toast.makeText(getContext(),"Submit "   , Toast.LENGTH_SHORT).show();
-
-
 
 
                  searchList.setVisibility(View.GONE);
@@ -251,6 +248,7 @@ public class Home extends Fragment {
 
                 Log.d("MVVM"," Adpter is being notified with any CHANGE");
                 mDoctorsAdapter.notifyDataSetChanged();
+                initRecyclerView();
             }
         });
 
@@ -303,7 +301,16 @@ public class Home extends Fragment {
         });
 
             // initializing the recycler
-            initRecyclerView();
+        Log.d("MVVM"," Arraylist size" +mDoctors.size());
+
+        initRecyclerView();
+
+            if (mDoctors.isEmpty()) {
+
+                loadingRecycler();
+                Log.d("MVVM"," Arraylist is empty" +mDoctors.size());
+
+            }
 
             pullData();
 
@@ -347,9 +354,12 @@ public class Home extends Fragment {
 
         // setting the adapter to recycler
         mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
-        mDoctorsAdapter = new DoctorsAdapter(mDoctors, getContext(), mNavController, actionId, mDoctorsViewModel);
+
+
+        mDoctorsAdapter = new DoctorsAdapter(mDoctors, getContext(), mNavController, actionId, mDoctorsViewModel );
         mDoctorsRecycler.setAdapter(mDoctorsAdapter);
         mDoctorsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+//        mDoctorsAdapter.notifyDataSetChanged();
 
         // setting the adapter to recycler
         mArticles = (ArrayList<ArticleDataModel>) mArticleViewModel.getArticles().getValue();
@@ -377,6 +387,8 @@ public class Home extends Fragment {
         super.onResume();
 
         searchList.setVisibility(View.GONE);
+
+
     }
 
     private void setUpDisplayName() {
@@ -389,5 +401,23 @@ public class Home extends Fragment {
 
 
 
+    }
+
+    private void loadingRecycler() {
+
+        Handler myHandler;
+        int SPLASH_TIME_OUT = 4000;
+        myHandler = new Handler();
+
+        // showing the Splash screen for two seconds then going to on boarding activity
+        myHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                initRecyclerView();
+
+
+            }
+        }, SPLASH_TIME_OUT);
     }
 }

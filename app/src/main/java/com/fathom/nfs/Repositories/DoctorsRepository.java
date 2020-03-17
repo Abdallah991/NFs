@@ -87,12 +87,22 @@ public class DoctorsRepository {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                mDoctorsItems.add(document.toObject(DoctorDataModel.class));
-                                int position = 0;
+                                if (mDoctorsItems.size() <= task.getResult().size()) {
+                                    mDoctorsItems.add(document.toObject(DoctorDataModel.class));
+                                }
 
-                                getImage(mDoctorsItems.get(position).getEmail(), position);
+                                Log.d(TAG, "Task size " + task.getResult().size());
 
-                                position++;
+                                Log.d(TAG, "Doctor array size " + mDoctorsItems.size());
+
+//                                for (int position = 0; position < task.getResult().size(); position++) {
+//
+                                if (mDoctorsItems.size() == task.getResult().size()) {
+                                    getImage(task.getResult());
+                                }
+//
+//                                    Log.d(TAG, "index is " + position, task.getException());
+//                                }
 
                             }
                         } else {
@@ -106,35 +116,42 @@ public class DoctorsRepository {
         }
 
 
-    private void getImage (String email, int position) {
+    private void getImage (QuerySnapshot query) {
 
 
-        userImageRef = storageRef.child("ahmed.ali@gmail.com.jpeg");
+
+        for (int position = 0; position < query.size(); position++) {
+
+            userImageRef = storageRef.child(mDoctorsItems.get(position).getEmail()+".jpg");
 
 
-        userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                // Use the bytes to display the image
+            int doctorPosition = position;
+            userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    // Use the bytes to display the image
 
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                mDoctorsItems.get(position).setDoctorImage(bmp);
-                Log.d(TAG," Loading the Image is DONE");
+                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    mDoctorsItems.get(doctorPosition).setDoctorImage(bmp);
+
+                    Log.d(TAG, " Loading the Image is DONE");
 
 
 //                        setImageBitmap(Bitmap.createScaledBitmap(bmp, userImage.getWidth(),
 //                                userImage.getHeight(), false)));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.d(TAG," Loading the Image Failed");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.d(TAG, " Loading the Image Failed" + exception.getMessage());
 
-                // Handle any errors
-            }
-        });
+                    // Handle any errors
+                }
+            });
+        }
 
 
     }
+
     }
 

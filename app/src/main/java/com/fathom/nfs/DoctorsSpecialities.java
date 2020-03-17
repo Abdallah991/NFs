@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
@@ -54,6 +55,7 @@ public class DoctorsSpecialities extends Fragment {
     private ImageView specialityImage;
     private TextView SpecialityText;
     private int position;
+    private String categoryName;
 
 
 
@@ -72,6 +74,7 @@ public class DoctorsSpecialities extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         doctorsSpecialityContent = view.findViewById(R.id.doctors_specialities);
         mDcotrosSpecialityRecycler = view.findViewById(R.id.doctorsSpecialityRecyclerView);
@@ -102,11 +105,14 @@ public class DoctorsSpecialities extends Fragment {
             public void onChanged(List<CategoryDataModel> categoryDataModels) {
 
                  CategoryDataModel category = categoryDataModels.get(position);
-                 String categoryName = category.getCategory();
+                 categoryName = category.getCategory();
                  specialityQ.setText("What is "+ categoryName + " ?");
                  specialityImage.setImageResource(category.getCategoryMonster());
                 SpecialityText.setText(category.getCategoryDescription());
 
+
+
+                initRecycler(categoryName);
 
             }
         });
@@ -114,17 +120,28 @@ public class DoctorsSpecialities extends Fragment {
         // Readjusting the position of layout elements
         ViewCompat.setLayoutDirection(doctorsSpecialityContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
-        initRecycler();
+//        while (categoryName.equals("")) {
+//        }
+        initRecycler(categoryName);
+
+
     }
 
 
 
-    private void initRecycler() {
+    private void initRecycler(String category) {
+
+        ArrayList<DoctorDataModel> filteredDoctors = new ArrayList<>();
 
 
         // setting the adapter to recycler
         mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
-        mDoctorsAdapter = new DoctorsAdapter(mDoctors, getContext(), mNavController, actionId, mDoctorsViewModel);
+        for (DoctorDataModel doctor : mDoctors) {
+            if (doctor.getSpecialty().equals(category)) {
+                filteredDoctors.add(doctor);
+            }
+        }
+        mDoctorsAdapter = new DoctorsAdapter(filteredDoctors, getContext(), mNavController, actionId, mDoctorsViewModel);
         mDcotrosSpecialityRecycler.setAdapter(mDoctorsAdapter);
         mDcotrosSpecialityRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }

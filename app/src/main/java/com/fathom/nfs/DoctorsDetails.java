@@ -160,15 +160,25 @@ public class DoctorsDetails extends Fragment {
                     firstName.setText(doctor.getDoctorFirstName());
                     lastName.setText(doctor.getDoctorLastName());
                     rating.setText(Double.toString(doctor.getRating()));
-                    doctorImage.setImageResource(doctor.getImageUrl());
+                    doctorImage.setImageBitmap(doctor.getDoctorImage());
+                    aboutContent.setText(doctor.getAbout());
+                    experienceContent.setText(doctor.getExperience());
+                    educationDegree1.setText(doctor.getEducation());
+                    educationDegree1Description.setVisibility(View.GONE);
+                    educationDegree2.setVisibility(View.GONE);
+                    educationDegree2Description.setVisibility(View.GONE);
                 }
 
+                // TODO: persist the book marks
                 if (isClickedFromBookmarks()) {
                     positionOfBookmarked = getPositionOfBookMark();
                     firstName.setText(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorFirstName());
                     lastName.setText(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorLastName());
                     rating.setText(Double.toString(doctorItemsBookmarked.get(positionOfBookmarked).getRating()));
-                    doctorImage.setImageResource(doctorItemsBookmarked.get(positionOfBookmarked).getImageUrl());
+                    doctorImage.setImageBitmap(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorImage());
+
+
+
                 }
 
 

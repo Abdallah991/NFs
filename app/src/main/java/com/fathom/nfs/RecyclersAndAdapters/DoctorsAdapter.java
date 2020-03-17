@@ -53,6 +53,8 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
 
         }
 
+
+
     @NonNull
     @Override
     public DoctorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
