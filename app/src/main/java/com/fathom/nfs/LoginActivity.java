@@ -17,6 +17,7 @@ import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.Callback;
 import com.amazonaws.mobile.client.UserStateDetails;
 import com.amazonaws.mobile.client.results.SignInResult;
+import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.DataModels.UserDataModel;
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DoctorDataModel doctor = new DoctorDataModel();
     private ShopItemDataModel shopItem = new ShopItemDataModel();
+    private ArticleDataModel article = new ArticleDataModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +90,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 SignIn();
 //                uploadDoctors();
-                uploadShopItems();
+//                uploadShopItems();
+                uploadArticles();
 
             }
         });
@@ -168,6 +171,19 @@ public class LoginActivity extends AppCompatActivity {
         shopItem.setShopItemType("Toy");
         db.collection("Shop Items")
                 .document(shopItem.getShopItemName()).set(shopItem);
+    }
+
+    private void uploadArticles() {
+
+        Log.d("Articles", "Articles method triggered");
+
+        article.setArticleTitle("What will happen next after depression");
+        article.setArticleType("Videos");
+        article.setArticleContent("is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
+        article.setAuthorName("Dr. Khulood");
+        article.setVideoUrl("https://www.youtube.com/watch?v=XHNHq1mC0VQ");
+        db.collection("Articles")
+                .document(article.getArticleTitle()).set(article);
     }
 
 }

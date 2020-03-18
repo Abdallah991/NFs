@@ -58,7 +58,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
     public void onBindViewHolder(@NonNull final ArticleAdapter.ArticleHolder holder, final int position) {
 
         Log.d(TAG, "OnBindViewHolder: Called.");
-        holder.articleImage.setImageResource(mArticles.get(position).getImageUrl());
+        holder.articleImage.setImageBitmap(mArticles.get(position).getArticleImage());
         holder.authorName.setText(mArticles.get(position).getAuthorName());
         holder.articleTitle.setText(mArticles.get(position).getArticleTitle());
 

@@ -68,7 +68,7 @@ public class ArticleDetailed extends Fragment {
             public void onChanged(List<ArticleDataModel> articleDataModels) {
                 ArticleDataModel article = articleDataModels.get(position);
 
-                articleImage.setImageResource(article.getImageUrl());
+                articleImage.setImageBitmap(article.getArticleImage());
                 articleTitle.setText(article.getArticleTitle());
                 author.setText(article.getAuthorName());
             }
