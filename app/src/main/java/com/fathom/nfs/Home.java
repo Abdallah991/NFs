@@ -67,6 +67,7 @@ public class Home extends Fragment {
     private static final String TAG3 = "Articles";
     private static final String TAG4 = "ShopItems";
     private static final String TAG5 = "FIREBASE";
+    private static final String TAG6 = "User";
     // declaring member variables
     private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>(3);
     private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
@@ -132,7 +133,6 @@ public class Home extends Fragment {
 
 
 
-//         setUpDisplayName();
 
         int id = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
         TextView textView = mSearchView.findViewById(id);
@@ -312,7 +312,16 @@ public class Home extends Fragment {
 
             }
 
-            pullData();
+        SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
+        String userFirstName = prefs.getString("FirstName", "");
+
+            if (userFirstName.equals("")) {
+
+                pullData();
+            }
+
+        setUpDisplayName();
+
 
 
 
@@ -334,6 +343,9 @@ public class Home extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 user = documentSnapshot.toObject(UserDataModel.class);
                 userName.setText(user.getFirstName());
+
+                SharedPreferences userPrefs = getActivity().getSharedPreferences(USER, 0);
+                userPrefs.edit().putString("FirstName", user.getFirstName()).apply();
 
             }
         });
@@ -393,9 +405,9 @@ public class Home extends Fragment {
 
     private void setUpDisplayName() {
 
-        SharedPreferences preferences = this.getActivity().getSharedPreferences(USER, getContext().MODE_PRIVATE);
-        String name = preferences.getString("FIRST_NAME", null);
-        Log.d(TAG, name);
+        SharedPreferences preferences = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
+        String name = preferences.getString("FirstName", null);
+        Log.d(TAG6, name);
         userName.setText(name);
 
 
@@ -409,12 +421,16 @@ public class Home extends Fragment {
         int SPLASH_TIME_OUT = 4000;
         myHandler = new Handler();
 
+        Log.d(TAG2, "loading Recycler been called");
+
         // showing the Splash screen for two seconds then going to on boarding activity
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
                 initRecyclerView();
+                Log.d(TAG2, "initialising recycler with a delay called ");
+
 
 
             }

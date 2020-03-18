@@ -18,6 +18,7 @@ import com.amazonaws.mobile.client.Callback;
 import com.amazonaws.mobile.client.UserStateDetails;
 import com.amazonaws.mobile.client.results.SignInResult;
 import com.fathom.nfs.DataModels.DoctorDataModel;
+import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.DataModels.UserDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private final String TAG = "SIGN IN";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DoctorDataModel doctor = new DoctorDataModel();
+    private ShopItemDataModel shopItem = new ShopItemDataModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
