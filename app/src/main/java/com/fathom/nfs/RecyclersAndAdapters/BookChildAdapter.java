@@ -72,7 +72,7 @@ public class BookChildAdapter extends RecyclerView.Adapter<BookChildAdapter.Book
     @Override
     public void onBindViewHolder(@NonNull BookChildHolder holder, final int position) {
 
-        holder.bookImage.setImageResource(mBook.get(position).getImageUrl());
+        holder.bookImage.setImageBitmap(mBook.get(position).getShopItemImage());
         holder.price.setText(mBook.get(position).getPrice());
         holder.bookDescription.setText(mBook.get(position).getItemDescription());
 

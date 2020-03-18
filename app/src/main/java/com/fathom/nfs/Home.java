@@ -320,7 +320,15 @@ public class Home extends Fragment {
                 pullData();
             }
 
-        setUpDisplayName();
+            if ((!userFirstName.equals("")) && userName.getText().equals("")) {
+                setUpDisplayName();
+
+        }
+
+            if(!mDoctors.isEmpty() ) {
+
+                setUpDisplayName();
+            }
 
 
 
@@ -333,7 +341,7 @@ public class Home extends Fragment {
     private void pullData() {
 
         SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
-        String docName = prefs.getString("EMAIL", "No name");
+        String docName = prefs.getString("EMAIL", "");
 
         Toast.makeText(getContext(), docName, Toast.LENGTH_SHORT).show();
 

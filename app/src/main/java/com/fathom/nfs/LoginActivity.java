@@ -87,7 +87,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 SignIn();
-                uploadDoctors();
+//                uploadDoctors();
+                uploadShopItems();
 
             }
         });
@@ -154,6 +155,19 @@ public class LoginActivity extends AppCompatActivity {
         doctor.setSpecialty("Alternative Healing");
         db.collection("Doctors")
                 .document(doctor.getEmail()).set(doctor);
+    }
+
+    private void uploadShopItems() {
+
+        Log.d("ShopItem", "Shop Item method triggered");
+
+        shopItem.setShopItemName("Swimie");
+        shopItem.setShopItemSubName(" A toy for pool and the beach");
+        shopItem.setItemDescription("This toy helps the child to interact with his/her emotions outside or at the pool of the beach");
+        shopItem.setPrice("4.720 BHD");
+        shopItem.setShopItemType("Toy");
+        db.collection("Shop Items")
+                .document(shopItem.getShopItemName()).set(shopItem);
     }
 
 }

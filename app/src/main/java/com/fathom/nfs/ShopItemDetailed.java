@@ -88,7 +88,7 @@ public class ShopItemDetailed extends Fragment {
 
                  shopItem = shopItemDataModels.get(position);
 
-                shopItemImage.setImageResource(shopItem.getImageUrl());
+                shopItemImage.setImageBitmap(shopItem.getShopItemImage());
                 price.setText(shopItem.getPrice());
                 shopItemDescription.setText(shopItem.getItemDescription());
             }

@@ -68,16 +68,6 @@ public class DoctorsRepository {
 
         Log.d(TAG," Loading the data is going to start");
 
-//        if (mDoctorsItems.isEmpty()) {
-//            mDoctorsItems.add (
-//                    new DoctorDataModel("Narjes", "Kazerooni", R.drawable.doctor1, 4.6)
-//            );
-//            mDoctorsItems.add (
-//                    new DoctorDataModel("Abdallah", "Alathamneh", R.drawable.user, 4.9)
-//            );
-//            mDoctorsItems.add (
-//                    new DoctorDataModel("Richard", "Chowne", R.drawable.doctor_s, 4.8)
-//            );
 
         db.collection("Doctors")
                 .get()
@@ -95,14 +85,11 @@ public class DoctorsRepository {
 
                                 Log.d(TAG, "Doctor array size " + mDoctorsItems.size());
 
-//                                for (int position = 0; position < task.getResult().size(); position++) {
-//
+
                                 if (mDoctorsItems.size() == task.getResult().size()) {
                                     getImage(task.getResult());
                                 }
-//
-//                                    Log.d(TAG, "index is " + position, task.getException());
-//                                }
+
 
                             }
                         } else {
@@ -136,9 +123,6 @@ public class DoctorsRepository {
 
                     Log.d(TAG, " Loading the Image is DONE");
 
-
-//                        setImageBitmap(Bitmap.createScaledBitmap(bmp, userImage.getWidth(),
-//                                userImage.getHeight(), false)));
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

@@ -63,7 +63,7 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
     public void onBindViewHolder(@NonNull final ShopItemAdapter.ShopItemHolder holder, final int position) {
 
         Log.d(TAG, "OnBindViewHolder: Called.");
-        holder.shopItemImage.setImageResource(mShopItems.get(position).getImageUrl());
+        holder.shopItemImage.setImageBitmap(mShopItems.get(position).getShopItemImage());
         holder.price.setText(mShopItems.get(position).getPrice());
         holder.shopItemDescription.setText(mShopItems.get(position).getItemDescription());
 
