@@ -63,16 +63,6 @@ public class ShopItemsRepository {
 
         Log.d("MVVM"," Loading the data is going to start");
 
-//        if (mShopItems.isEmpty()) {
-//            mShopItems.add (
-//                    new ShopItemDataModel(R.drawable.shop_item_1, "6.000", "Meebie - For Play & Emotional Expression")
-//            );
-//            mShopItems.add (
-//                    new ShopItemDataModel(R.drawable.shop_item_2, "7.375", "Kimochis Mixed Feelings Pack…")
-//            );
-//            mShopItems.add (
-//                    new ShopItemDataModel(R.drawable.shop_item_3, "4.720", "Meebie - For Play & Emotional Expression")
-//            );
 
             db.collection("Shop Items")
                     .get()

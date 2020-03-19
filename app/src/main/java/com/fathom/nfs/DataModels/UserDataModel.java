@@ -1,5 +1,7 @@
 package com.fathom.nfs.DataModels;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 public class UserDataModel {
@@ -11,6 +13,7 @@ public class UserDataModel {
     private String password;
     private String accountType;
     private int imgUrl;
+    private Bitmap userImage;
     private ArrayList<DoctorDataModel> bookmarkedDoctors;
     private ArrayList<ShopItemDataModel> bookmarkedShopItems;
     private ArrayList<ArticleDataModel> bookmarkedArticles;
@@ -90,5 +93,29 @@ public class UserDataModel {
 
     public void setImgUrl(int imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public void setBookmarkedDoctors(ArrayList<DoctorDataModel> bookmarkedDoctors) {
+        this.bookmarkedDoctors = bookmarkedDoctors;
+    }
+
+    public void setBookmarkedShopItems(ArrayList<ShopItemDataModel> bookmarkedShopItems) {
+        this.bookmarkedShopItems = bookmarkedShopItems;
+    }
+
+    public void setBookmarkedArticles(ArrayList<ArticleDataModel> bookmarkedArticles) {
+        this.bookmarkedArticles = bookmarkedArticles;
+    }
+
+    public void setBookedAppointments(ArrayList<AppointmentDataModel> bookedAppointments) {
+        this.bookedAppointments = bookedAppointments;
+    }
+
+    public Bitmap getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(Bitmap userImage) {
+        this.userImage = userImage;
     }
 }

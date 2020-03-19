@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 SignIn();
 //                uploadDoctors();
 //                uploadShopItems();
-                uploadArticles();
+//                uploadArticles();
 
             }
         });
@@ -145,6 +145,8 @@ public class LoginActivity extends AppCompatActivity {
                     });
 
     }
+
+    // uploading the data to the backend
 
     private void uploadDoctors() {
 

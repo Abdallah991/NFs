@@ -43,9 +43,7 @@ import com.fathom.nfs.ViewModels.ArticleViewModel;
 import com.fathom.nfs.ViewModels.CategoryViewModel;
 import com.fathom.nfs.ViewModels.DoctorsViewModel;
 import com.fathom.nfs.ViewModels.ShopItemsViewModel;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.fathom.nfs.ViewModels.UserViewModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +67,7 @@ public class Home extends Fragment {
     private static final String TAG5 = "FIREBASE";
     private static final String TAG6 = "User";
     // declaring member variables
-    private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>(3);
+    private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>();
     private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
     private ArrayList<ShopItemDataModel> mShopItems = new ArrayList<>();
     private ArrayList<CategoryDataModel> mCategories = new ArrayList<>();
@@ -86,6 +84,7 @@ public class Home extends Fragment {
     private CategoryViewModel mCategoryViewModel;
     private ArticleViewModel mArticleViewModel;
     private ShopItemsViewModel mShopItemsViewModel;
+    private UserViewModel mUserViewModel;
     private SearchView mSearchView;
     private ListView searchList;
     private ArrayAdapter<String> searchAdapter;
@@ -172,7 +171,6 @@ public class Home extends Fragment {
 
                  searchList.setVisibility(View.VISIBLE);
                  searchAdapter.getFilter().filter(s);
-//                 Toast.makeText(getContext(),"Text change "   , Toast.LENGTH_SHORT).show();
 
 
                  return false;
@@ -237,6 +235,19 @@ public class Home extends Fragment {
             }
         });
 
+        // Calling User View Model
+
+        mUserViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        mUserViewModel.initUser(getContext());
+
+        mUserViewModel.getUser(getContext()).observe(getViewLifecycleOwner(), new Observer<UserDataModel>() {
+            @Override
+            public void onChanged(UserDataModel userDataModel) {
+                user = userDataModel;
+//                user.notify();
+                userName.setText(user.getFirstName());
+            }
+        });
 
          // Calling the View Model
         mDoctorsViewModel = new ViewModelProvider(requireActivity()).get(DoctorsViewModel.class);
@@ -311,53 +322,21 @@ public class Home extends Fragment {
                 Log.d("MVVM"," Arraylist is empty" +mDoctors.size());
 
             }
-
         SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
         String userFirstName = prefs.getString("FirstName", "");
 
-            if (userFirstName.equals("")) {
-
-                pullData();
-            }
 
             if ((!userFirstName.equals("")) && userName.getText().equals("")) {
                 setUpDisplayName();
 
         }
 
-            if(!mDoctors.isEmpty() ) {
-
-                setUpDisplayName();
-            }
-
 
 
 
 
     }
 
-    // TODO: create a user repo and view model
-
-    private void pullData() {
-
-        SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
-        String docName = prefs.getString("EMAIL", "");
-
-        Toast.makeText(getContext(), docName, Toast.LENGTH_SHORT).show();
-
-        DocumentReference docRef = db.collection("Users").document(docName);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                user = documentSnapshot.toObject(UserDataModel.class);
-                userName.setText(user.getFirstName());
-
-                SharedPreferences userPrefs = getActivity().getSharedPreferences(USER, 0);
-                userPrefs.edit().putString("FirstName", user.getFirstName()).apply();
-
-            }
-        });
-    }
 
 
     private void initRecyclerView(){
