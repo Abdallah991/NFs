@@ -1,6 +1,8 @@
 package com.fathom.nfs;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -37,7 +39,9 @@ public class HelpLineDescription extends Fragment {
     private ImageButton backButton;
     private ImageView helpLineImage;
     private TextView helpLineText;
+    private Button callButton;
     private int position;
+    private String phone = "77777777";
 
 
     public HelpLineDescription() {
@@ -61,6 +65,8 @@ public class HelpLineDescription extends Fragment {
         backButton = view.findViewById(R.id.backButtonToHelpLines);
         helpLineImage = view.findViewById(R.id.helpLineImage);
         helpLineText = view.findViewById(R.id.helpLineText);
+        callButton = view.findViewById(R.id.callHelp);
+
 
         ViewCompat.setLayoutDirection(helpLineDescription, ViewCompat.LAYOUT_DIRECTION_LTR);
 
@@ -77,6 +83,8 @@ public class HelpLineDescription extends Fragment {
                 HelpLinesDataModel helpLine = helpLinesDataModels.get(position);
                 helpLineImage.setImageResource(helpLine.getDescriptionImage());
                 helpLineText.setText(helpLine.getHelpLineDescription());
+                phone = helpLine.getHelpLinePhone();
+
 
 
             }
@@ -91,6 +99,15 @@ public class HelpLineDescription extends Fragment {
 
                 NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
                 navController.navigate(R.id.action_helpLineDescription_to_helpLinesFragment);
+            }
+        });
+
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                startActivity(intent);
             }
         });
     }

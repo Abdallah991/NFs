@@ -15,6 +15,13 @@ public class HelpLinesDataModel  {
         this.descriptionImage = descImage;
     }
 
+    public HelpLinesDataModel(int helpLineImage, int descriptionImage, String helpLineDescription, String helpLinePhone) {
+        this.helpLineImage = helpLineImage;
+        this.descriptionImage = descriptionImage;
+        this.helpLineDescription = helpLineDescription;
+        this.helpLinePhone = helpLinePhone;
+    }
+
     public int getHelpLineImage() {
         return helpLineImage;
     }
