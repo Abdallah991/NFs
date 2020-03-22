@@ -19,6 +19,8 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -33,6 +35,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.fathom.nfs.DataModels.UserDataModel;
+import com.fathom.nfs.ViewModels.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -77,7 +80,7 @@ public class AccountSettings extends Fragment {
     private StorageReference storageRef;
     private StorageReference userImageRef;
     private Dialog mDialog;
-    final long ONE_MEGABYTE = 1024 * 1024;
+    private UserViewModel mUserViewModel;
 
 
 
@@ -214,22 +217,18 @@ public class AccountSettings extends Fragment {
 
     private void pullData() {
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
-        String docName = prefs.getString("EMAIL", "No name");
+        mUserViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        mUserViewModel.initUser(getContext());
 
-        Toast.makeText(getContext(), docName, Toast.LENGTH_SHORT).show();
-
-        DocumentReference docRef = db.collection("Users").document(docName);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        mUserViewModel.getUser(getContext()).observe(getViewLifecycleOwner(), new Observer<UserDataModel>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                user = documentSnapshot.toObject(UserDataModel.class);
+            public void onChanged(UserDataModel userDataModel) {
+                user = userDataModel;
+
                 firstName.setText(user.getFirstName());
                 lastName.setText(user.getLastName());
                 email.setText(user.getEmail());
                 password.setText(user.getPassword());
-
-
             }
         });
     }
@@ -312,30 +311,16 @@ public class AccountSettings extends Fragment {
 
     private void getImage () {
 
-        // naming the path as email
-        SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
-        String docName = prefs.getString("EMAIL", "No name");
+        mUserViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        mUserViewModel.initUser(getContext());
 
-        userImageRef = storageRef.child(docName);
-
-
-        userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        mUserViewModel.getUser(getContext()).observe(getViewLifecycleOwner(), new Observer<UserDataModel>() {
             @Override
-            public void onSuccess(byte[] bytes) {
-                // Use the bytes to display the image
+            public void onChanged(UserDataModel userDataModel) {
+                user = userDataModel;
 
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                userImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, userImage.getWidth(),
-                        userImage.getHeight(), false));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+                userImage.setImageBitmap(user.getUserImage());
             }
         });
-
-
     }
 }

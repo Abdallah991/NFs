@@ -68,8 +68,11 @@ public class Home extends Fragment {
     private static final String TAG6 = "User";
     // declaring member variables
     private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>();
+    private ArrayList<DoctorDataModel> homeDoctors = new ArrayList<>();
     private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
+    private ArrayList<ArticleDataModel> homeArticles = new ArrayList<>();
     private ArrayList<ShopItemDataModel> mShopItems = new ArrayList<>();
+    private ArrayList<ShopItemDataModel> homeShopItems = new ArrayList<>();
     private ArrayList<CategoryDataModel> mCategories = new ArrayList<>();
     private RecyclerView mDoctorsRecycler;
     private RecyclerView mArticlesRecycler;
@@ -91,6 +94,8 @@ public class Home extends Fragment {
     private ArrayList<String> searchListItems = new ArrayList<>();
 
     private Button viewAllDoctors;
+    private Button viewAllArticles;
+    private Button viewAllShopItems;
 
     private final int actionId = R.id.action_homeFragment_to_doctorsDetails;
     private int actionSpecialityId = R.id.action_homeFragment_to_doctorsSpecialities;
@@ -299,6 +304,8 @@ public class Home extends Fragment {
 
 
         viewAllDoctors = view.findViewById(R.id.viewDoctors);
+        viewAllArticles = view.findViewById(R.id.viewArticles);
+        viewAllShopItems = view.findViewById(R.id.viewShop);
         // Readjusting the position of layout elements
         ViewCompat.setLayoutDirection(content, ViewCompat.LAYOUT_DIRECTION_LTR);
 
@@ -307,6 +314,22 @@ public class Home extends Fragment {
             @Override
             public void onClick(View v) {
                 mNavController.navigate(R.id.action_homeFragment_to_doctors);
+
+            }
+        });
+
+        viewAllShopItems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNavController.navigate(R.id.action_homeFragment_to_shopFragment);
+
+            }
+        });
+
+        viewAllArticles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNavController.navigate(R.id.action_homeFragment_to_articles);
 
             }
         });
@@ -355,20 +378,20 @@ public class Home extends Fragment {
         mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
 
 
-        mDoctorsAdapter = new DoctorsAdapter(mDoctors, getContext(), mNavController, actionId, mDoctorsViewModel );
+        mDoctorsAdapter = new DoctorsAdapter(homeDoctors, getContext(), mNavController, actionId, mDoctorsViewModel );
         mDoctorsRecycler.setAdapter(mDoctorsAdapter);
         mDoctorsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 //        mDoctorsAdapter.notifyDataSetChanged();
 
         // setting the adapter to recycler
         mArticles = (ArrayList<ArticleDataModel>) mArticleViewModel.getArticles().getValue();
-        mArticleAdapter = new ArticleAdapter(mArticles, getContext(), mNavController, actionArticle, mArticleViewModel);
+        mArticleAdapter = new ArticleAdapter(homeArticles, getContext(), mNavController, actionArticle, mArticleViewModel);
         mArticlesRecycler.setAdapter(mArticleAdapter);
         mArticlesRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // setting the adapter to recycler
         mShopItems = (ArrayList<ShopItemDataModel>) mShopItemsViewModel.getShopItems().getValue();
-        mShopItemAdapter = new ShopItemAdapter(mShopItems, getContext(), mNavController, actionToDetailedShopItem, mShopItemsViewModel);
+        mShopItemAdapter = new ShopItemAdapter(homeShopItems, getContext(), mNavController, actionToDetailedShopItem, mShopItemsViewModel);
         mShopRecycler.setAdapter(mShopItemAdapter);
         mShopRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -384,6 +407,49 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        Log.d("Home", "onResume() got fired");
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        if (!mDoctors.isEmpty()) {
+            i = mDoctors.size();
+            j = mArticles.size();
+            k = mShopItems.size();
+
+            if (homeDoctors.isEmpty()) {
+                for (DoctorDataModel doctor : mDoctors) {
+                    homeDoctors.add(doctor);
+
+
+                }
+                homeDoctors.subList(3, i).clear();
+            }
+
+            if (homeArticles.isEmpty()) {
+                for (ArticleDataModel article : mArticles) {
+                    homeArticles.add(article);
+
+
+                }
+                homeArticles.subList(3, j).clear();
+
+            }
+
+            if(homeShopItems.isEmpty()) {
+                for (ShopItemDataModel shopItem : mShopItems) {
+                    homeShopItems.add(shopItem);
+
+                }
+                homeShopItems.subList(3, k).clear();
+
+            }
+
+
+        }
+
+        initRecyclerView();
 
         searchList.setVisibility(View.GONE);
 
@@ -405,7 +471,7 @@ public class Home extends Fragment {
     private void loadingRecycler() {
 
         Handler myHandler;
-        int SPLASH_TIME_OUT = 4000;
+        int SPLASH_TIME_OUT = 7000;
         myHandler = new Handler();
 
         Log.d(TAG2, "loading Recycler been called");
@@ -414,6 +480,34 @@ public class Home extends Fragment {
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
+
+
+
+                int i = 0;
+                int j = 0;
+                int k = 0;
+
+                for (DoctorDataModel doctor : mDoctors) {
+                    homeDoctors.add(doctor);
+                }
+
+                for (ArticleDataModel article : mArticles) {
+                    homeArticles.add(article);
+                }
+
+                for (ShopItemDataModel shopItem : mShopItems) {
+                    homeShopItems.add(shopItem);
+                }
+
+                i = mDoctors.size();
+                j = mArticles.size();
+                k = mShopItems.size();
+
+
+                homeDoctors.subList(3, i).clear();
+                homeArticles.subList(3, j).clear();
+                homeShopItems.subList(3, k).clear();
+
 
                 initRecyclerView();
                 Log.d(TAG2, "initialising recycler with a delay called ");

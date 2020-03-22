@@ -44,7 +44,7 @@ public class DoctorsSpecialities extends Fragment {
 
     // declaring member variables
     private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>();
-    private RecyclerView mDcotrosSpecialityRecycler;
+    private RecyclerView mDoctorsSpecialityRecycler;
     private DoctorsAdapter mDoctorsAdapter;
     private ScrollView doctorsSpecialityContent;
     private NavController mNavController;
@@ -77,7 +77,7 @@ public class DoctorsSpecialities extends Fragment {
 
 
         doctorsSpecialityContent = view.findViewById(R.id.doctors_specialities);
-        mDcotrosSpecialityRecycler = view.findViewById(R.id.doctorsSpecialityRecyclerView);
+        mDoctorsSpecialityRecycler = view.findViewById(R.id.doctorsSpecialityRecyclerView);
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         specialityQ = view.findViewById(R.id.specialityQuestion);
@@ -133,6 +133,7 @@ public class DoctorsSpecialities extends Fragment {
 
         ArrayList<DoctorDataModel> filteredDoctors = new ArrayList<>();
 
+        Toast.makeText(getContext(), "the array size is :"+ mDoctors.size(), Toast.LENGTH_SHORT).show();
 
         // setting the adapter to recycler
         mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
@@ -142,7 +143,7 @@ public class DoctorsSpecialities extends Fragment {
             }
         }
         mDoctorsAdapter = new DoctorsAdapter(filteredDoctors, getContext(), mNavController, actionId, mDoctorsViewModel);
-        mDcotrosSpecialityRecycler.setAdapter(mDoctorsAdapter);
-        mDcotrosSpecialityRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mDoctorsSpecialityRecycler.setAdapter(mDoctorsAdapter);
+        mDoctorsSpecialityRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

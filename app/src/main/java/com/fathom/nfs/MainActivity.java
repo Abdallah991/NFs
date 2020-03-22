@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -27,6 +31,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.amazonaws.mobile.client.AWSMobileClient;
 import com.amazonaws.mobile.client.Callback;
 import com.amazonaws.mobile.client.SignOutOptions;
+import com.fathom.nfs.DataModels.UserDataModel;
+import com.fathom.nfs.ViewModels.UserViewModel;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,8 +57,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView bottomNavigationView;
     private Button logOut;
     private ImageView closeDrawerButton;
+    private UserViewModel mUserViewModel;
     private ImageView sliderUserImage;
     private String TAG = "HOME";
+    private UserDataModel user = new UserDataModel();
 
 
     @Override
@@ -138,42 +146,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void persistImage() {
 
 
-        // naming the path as email
-        SharedPreferences prefs = getSharedPreferences(USER, MODE_PRIVATE);
-        String docName = prefs.getString("EMAIL", "No name");
+        mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        mUserViewModel.initUser(getApplicationContext());
 
-         FirebaseStorage storage;
-        StorageReference storageRef;
-        StorageReference userImageRef;
-
-        storage = FirebaseStorage.getInstance();
-        storageRef = storage.getReference();
-
-        userImageRef = storageRef.child(docName);
-
-
-        Log.d(TAG, "Persist image called");
-
-        userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        mUserViewModel.getUser(getApplicationContext()).observe(this, new Observer<UserDataModel>() {
             @Override
-            public void onSuccess(byte[] bytes) {
-                // Use the bytes to display the image
+            public void onChanged(UserDataModel userDataModel) {
+                user = userDataModel;
 
-                Log.d(TAG, "Success");
+//                sliderUserImage.setImageBitmap(user.getUserImage());
+                loadingImage(user);
 
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
-                // TODO: Set a way where you save an image locally
-//                sliderUserImage.setImageBitmap(Bitmap.createScaledBitmap(bmp, sliderUserImage.getWidth(),
-//                        sliderUserImage.getHeight(), false));
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-
-                Log.d(TAG, "Failure");
-
-                // Handle any errors
             }
         });
     }
@@ -203,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onSupportNavigateUp() {
         // reference the navigation controller when you want to navigate up
         navController.popBackStack(R.id.homeFragment, false);
+
 
 
         return NavigationUI.navigateUp(navController, drawerLayout);
@@ -270,6 +254,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void loadingImage(UserDataModel userDataModel) {
+
+        Handler myHandler;
+        int SPLASH_TIME_OUT = 8000;
+        myHandler = new Handler();
+
+
+        // showing the Splash screen for two seconds then going to on boarding activity
+        myHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                user = userDataModel;
+
+                // TODO: Persist the image on the slider
+//                sliderUserImage.setImageBitmap(user.getUserImage());
+//                sliderUserImage.setImageResource(R.drawable.user);
+
+
+                Toast.makeText(getApplicationContext(), "the user is " +user.getUserImage(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        }, SPLASH_TIME_OUT);
+    }
 
 
 
