@@ -18,10 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.BookArrayDataModel;
 import com.fathom.nfs.DataModels.BookRowDataModel;
+import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.BookParentAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.ShopItemAdapter;
@@ -36,7 +41,9 @@ public class Shop extends Fragment {
 
 
     private ArrayList<ShopItemDataModel> mShopItems = new ArrayList<>();
+    private ArrayList<ShopItemDataModel> limitedShopItems = new ArrayList<>();
     private ArrayList<BookRowDataModel> bookArray = new ArrayList<>();
+    private ShopItemDataModel featured;
 
     private ScrollView shopContent;
 
@@ -52,6 +59,11 @@ public class Shop extends Fragment {
 
     private int actionToDetailedShopItem = R.id.action_shopFragment_to_shopItemDetailed;
     private int actionToDetailedBook = R.id.action_shopFragment_to_bookItemDetailed;
+
+    private ImageView featuredImage;
+    private TextView featuredTitle;
+    private TextView featuredSubTitle;
+    private TextView featuredPrice;
 
 
     public Shop() {
@@ -74,6 +86,11 @@ public class Shop extends Fragment {
 
         mShopRecycler = view.findViewById(R.id.toysRecyclerView);
         mBookRecycler = view.findViewById(R.id.booksRecyclerView);
+
+        featuredImage = view.findViewById(R.id.toyImage);
+        featuredTitle = view.findViewById(R.id.toyTitle);
+        featuredSubTitle = view.findViewById(R.id.toySubtitle);
+        featuredPrice = view.findViewById(R.id.toyPrice);
 
         mBookArrayViewModel = new ViewModelProvider(requireActivity()).get(BookArrayViewModel.class);
         mBookArrayViewModel.initBookArrays();
@@ -110,7 +127,7 @@ public class Shop extends Fragment {
 
         // setting the adapter to recycler
         mShopItems = (ArrayList<ShopItemDataModel>) mShopItemsViewModel.getShopItems().getValue();
-        mShopItemAdapter = new ShopItemAdapter(mShopItems, getContext(), mNavController,actionToDetailedShopItem, mShopItemsViewModel);
+        mShopItemAdapter = new ShopItemAdapter(limitedShopItems, getContext(), mNavController,actionToDetailedShopItem, mShopItemsViewModel);
         mShopRecycler.setAdapter(mShopItemAdapter);
         mShopRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -119,5 +136,44 @@ public class Shop extends Fragment {
         mBookParentAdapter = new BookParentAdapter(bookArray, getContext(), mNavController,actionToDetailedBook, mBookArrayViewModel);
         mBookRecycler.setAdapter(mBookParentAdapter);
         mBookRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        int i = 0;
+
+        if (!mShopItems.isEmpty()) {
+            i =  mShopItems.size();
+
+            if(limitedShopItems.isEmpty()) {
+                for (ShopItemDataModel shopItem : mShopItems) {
+                    if (shopItem.getPrice().equals("3.99000")) {
+                        featured = shopItem;
+//                        Toast.makeText(getContext(), featured.getShopItemName() + "   "+ featured.getShopItemImage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                    else {
+                        limitedShopItems.add(shopItem);
+                    }
+
+                }
+
+                if( limitedShopItems.size()> 3) {
+                limitedShopItems.subList(3, i).clear();
+                }
+
+            }
+
+//            Toast.makeText(getContext(), featured.getShopItemName(), Toast.LENGTH_SHORT).show();
+            featuredImage.setImageBitmap(featured.getShopItemImage());
+            featuredTitle.setText(featured.getShopItemName());
+            featuredSubTitle.setText(featured.getShopItemSubName());
+            featuredPrice.setText(featured.getPrice());
+
+
+        }
+
+        initRecyclers();
     }
 }

@@ -1,6 +1,10 @@
 package com.fathom.nfs;
 
 
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -80,7 +84,7 @@ public class DoctorsDetails extends Fragment {
     private Button callButton;
     private Button writeReview;
     private Button bookAppointment;
-
+    private String phone;
     private NavController mNavController;
 
 
@@ -167,6 +171,7 @@ public class DoctorsDetails extends Fragment {
                     educationDegree1Description.setVisibility(View.GONE);
                     educationDegree2.setVisibility(View.GONE);
                     educationDegree2Description.setVisibility(View.GONE);
+                    phone = doctor.getPhone();
                 }
 
                 // TODO: persist the book marks
@@ -332,9 +337,40 @@ public class DoctorsDetails extends Fragment {
         doctorChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mNavController.navigate(R.id.action_doctorsDetails_to_chat);
+//                mNavController.navigate(R.id.action_doctorsDetails_to_chat);
+
+                PackageManager pm = getContext().getPackageManager();
+                try {
+
+
+                    Intent waIntent = new Intent(Intent.ACTION_SEND);
+                    waIntent.setType("text/plain");
+                    String text = "YOUR TEXT HERE";
+
+                    PackageInfo info =pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+                    //Check if package exists or not. If not then code
+                    //in catch block will be called
+                    waIntent.setPackage("com.whatsapp");
+
+                    waIntent.putExtra(Intent.EXTRA_TEXT, text);
+                    startActivity(Intent.createChooser(waIntent, "Share with"));
+
+                } catch (PackageManager.NameNotFoundException e) {
+                    Toast.makeText(getContext(), "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                            .show();
+                }
             }
         });
+
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+//                startActivity(intent);
+            }
+        });
+
+
 
 
         initRecycler();

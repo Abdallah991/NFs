@@ -23,6 +23,9 @@ import android.widget.Toast;
 
 import com.fathom.nfs.RecyclersAndAdapters.CartAdapter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import static com.fathom.nfs.DataModels.CartDataModel.shoppingCartItems;
 
 
@@ -39,6 +42,8 @@ public class Cart extends Fragment {
     private TextView totalPrice;
     private NavController mNavController;
     private double totalCartPrice = 0;
+    private double actualPrice;
+    private BigDecimal price;
 
     public Cart() {
         // Required empty public constructor
@@ -110,12 +115,18 @@ public class Cart extends Fragment {
         for (int i =0; i < shoppingCartItems.size(); i++ ) {
 
             totalCartPrice += Double.parseDouble( shoppingCartItems.get(i).getPrice());
-
+            price = new BigDecimal(totalCartPrice).setScale(3, RoundingMode.HALF_UP);
+            actualPrice = price.doubleValue();
 
         }
 
-        String toatlCartAmount = Double.toString(totalCartPrice);
-        totalPrice.setText( toatlCartAmount);
+        String totalCartAmount = Double.toString(actualPrice);
+        totalPrice.setText(totalCartAmount);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 }

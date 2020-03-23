@@ -18,6 +18,7 @@ public class DoctorDataModel {
     private String education;
     private String experience;
     private String gender;
+    private String phone;
     private ArrayList<ReviewDataModel> reviews = new ArrayList<>();
     public static ArrayList<AppointmentDataModel> doctorAppointments = new ArrayList<>();
 
@@ -168,5 +169,13 @@ public class DoctorDataModel {
 
     public void setDoctorImage(Bitmap doctorImage) {
         this.doctorImage = doctorImage;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

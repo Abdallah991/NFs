@@ -13,8 +13,14 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,6 +34,11 @@ public class SetAppointment extends Fragment {
     private LinearLayout setAppointmentContent;
     private CalendarView mCalendarView;
     private Calendar calendar;
+    private Spinner startTime;
+    private Spinner startAmPm;
+    private Spinner endTime;
+    private Spinner endAmPm;
+    private Button bookAppointment;
 
     public SetAppointment() {
         // Required empty public constructor
@@ -49,6 +60,26 @@ public class SetAppointment extends Fragment {
         setAppointmentContent = view.findViewById(R.id.setAppointmentContent);
         calendar = Calendar.getInstance();
         mCalendarView = view.findViewById(R.id.calendarView);
+        startTime = view.findViewById(R.id.startTime);
+        startAmPm = view.findViewById(R.id.startAMPM);
+        endTime = view.findViewById(R.id.endTime);
+        endAmPm = view.findViewById(R.id.endAMPM);
+        bookAppointment = view.findViewById(R.id.appointmentBooking);
+
+        ArrayAdapter<String> timeAdapter = new ArrayAdapter<String>(getContext(),
+                R.layout.spinner_item, getResources().getStringArray(R.array.timings));
+        ArrayAdapter<String> AmPmAdapter = new ArrayAdapter<String>(getContext(),
+                R.layout.spinner_item, getResources().getStringArray(R.array.AMPM));
+        timeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        AmPmAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+
+        startTime.setAdapter(timeAdapter);
+        endTime.setAdapter(timeAdapter);
+
+        startAmPm.setAdapter(AmPmAdapter);
+        endAmPm.setAdapter(AmPmAdapter);
+
+
         Date date = new Date();
 
         try {
@@ -58,6 +89,9 @@ public class SetAppointment extends Fragment {
         }
 
         showAppointmentsForTheDay(calendar.getTime());
+
+        Toast.makeText(getContext(),"Calender is "+ calendar.getTime()   , Toast.LENGTH_SHORT).show();
+
 
         mCalendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
@@ -73,6 +107,17 @@ public class SetAppointment extends Fragment {
 
 
         ViewCompat.setLayoutDirection(setAppointmentContent, ViewCompat.LAYOUT_DIRECTION_LTR);
+
+
+        bookAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),
+                        "Appointment is " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
+                        " to "+ endTime.getSelectedItem().toString()+ " "+ endAmPm.getSelectedItem().toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -108,5 +153,48 @@ public class SetAppointment extends Fragment {
 
         ;
 
+    }
+
+
+    private void creatEventOnCalender() {
+
+//        Event event = new Event()
+//                .setSummary("Google I/O 2015")
+//                .setLocation("800 Howard St., San Francisco, CA 94103")
+//                .setDescription("A chance to hear more about Google's developer products.");
+//
+//        DateTime startDateTime = new DateTime("2015-05-28T09:00:00-07:00");
+//        EventDateTime start = new EventDateTime()
+//                .setDateTime(startDateTime)
+//                .setTimeZone("America/Los_Angeles");
+//        event.setStart(start);
+//
+//        DateTime endDateTime = new DateTime("2015-05-28T17:00:00-07:00");
+//        EventDateTime end = new EventDateTime()
+//                .setDateTime(endDateTime)
+//                .setTimeZone("America/Los_Angeles");
+//        event.setEnd(end);
+//
+//        String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
+//        event.setRecurrence(Arrays.asList(recurrence));
+//
+//        EventAttendee[] attendees = new EventAttendee[] {
+//                new EventAttendee().setEmail("lpage@example.com"),
+//                new EventAttendee().setEmail("sbrin@example.com"),
+//        };
+//        event.setAttendees(Arrays.asList(attendees));
+//
+//        EventReminder[] reminderOverrides = new EventReminder[] {
+//                new EventReminder().setMethod("email").setMinutes(24 * 60),
+//                new EventReminder().setMethod("popup").setMinutes(10),
+//        };
+//        Event.Reminders reminders = new Event.Reminders()
+//                .setUseDefault(false)
+//                .setOverrides(Arrays.asList(reminderOverrides));
+//        event.setReminders(reminders);
+//
+//        String calendarId = "primary";
+//        event = service.events().insert(calendarId, event).execute();
+//        System.out.printf("Event created: %s\n", event.getHtmlLink());
     }
 }
