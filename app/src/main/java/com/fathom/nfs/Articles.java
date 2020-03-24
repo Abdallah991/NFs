@@ -62,10 +62,10 @@ public class Articles extends Fragment {
     private int actionArticle = R.id.action_articles_to_articleDetailed2;
     private int actionId = R.id.action_articles_to_articleDetailed2;
     private int actionVideo = R.id.action_articles_to_videoDetailed2;
-    private RelativeLayout articlesLayout;
-    private RelativeLayout videosLayout;
-    private RelativeLayout blogLayout;
-    private RelativeLayout communityLayout;
+    private static RelativeLayout articlesLayout;
+    private static RelativeLayout videosLayout;
+    private static RelativeLayout blogLayout;
+    private static RelativeLayout communityLayout;
 
 
 
@@ -127,7 +127,7 @@ public class Articles extends Fragment {
 
 
 
-//        showArticles();
+        showArticles();
         initRecyclerView();
 
     }
@@ -172,7 +172,7 @@ public class Articles extends Fragment {
     }
 
 
-    public void showArticles() {
+    public static void showArticles() {
 
         articlesLayout.setVisibility(View.VISIBLE);
         videosLayout.setVisibility(View.GONE);
@@ -182,7 +182,7 @@ public class Articles extends Fragment {
 
     }
 
-    public void showVideos() {
+    public static void showVideos() {
 
         articlesLayout.setVisibility(View.GONE);
         videosLayout.setVisibility(View.VISIBLE);
@@ -190,7 +190,7 @@ public class Articles extends Fragment {
         communityLayout.setVisibility(View.GONE);
 
     }
-    public void showBlog() {
+    public static void showBlog() {
 
         articlesLayout.setVisibility(View.GONE);
         videosLayout.setVisibility(View.GONE);
@@ -198,7 +198,7 @@ public class Articles extends Fragment {
         communityLayout.setVisibility(View.GONE);
 
     }
-    public void showCommunity() {
+    public static void showCommunity() {
 
         articlesLayout.setVisibility(View.GONE);
         videosLayout.setVisibility(View.GONE);

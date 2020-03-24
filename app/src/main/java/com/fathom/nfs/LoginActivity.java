@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 SignIn();
 //                uploadDoctors();
 //                uploadShopItems();
-//                uploadArticles();
+                uploadArticles();
 
             }
         });
@@ -179,8 +179,8 @@ public class LoginActivity extends AppCompatActivity {
 
         Log.d("Articles", "Articles method triggered");
 
-        article.setArticleTitle("What will happen next after depression");
-        article.setArticleType("Videos");
+        article.setArticleTitle("What will happen next");
+        article.setArticleType("Community");
         article.setArticleContent("is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.");
         article.setAuthorName("Dr. Khulood");
         article.setVideoUrl("https://www.youtube.com/watch?v=XHNHq1mC0VQ");

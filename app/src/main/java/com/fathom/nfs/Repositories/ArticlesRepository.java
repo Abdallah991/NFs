@@ -27,7 +27,7 @@ public class ArticlesRepository {
     // Creating one instance
     private static ArticlesRepository instance;
     private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
-    private String TAG = "MVVM";
+    private String TAG = "Articles";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseStorage storage;
     private StorageReference storageRef;
@@ -65,14 +65,6 @@ public class ArticlesRepository {
 
         if (mArticles.isEmpty()) {
 
-//            mArticles.add (
-//                    new ArticleDataModel(R.drawable.autism_article, "When to Test your Child for Autism", "Dr MUNEERA"));
-//
-//            mArticles.add (
-//                    new ArticleDataModel(R.drawable.abuse_article, "Suicid Awareness in the Middle East", "Dr EMAD"));
-//
-//            mArticles.add (
-//                    new ArticleDataModel(R.drawable.suicide_article, "5 Steps to Deal with Domestic Abuse", "Dr KHULOOD"));
 
             Log.d(TAG," Loading the data is going to start");
 

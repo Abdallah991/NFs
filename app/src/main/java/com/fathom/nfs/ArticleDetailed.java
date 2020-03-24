@@ -33,6 +33,7 @@ public class ArticleDetailed extends Fragment {
     private ImageView articleImage;
     private TextView articleTitle;
     private TextView author;
+    private TextView articleContent;
     private ScrollView articleDetailedContent;
     private int position;
 
@@ -57,6 +58,7 @@ public class ArticleDetailed extends Fragment {
 
         articleImage = view.findViewById(R.id.articleDetailedImage);
         articleTitle = view.findViewById(R.id.articleDetailedTitle);
+        articleContent = view.findViewById(R.id.articleContent);
         author = view.findViewById(R.id.articleDetailedAuthor);
         articleDetailedContent = view.findViewById(R.id.articleDetailed);
 
@@ -71,6 +73,7 @@ public class ArticleDetailed extends Fragment {
                 articleImage.setImageBitmap(article.getArticleImage());
                 articleTitle.setText(article.getArticleTitle());
                 author.setText(article.getAuthorName());
+                articleContent.setText((article.getArticleContent()));
             }
         });
 

@@ -7,8 +7,10 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -80,14 +82,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView = findViewById(R.id.bottom_nav);
         logOut = findViewById(R.id.logOut);
         closeDrawerButton = findViewById(R.id.close_btn);
-        sliderUserImage = findViewById(R.id.sliderUserImage);
 
+        LayoutInflater inflater = getLayoutInflater();
+//        View slider = inflater.from(getApplicationContext()).inflate(R.layout.drawer_header, null);
+        ViewGroup viewRoot = (ViewGroup) inflater.inflate(R.layout.drawer_header,null);
+
+        Log.d("User Image", " " + sliderUserImage);
+        sliderUserImage = viewRoot.findViewById(R.id.sliderUserImage);
+
+        Log.d("User Image", " " + sliderUserImage);
         // Shifting the Action bar, Drawer Layout and Navigation view to the right side
         ViewCompat.setLayoutDirection(toolbar, ViewCompat.LAYOUT_DIRECTION_RTL);
         ViewCompat.setLayoutDirection(drawerLayout, ViewCompat.LAYOUT_DIRECTION_RTL);
         ViewCompat.setLayoutDirection(navigationView, ViewCompat.LAYOUT_DIRECTION_LTR);
         ViewCompat.setLayoutDirection(bottomNavigationView, ViewCompat.LAYOUT_DIRECTION_LTR);
 //        navigationView.setItemHorizontalPadding(100);
+
 
         for (int i = 0; i < toolbar.getChildCount(); i++) {
             if(toolbar.getChildAt(i) instanceof ImageButton){
@@ -129,6 +139,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.closeDrawer(GravityCompat.START);
+
+
                 }
 
             }
@@ -268,17 +280,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 user = userDataModel;
 
                 // TODO: Persist the image on the slider
-//                sliderUserImage.setImageBitmap(user.getUserImage());
-//                sliderUserImage.setImageResource(R.drawable.user);
+                sliderUserImage.setImageBitmap(user.getUserImage());
+                sliderUserImage.setImageResource(R.drawable.user);
 
 
-                Toast.makeText(getApplicationContext(), "the user is " +user.getUserImage(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "the user is " +user.getUserImage(), Toast.LENGTH_SHORT).show();
+
 
 
             }
         }, SPLASH_TIME_OUT);
     }
-
 
 
 

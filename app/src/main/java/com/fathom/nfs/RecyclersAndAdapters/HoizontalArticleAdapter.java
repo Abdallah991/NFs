@@ -20,6 +20,11 @@ import com.fathom.nfs.ViewModels.ArticleCategoryViewModel;
 
 import java.util.ArrayList;
 
+import static com.fathom.nfs.Articles.showArticles;
+import static com.fathom.nfs.Articles.showBlog;
+import static com.fathom.nfs.Articles.showCommunity;
+import static com.fathom.nfs.Articles.showVideos;
+
 public class HoizontalArticleAdapter extends RecyclerView.Adapter<HoizontalArticleAdapter.ArticleCardsHolder> {
 
     private ArrayList<ArticleCategoryDataModel> mArticleCategories;
@@ -57,6 +62,31 @@ public class HoizontalArticleAdapter extends RecyclerView.Adapter<HoizontalArtic
     public void onBindViewHolder(@NonNull ArticleCardsHolder holder, int position) {
 
         holder.image.setImageResource(mArticleCategories.get(position).getCategoryImage());
+
+        holder.card.setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View view) {
+                if (position == 0){
+                    showArticles();
+                }
+                if (position == 1) {
+                    showVideos();
+
+                }
+
+                if (position == 2) {
+                    showBlog();
+
+                }
+
+                if (position == 3) {
+                    showCommunity();
+
+                }
+            }
+        });
 
 
 

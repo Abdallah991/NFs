@@ -1,7 +1,9 @@
 package com.fathom.nfs;
 
 
+import android.content.Intent;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,6 +35,7 @@ public class VideoDetailed extends Fragment {
     private TextView videoTitle;
     private TextView videoUploader;
     private int position;
+    private String youtubeLink;
 
 
 
@@ -71,11 +74,23 @@ public class VideoDetailed extends Fragment {
                 videoImage.setImageResource(article.getImageUrl());
                 videoTitle.setText(article.getArticleTitle());
                 videoUploader.setText(article.getAuthorName());
+                youtubeLink = article.getVideoUrl();
+                youtubeLink = "https://www.youtube.com/watch?v=XHNHq1mC0VQ";
             }
         });
 
 
         ViewCompat.setLayoutDirection(videoDetailedContent, ViewCompat.LAYOUT_DIRECTION_LTR);
+
+        playVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(youtubeLink));
+                startActivity(webIntent);
+            }
+        });
 
     }
 }

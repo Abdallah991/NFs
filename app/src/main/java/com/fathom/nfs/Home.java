@@ -25,6 +25,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.SearchView;
@@ -103,6 +104,7 @@ public class Home extends Fragment {
     private int actionToDetailedShopItem = R.id.action_homeFragment_to_shopItemDetailed;
 
     private TextView userName;
+    private ImageView sliderUserImage;
     private DoctorDataModel doctor = new DoctorDataModel();
 
 
@@ -134,7 +136,14 @@ public class Home extends Fragment {
 
          userName = view.findViewById(R.id.userName);
 
+        LayoutInflater inflater = getLayoutInflater();
+//        View slider = inflater.from(getApplicationContext()).inflate(R.layout.drawer_header, null);
+        ViewGroup viewRoot = (ViewGroup) inflater.inflate(R.layout.drawer_header,null);
 
+        Log.d("User Image", " " + sliderUserImage);
+        sliderUserImage = viewRoot.findViewById(R.id.sliderUserImage);
+
+        Log.d("User Image", " " + sliderUserImage);
 
 
 
@@ -454,6 +463,13 @@ public class Home extends Fragment {
         searchList.setVisibility(View.GONE);
 
 
+
+            Toast.makeText(getContext(), "User is " +user.getFirstName() , Toast.LENGTH_SHORT ).show();
+//            sliderUserImage.setImageResource(R.drawable.user);
+
+
+
+
     }
 
     private void setUpDisplayName() {
@@ -512,6 +528,7 @@ public class Home extends Fragment {
                 initRecyclerView();
                 Log.d(TAG2, "initialising recycler with a delay called ");
 
+                sliderUserImage.setImageBitmap(user.getUserImage());
 
 
             }
