@@ -66,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Toys"
+                android:id="@+id/toysFilter"
                 android:background="@drawable/button_filter"
                 android:textColor="@color/colorPrimary"
                 android:textSize="11sp"
@@ -80,6 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Books"
+                android:id="@+id/booksFilter"
                 android:background="@drawable/button_filter"
                 android:textColor="@color/colorPrimary"
                 android:textSize="11sp"
@@ -94,6 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Merchandise"
+                android:id="@+id/merchandiseFilter"
                 android:background="@drawable/button_filter"
                 android:layout_marginTop="@dimen/fab_margin"
                 android:layout_marginBottom="@dimen/fab_margin"
@@ -108,7 +111,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/newIn"
+            android:id="@+id/newInToys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -129,7 +132,7 @@
             android:textSize="32sp"
             android:textStyle="bold"
             app:fontFamily="@font/poppins"
-            android:layout_below="@id/newIn" />
+            android:layout_below="@id/newInToys" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -268,7 +271,7 @@
             android:layout_below="@id/linearLayout2"/>
 
     <TextView
-        android:id="@+id/newIn2"
+        android:id="@+id/newInBooks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -289,7 +292,7 @@
         android:textSize="32sp"
         android:textStyle="bold"
         app:fontFamily="@font/poppins"
-        android:layout_below="@id/newIn2" />
+        android:layout_below="@id/newInBooks" />
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
@@ -324,7 +327,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="40dp"
-            android:text="@string/newIn"
+            android:text="No Merchandise"
+            android:gravity="center_horizontal"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             app:fontFamily="@font/poppins_regular"

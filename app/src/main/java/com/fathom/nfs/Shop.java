@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -71,6 +72,17 @@ public class Shop extends Fragment {
     private TextView featuredSubTitle;
     private TextView featuredPrice;
 
+    private Button toys;
+    private Button viewToys;
+    private Button books;
+    private Button viewBooks;
+    private Button merchandise;
+
+    private TextView newInToys;
+    private TextView newInBooks;
+    private TextView toysText;
+    private TextView booksText;
+
     private String TAG2 = "Books Array";
 
 
@@ -101,6 +113,17 @@ public class Shop extends Fragment {
         featuredTitle = view.findViewById(R.id.toyTitle);
         featuredSubTitle = view.findViewById(R.id.toySubtitle);
         featuredPrice = view.findViewById(R.id.toyPrice);
+
+        toys = view.findViewById(R.id.toysFilter);
+        viewToys = view.findViewById(R.id.viewToys);
+        books = view.findViewById(R.id.booksFilter);
+        viewBooks = view.findViewById(R.id.viewBooks);
+        merchandise = view.findViewById(R.id.merchandiseFilter);
+
+        newInToys = view.findViewById(R.id.newInToys);
+        newInBooks = view.findViewById(R.id.newInBooks);
+        toysText = view.findViewById(R.id.toys);
+        booksText = view.findViewById(R.id.books);
 
 
         mBookArrayViewModel = new ViewModelProvider(requireActivity()).get(BookArrayViewModel.class);
@@ -135,6 +158,77 @@ public class Shop extends Fragment {
                 // so Detailed shop will display featured
                 mShopItemDataModel = featured;
                 mNavController.navigate(actionToDetailedShopItem);
+            }
+        });
+
+        toys.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toys.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                toys.setTextColor(getResources().getColor(R.color.white));
+                books.setBackgroundColor(getResources().getColor(R.color.white));
+                books.setTextColor(getResources().getColor(R.color.colorPrimary));
+                merchandise.setBackgroundColor(getResources().getColor(R.color.white));
+                merchandise.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                mShopRecycler.setVisibility(View.VISIBLE);
+                featuredCard.setVisibility(View.VISIBLE);
+                mBookRecycler.setVisibility(View.GONE);
+                viewBooks.setVisibility(View.GONE);
+                newInBooks.setVisibility(View.GONE);
+                booksText.setVisibility(View.GONE);
+                newInToys.setVisibility(View.VISIBLE);
+                toysText.setVisibility(View.VISIBLE);
+                viewToys.setVisibility(View.VISIBLE);
+            }
+        });
+
+        books.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                books.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                books.setTextColor(getResources().getColor(R.color.white));
+                toys.setBackgroundColor(getResources().getColor(R.color.white));
+                toys.setTextColor(getResources().getColor(R.color.colorPrimary));
+                merchandise.setBackgroundColor(getResources().getColor(R.color.white));
+                merchandise.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                mShopRecycler.setVisibility(View.GONE);
+                featuredCard.setVisibility(View.GONE);
+                mBookRecycler.setVisibility(View.VISIBLE);
+                viewBooks.setVisibility(View.VISIBLE);
+                newInBooks.setVisibility(View.VISIBLE);
+                booksText.setVisibility(View.VISIBLE);
+                newInToys.setVisibility(View.GONE);
+                toysText.setVisibility(View.GONE);
+                viewToys.setVisibility(View.GONE);
+
+            }
+        });
+
+        merchandise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                merchandise.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                merchandise.setTextColor(getResources().getColor(R.color.white));
+                books.setBackgroundColor(getResources().getColor(R.color.white));
+                books.setTextColor(getResources().getColor(R.color.colorPrimary));
+                toys.setBackgroundColor(getResources().getColor(R.color.white));
+                toys.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                mShopRecycler.setVisibility(View.GONE);
+                mBookRecycler.setVisibility(View.GONE);
+                featuredCard.setVisibility(View.GONE);
+                viewBooks.setVisibility(View.GONE);
+                newInBooks.setVisibility(View.GONE);
+                booksText.setVisibility(View.GONE);
+                newInToys.setVisibility(View.GONE);
+                toysText.setVisibility(View.GONE);
+                viewToys.setVisibility(View.GONE);
+
+
             }
         });
 
