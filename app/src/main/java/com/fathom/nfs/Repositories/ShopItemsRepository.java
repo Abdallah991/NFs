@@ -64,7 +64,7 @@ public class ShopItemsRepository {
         Log.d("MVVM"," Loading the data is going to start");
 
 
-            db.collection("Shop Items")
+            db.collection("Shop Items").whereEqualTo("shopItemType","Toy")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override

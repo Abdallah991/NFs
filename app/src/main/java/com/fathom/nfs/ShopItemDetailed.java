@@ -29,6 +29,7 @@ import com.fathom.nfs.ViewModels.ShopItemsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.fathom.nfs.DataModels.CartDataModel.shoppingCartItems;
 
@@ -49,9 +50,15 @@ public class ShopItemDetailed extends Fragment {
     private NavController mNavController;
     private int actionId = R.id.action_shopItemDetailed_self;
     private int actionToCart = R.id.action_shopItemDetailed_to_cart;
-    private ArrayList<ShopItemDataModel> mShopItemDataModels;
+    public static ShopItemDataModel mShopItemDataModel;
 
-    public ShopItemDetailed() {
+
+//    public ShopItemDetailed( ShopItemDataModel shopItem) {
+//        // Required empty public constructor
+//        mShopItemDataModel = shopItem;
+//    }
+
+    public ShopItemDetailed( ) {
         // Required empty public constructor
     }
 
@@ -86,11 +93,19 @@ public class ShopItemDetailed extends Fragment {
 
                 mShopItemAdapter.notifyDataSetChanged();
 
-                 shopItem = shopItemDataModels.get(position);
+                if (mShopItemDataModel == null) {
+                    shopItem = shopItemDataModels.get(position);
 
-                shopItemImage.setImageBitmap(shopItem.getShopItemImage());
-                price.setText(shopItem.getPrice());
-                shopItemDescription.setText(shopItem.getItemDescription());
+                    shopItemImage.setImageBitmap(shopItem.getShopItemImage());
+                    price.setText(shopItem.getPrice());
+                    shopItemDescription.setText(shopItem.getItemDescription());
+                }
+                else {
+
+                    shopItemImage.setImageBitmap(mShopItemDataModel.getShopItemImage());
+                    price.setText(mShopItemDataModel.getPrice());
+                    shopItemDescription.setText(mShopItemDataModel.getItemDescription());
+                }
             }
         });
 
@@ -100,7 +115,12 @@ public class ShopItemDetailed extends Fragment {
             public void onClick(View v) {
 
                 mNavController.navigate(actionToCart);
-                shoppingCartItems.add(shopItem);
+                if (mShopItemDataModel == null) {
+                    shoppingCartItems.add(shopItem);
+                }
+                else {
+                    shoppingCartItems.add(mShopItemDataModel);
+                }
                 Toast.makeText(getContext(), "Items in cart "+ shoppingCartItems.size() , Toast.LENGTH_SHORT).show();
 
 

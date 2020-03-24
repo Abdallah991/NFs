@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fathom.nfs.BookItemDetailed;
 import com.fathom.nfs.DataModels.BookRowDataModel;
 import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.R;
@@ -81,6 +82,7 @@ public class BookChildAdapter extends RecyclerView.Adapter<BookChildAdapter.Book
             public void onClick(View v) {
                 mBookArrayViewModel.SelectRow(mRow, rowPosition);
                 mBookArrayViewModel.SelectBook(mBook, position);
+                BookItemDetailed.bookDetailed = mBook.get(position);
                 mNavController.navigate(actionId);
 
 

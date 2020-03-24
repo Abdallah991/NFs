@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import static com.fathom.nfs.DataModels.BookmarkDataModel.doctorItemsBookmarked;
 import static com.fathom.nfs.DataModels.BookmarkDataModel.shopItemsBookmarked;
+import static com.fathom.nfs.ShopItemDetailed.mShopItemDataModel;
 
 public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopItemHolder> {
 
@@ -70,6 +71,8 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // so Detailed shop work normally and not display featured
+                mShopItemDataModel = null;
                 mNavController.navigate(mShopItemId);
                 mShopItemsViewModel.selectShopItems(mShopItems, position);
             }

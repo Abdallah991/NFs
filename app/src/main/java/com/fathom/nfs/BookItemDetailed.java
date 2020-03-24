@@ -44,6 +44,7 @@ public class BookItemDetailed extends Fragment {
     private RecyclerView horizontalShopItemRecycler;
     private BookArrayViewModel model;
     private NavController mNavController;
+    public static ShopItemDataModel bookDetailed;
 //    private int actionId = R.id.action_shopItemDetailed_self;
 
     public BookItemDetailed() {
@@ -73,23 +74,25 @@ public class BookItemDetailed extends Fragment {
         positionOfItem = model.getPositionOfItems();
         positionOfBookArray = model.getPositionOfRow();
 
-//        model.getBookArrays().observe(getViewLifecycleOwner(), new Observer<List<BookRowDataModel>>() {
-//            @Override
-//            public void onChanged(List<BookRowDataModel> bookRowDataModels) {
-//
-//                BookRowDataModel bookRow = bookRowDataModels.get(positionOfBookArray);
-//                ShopItemDataModel book = bookRow.getBooks().get(positionOfItem);
-//
-//                bookImage.setImageResource(book.getImageUrl());
-//                price.setText(book.getPrice());
-//                bookDescription.setText(book.getItemDescription());
-//
-//
-//
-//
-//            }
-//        });
+        model.getBookArrays().observe(getViewLifecycleOwner(), new Observer<List<BookRowDataModel>>() {
+            @Override
+            public void onChanged(List<BookRowDataModel> bookRowDataModels) {
 
+//                BookRowDataModel bookRow = bookRowDataModels.get(positionOfBookArray);
+//                ShopItemDataModel book =  bookRow.getBooks().get(positionOfItem);
+
+//                notify();
+
+
+
+
+
+            }
+        });
+
+        bookImage.setImageBitmap(bookDetailed.getShopItemImage());
+        price.setText(bookDetailed.getPrice());
+        bookDescription.setText(bookDetailed.getItemDescription());
 
         ViewCompat.setLayoutDirection(bookDetailedContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 

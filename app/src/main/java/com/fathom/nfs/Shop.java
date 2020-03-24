@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -15,6 +16,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +39,8 @@ import com.fathom.nfs.ViewModels.ShopItemsViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fathom.nfs.ShopItemDetailed.mShopItemDataModel;
+
 
 public class Shop extends Fragment {
 
@@ -43,7 +48,7 @@ public class Shop extends Fragment {
     private ArrayList<ShopItemDataModel> mShopItems = new ArrayList<>();
     private ArrayList<ShopItemDataModel> limitedShopItems = new ArrayList<>();
     private ArrayList<BookRowDataModel> bookArray = new ArrayList<>();
-    private ShopItemDataModel featured;
+    private static ShopItemDataModel featured;
 
     private ScrollView shopContent;
 
@@ -60,14 +65,18 @@ public class Shop extends Fragment {
     private int actionToDetailedShopItem = R.id.action_shopFragment_to_shopItemDetailed;
     private int actionToDetailedBook = R.id.action_shopFragment_to_bookItemDetailed;
 
+    private CardView featuredCard;
     private ImageView featuredImage;
     private TextView featuredTitle;
     private TextView featuredSubTitle;
     private TextView featuredPrice;
 
+    private String TAG2 = "Books Array";
 
-    public Shop() {
-        // Required empty public constructor
+
+    public Shop( ) {
+
+
     }
 
 
@@ -87,10 +96,12 @@ public class Shop extends Fragment {
         mShopRecycler = view.findViewById(R.id.toysRecyclerView);
         mBookRecycler = view.findViewById(R.id.booksRecyclerView);
 
+        featuredCard = view.findViewById(R.id.shopItemCard);
         featuredImage = view.findViewById(R.id.toyImage);
         featuredTitle = view.findViewById(R.id.toyTitle);
         featuredSubTitle = view.findViewById(R.id.toySubtitle);
         featuredPrice = view.findViewById(R.id.toyPrice);
+
 
         mBookArrayViewModel = new ViewModelProvider(requireActivity()).get(BookArrayViewModel.class);
         mBookArrayViewModel.initBookArrays();
@@ -118,6 +129,16 @@ public class Shop extends Fragment {
         initRecyclers();
 
 
+        featuredCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // so Detailed shop will display featured
+                mShopItemDataModel = featured;
+                mNavController.navigate(actionToDetailedShopItem);
+            }
+        });
+
+        loadingRecycler();
 
 
     }
@@ -174,6 +195,31 @@ public class Shop extends Fragment {
 
         }
 
+        mBookParentAdapter.notifyDataSetChanged();
         initRecyclers();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    private void loadingRecycler() {
+
+        Handler myHandler;
+        int SPLASH_TIME_OUT = 6000;
+        myHandler = new Handler();
+
+        Log.d(TAG2, "Books Recycler been called");
+
+        // showing the Splash screen for two seconds then going to on boarding activity
+        myHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                initRecyclers();
+            }
+        }, SPLASH_TIME_OUT);
     }
 }

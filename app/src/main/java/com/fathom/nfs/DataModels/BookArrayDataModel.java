@@ -3,7 +3,7 @@ package com.fathom.nfs.DataModels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookArrayDataModel {
+public class BookArrayDataModel extends ShopItemDataModel{
 
     // depends on data received
     private ArrayList<BookRowDataModel> booksArray;

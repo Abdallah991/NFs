@@ -166,11 +166,11 @@ public class LoginActivity extends AppCompatActivity {
 
         Log.d("ShopItem", "Shop Item method triggered");
 
-        shopItem.setShopItemName("Swimie");
-        shopItem.setShopItemSubName(" A toy for pool and the beach");
-        shopItem.setItemDescription("This toy helps the child to interact with his/her emotions outside or at the pool of the beach");
-        shopItem.setPrice("4.720 BHD");
-        shopItem.setShopItemType("Toy");
+        shopItem.setShopItemName("The Psychology Book");
+        shopItem.setShopItemSubName("Learn more about psychology");
+        shopItem.setItemDescription("This book is written by Someone");
+        shopItem.setPrice("1.200");
+        shopItem.setShopItemType("Book");
         db.collection("Shop Items")
                 .document(shopItem.getShopItemName()).set(shopItem);
     }
