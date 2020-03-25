@@ -76,4 +76,16 @@
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:indeterminateDrawable">@drawable/circular_progress_dialog</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:background">@color/white</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+
+    </style>
+
+
 </resources>

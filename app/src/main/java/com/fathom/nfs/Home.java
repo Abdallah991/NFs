@@ -3,7 +3,9 @@ package com.fathom.nfs;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -106,6 +108,8 @@ public class Home extends Fragment {
     private TextView userName;
     private ImageView sliderUserImage;
     private DoctorDataModel doctor = new DoctorDataModel();
+    private static ProgressDialog myProgressDialog;
+
 
 
     public Home() {
@@ -142,6 +146,7 @@ public class Home extends Fragment {
 
         Log.d("User Image", " " + sliderUserImage);
         sliderUserImage = viewRoot.findViewById(R.id.sliderUserImage);
+
 
         Log.d("User Image", " " + sliderUserImage);
 
@@ -364,6 +369,14 @@ public class Home extends Fragment {
         }
 
 
+            if (mDoctors.isEmpty()) {
+                myProgressDialog = new ProgressDialog(getContext());
+                myProgressDialog.setProgressStyle(R.style.MyAlertDialogStyle);
+                myProgressDialog.setCancelable(false);
+                myProgressDialog.setMessage("Please Wait ...");
+                myProgressDialog.show();
+            }
+
 
 
 
@@ -530,7 +543,7 @@ public class Home extends Fragment {
 
                 sliderUserImage.setImageBitmap(user.getUserImage());
 
-
+                myProgressDialog.dismiss();
             }
         }, SPLASH_TIME_OUT);
     }
