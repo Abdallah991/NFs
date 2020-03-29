@@ -56,8 +56,9 @@ public class BookParentAdapter extends RecyclerView.Adapter<BookParentAdapter.Bo
     public void onBindViewHolder(@NonNull BookHolder holder, int position) {
 
 
-        
+//        if (horizentalAdapter == null)
         horizentalAdapter = new BookChildAdapter(mBooks.get(position).getBooks(),mContext, mNavController, actionId, mBookArrayViewModel, position, mBooks);
+
         holder.recyclerViewHorizontal.setAdapter(horizentalAdapter);
 
         holder.recyclerViewHorizontal.setRecycledViewPool(recycledViewPool);

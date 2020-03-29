@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class ShopItemDetailed extends Fragment {
     private int actionId = R.id.action_shopItemDetailed_self;
     private int actionToCart = R.id.action_shopItemDetailed_to_cart;
     public static ShopItemDataModel mShopItemDataModel;
+    private ImageButton backButton;
 
 
 //    public ShopItemDetailed( ShopItemDataModel shopItem) {
@@ -80,6 +82,7 @@ public class ShopItemDetailed extends Fragment {
         price = view.findViewById(R.id.shopItemDetailedPrice);
         shopItemDescription = view.findViewById(R.id.ShopItemDetailedDescription);
         horizontalShopItemRecycler = view.findViewById(R.id.ShopItemDetailedRecyclerView);
+        backButton = view.findViewById(R.id.backButtonToShop);
         addToCart = view.findViewById(R.id.addToCart);
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
@@ -129,6 +132,12 @@ public class ShopItemDetailed extends Fragment {
 
 
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNavController.navigateUp();
+            }
+        });
 
 
         ViewCompat.setLayoutDirection(shopItemDetailedContent, ViewCompat.LAYOUT_DIRECTION_LTR);

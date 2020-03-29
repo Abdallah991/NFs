@@ -9,10 +9,13 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -36,6 +39,7 @@ public class ArticleDetailed extends Fragment {
     private TextView articleContent;
     private ScrollView articleDetailedContent;
     private int position;
+    private ImageButton backButton;
 
 
     public ArticleDetailed() {
@@ -61,6 +65,7 @@ public class ArticleDetailed extends Fragment {
         articleContent = view.findViewById(R.id.articleContent);
         author = view.findViewById(R.id.articleDetailedAuthor);
         articleDetailedContent = view.findViewById(R.id.articleDetailed);
+        backButton = view.findViewById(R.id.backButtonToArticlesFromDetailedArticle);
 
         ArticleViewModel model = new ViewModelProvider(requireActivity()).get(ArticleViewModel.class);
         model.initArticles();
@@ -74,6 +79,14 @@ public class ArticleDetailed extends Fragment {
                 articleTitle.setText(article.getArticleTitle());
                 author.setText(article.getAuthorName());
                 articleContent.setText((article.getArticleContent()));
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigateUp();
             }
         });
 

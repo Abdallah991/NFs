@@ -11,6 +11,9 @@
         android:label="fragment_about_nfs"
         tools:layout="@layout/fragment_about_nfs">
 
+        <action
+            android:id="@+id/action_aboutNfsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountSettingsFragment"
@@ -187,7 +190,11 @@
         android:id="@+id/bookItemDetailed"
         android:name="com.fathom.nfs.BookItemDetailed"
         android:label="fragment_book_item_detailed"
-        tools:layout="@layout/fragment_book_item_detailed" />
+        tools:layout="@layout/fragment_book_item_detailed" >
+        <action
+            android:id="@+id/action_bookItemDetailed_to_shopFragment"
+            app:destination="@id/shopFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cart"
         android:name="com.fathom.nfs.Cart"

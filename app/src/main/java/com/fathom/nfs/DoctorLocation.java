@@ -10,10 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,6 +37,7 @@ public class DoctorLocation extends Fragment implements OnMapReadyCallback {
 
     private LinearLayout doctorLocationContent;
     private LatLng doctorLocation;
+    private ImageButton backButton;
 
 
 
@@ -57,12 +61,19 @@ public class DoctorLocation extends Fragment implements OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState);
 
         doctorLocationContent = view.findViewById(id.doctorLocationContent);
+        backButton = view.findViewById(id.backButtonToDoctors);
 
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigateUp();
+            }
+        });
 
         ViewCompat.setLayoutDirection(doctorLocationContent, ViewCompat.LAYOUT_DIRECTION_LTR);
     }

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class FAQs extends Fragment {
     private FAQsViewModel mFAQsViewModel;
     private int actionBackToHome;
     private int position;
+    private ImageButton backButton;
 
     public FAQs() {
         // Required empty public constructor
@@ -67,6 +69,7 @@ public class FAQs extends Fragment {
 
         FAQsContent = view.findViewById(R.id.faqsContent);
         mFAQsSectionsRecycler = view.findViewById(R.id.FAQRecyclerView);
+        backButton = view.findViewById(R.id.backButtonToHome);
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         mFAQsViewModel = new ViewModelProvider(requireActivity()).get(FAQsViewModel.class);
@@ -77,6 +80,13 @@ public class FAQs extends Fragment {
             @Override
             public void onChanged(List<FAQsDataModel> faQsDataModels) {
                 mFAQsAdapter.notifyDataSetChanged();
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNavController.navigateUp();
             }
         });
 

@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView sliderUserImage;
     private String TAG = "HOME";
     private UserDataModel user = new UserDataModel();
+    private FirebaseStorage storage;
+    private StorageReference storageRef;
+    private StorageReference userImageRef;
 
 
     @Override
@@ -91,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sliderUserImage = viewRoot.findViewById(R.id.sliderUserImage);
 
         Log.d("User Image", " " + sliderUserImage);
+
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
         // Shifting the Action bar, Drawer Layout and Navigation view to the right side
         ViewCompat.setLayoutDirection(toolbar, ViewCompat.LAYOUT_DIRECTION_RTL);
         ViewCompat.setLayoutDirection(drawerLayout, ViewCompat.LAYOUT_DIRECTION_RTL);
@@ -167,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 user = userDataModel;
 
 //                sliderUserImage.setImageBitmap(user.getUserImage());
+                getImage();
                 loadingImage(user);
 
             }
@@ -280,8 +287,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 user = userDataModel;
 
                 // TODO: Persist the image on the slider
-                sliderUserImage.setImageBitmap(user.getUserImage());
-                sliderUserImage.setImageResource(R.drawable.user);
+//                sliderUserImage.setImageBitmap(user.getUserImage());
+//                sliderUserImage.setImageResource(R.drawable.user);
 
 
 //                Toast.makeText(getApplicationContext(), "the user is " +user.getUserImage(), Toast.LENGTH_SHORT).show();
@@ -290,6 +297,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         }, SPLASH_TIME_OUT);
+    }
+
+    private void getImage() {
+
+
+        userImageRef = storageRef.child("abdulla.alathamnah@gmail.com");
+
+
+        userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                // Use the bytes to display the image
+
+                final Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                user.setUserImage(bmp);
+                sliderUserImage.setImageBitmap(bmp);
+
+                Log.d(TAG, " Loading the Image is DONE");
+
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                Log.d(TAG, " Loading the Image Failed" + exception.getMessage());
+
+                // Handle any errors
+            }
+        });
+
     }
 
 

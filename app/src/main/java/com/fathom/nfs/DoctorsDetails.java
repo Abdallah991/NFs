@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -86,6 +87,7 @@ public class DoctorsDetails extends Fragment {
     private Button bookAppointment;
     private String phone;
     private NavController mNavController;
+    private ImageButton backButton;
 
 
 
@@ -142,6 +144,9 @@ public class DoctorsDetails extends Fragment {
         bookAppointment = view.findViewById(R.id.bookAppointment);
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
+        backButton = view.findViewById(R.id.backButtonToDoctors);
+
 
 
         ViewCompat.setLayoutDirection(doctorsDetailsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
@@ -331,6 +336,13 @@ public class DoctorsDetails extends Fragment {
 
                 mNavController.navigate(R.id.action_doctorsDetails_to_setAppointment);
 
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNavController.navigateUp();
             }
         });
 

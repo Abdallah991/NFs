@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -56,6 +57,7 @@ public class DoctorsSpecialities extends Fragment {
     private TextView SpecialityText;
     private int position;
     private String categoryName;
+    private ImageButton backButton;
 
 
 
@@ -83,6 +85,7 @@ public class DoctorsSpecialities extends Fragment {
         specialityQ = view.findViewById(R.id.specialityQuestion);
         specialityImage = view.findViewById(R.id.quesionImage);
         SpecialityText = view.findViewById(R.id.doctorsSpecialityText);
+        backButton = view.findViewById(R.id.backButtonToDoctors);
 
         // Calling the View Model
         mDoctorsViewModel = new ViewModelProvider(requireActivity()).get(DoctorsViewModel.class);
@@ -114,6 +117,13 @@ public class DoctorsSpecialities extends Fragment {
 
                 initRecycler(categoryName);
 
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNavController.navigateUp();
             }
         });
 

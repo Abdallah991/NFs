@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class BookItemDetailed extends Fragment {
     private BookArrayViewModel model;
     private NavController mNavController;
     public static ShopItemDataModel bookDetailed;
+    private ImageButton backButton;
 //    private int actionId = R.id.action_shopItemDetailed_self;
 
     public BookItemDetailed() {
@@ -67,6 +69,7 @@ public class BookItemDetailed extends Fragment {
         bookImage = view.findViewById(R.id.bookItemDetailedImage);
         price = view.findViewById(R.id.bookItemDetailedPrice);
         bookDescription = view.findViewById(R.id.bookItemDetailedDescription);
+        backButton = view.findViewById(R.id.backButtonToBookShop);
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
@@ -95,6 +98,17 @@ public class BookItemDetailed extends Fragment {
         bookDescription.setText(bookDetailed.getItemDescription());
 
         ViewCompat.setLayoutDirection(bookDetailedContent, ViewCompat.LAYOUT_DIRECTION_LTR);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mNavController.navigateUp();
+
+
+
+            }
+        });
 
 
 

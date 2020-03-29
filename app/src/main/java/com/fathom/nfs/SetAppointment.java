@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -39,6 +43,7 @@ public class SetAppointment extends Fragment {
     private Spinner endTime;
     private Spinner endAmPm;
     private Button bookAppointment;
+    private ImageView backButton;
 
     public SetAppointment() {
         // Required empty public constructor
@@ -65,6 +70,7 @@ public class SetAppointment extends Fragment {
         endTime = view.findViewById(R.id.endTime);
         endAmPm = view.findViewById(R.id.endAMPM);
         bookAppointment = view.findViewById(R.id.appointmentBooking);
+        backButton = view.findViewById(R.id.backButtontoDoctorDetailed);
 
         ArrayAdapter<String> timeAdapter = new ArrayAdapter<String>(getContext(),
                 R.layout.spinner_item, getResources().getStringArray(R.array.timings));
@@ -105,6 +111,14 @@ public class SetAppointment extends Fragment {
 
 
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigateUp();
+            }
+        });
 
         ViewCompat.setLayoutDirection(setAppointmentContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 

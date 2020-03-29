@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class FAQsDetailed extends Fragment {
     private TextView title;
     private TextView detailedSectionText;
     private ImageView monsterImage;
+    private ImageButton backButton;
 
     public FAQsDetailed() {
         // Required empty public constructor
@@ -71,6 +73,7 @@ public class FAQsDetailed extends Fragment {
         title = view.findViewById(R.id.faqsDetailedTitle);
         detailedSectionText = view.findViewById(R.id.faqsDetailedText);
         monsterImage = view.findViewById(R.id.faqsDetailedMonster);
+        backButton = view.findViewById(R.id.backButtonToFaqs);
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
 
@@ -98,6 +101,12 @@ public class FAQsDetailed extends Fragment {
 
 
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNavController.navigateUp();
+            }
+        });
 
 
         ViewCompat.setLayoutDirection(FAQsDetailedContent, ViewCompat.LAYOUT_DIRECTION_LTR);

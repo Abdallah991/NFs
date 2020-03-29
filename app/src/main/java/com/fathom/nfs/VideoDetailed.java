@@ -12,10 +12,13 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +39,7 @@ public class VideoDetailed extends Fragment {
     private TextView videoUploader;
     private int position;
     private String youtubeLink;
+    private ImageButton backButton;
 
 
 
@@ -61,6 +65,7 @@ public class VideoDetailed extends Fragment {
         playVideo = view.findViewById(R.id.playImageDetailed);
         videoTitle = view.findViewById(R.id.videoDetailedTitle);
         videoUploader = view.findViewById(R.id.videoDetailedAuthor);
+        backButton = view.findViewById(R.id.backButtonToArticles);
 
         ArticleViewModel model = new ViewModelProvider(requireActivity()).get(ArticleViewModel.class);
         model.initArticles();
@@ -76,6 +81,14 @@ public class VideoDetailed extends Fragment {
                 videoUploader.setText(article.getAuthorName());
                 youtubeLink = article.getVideoUrl();
                 youtubeLink = "https://www.youtube.com/watch?v=XHNHq1mC0VQ";
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                navController.navigateUp();
             }
         });
 

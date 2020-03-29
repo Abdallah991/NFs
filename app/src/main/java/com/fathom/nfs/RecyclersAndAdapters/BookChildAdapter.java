@@ -50,6 +50,24 @@ public class BookChildAdapter extends RecyclerView.Adapter<BookChildAdapter.Book
 
     }
 
+    public BookChildAdapter(
+                            Context context,
+                            NavController navController,
+                            int action,
+                            BookArrayViewModel bookArrayViewModel,
+                            int position,
+                            ArrayList<BookRowDataModel> row) {
+
+
+        this.mContext = context;
+        mNavController = navController;
+        actionId = action;
+        mBookArrayViewModel = bookArrayViewModel;
+        rowPosition = position;
+        mRow = row;
+
+    }
+
 
     public BookChildAdapter(ArrayList<ShopItemDataModel> books,
                             Context context,
