@@ -1,9 +1,12 @@
 package com.fathom.nfs;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -22,9 +25,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,6 +93,8 @@ public class DoctorsDetails extends Fragment {
     private String phone;
     private NavController mNavController;
     private ImageButton backButton;
+    private Dialog mDialog;
+
 
 
 
@@ -146,6 +153,8 @@ public class DoctorsDetails extends Fragment {
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         backButton = view.findViewById(R.id.backButtonToDoctors);
+
+        mDialog = new Dialog(getContext());
 
 
 
@@ -383,6 +392,14 @@ public class DoctorsDetails extends Fragment {
         });
 
 
+        writeReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                openDialog();
+
+            }
+        });
 
 
         initRecycler();
@@ -408,6 +425,44 @@ public class DoctorsDetails extends Fragment {
         mReviewRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
+
+
+    }
+
+
+    private void openDialog() {
+
+        TextView doctorName;
+        ImageView cancel;
+        RatingBar reviewRating;
+        EditText reviewText;
+        Button postReview;
+
+        mDialog.setContentView(R.layout.write_resource_dialoug);
+        doctorName = mDialog.findViewById(R.id.doctorNameInDialogue);
+        cancel = mDialog.findViewById(R.id.cancelReview);
+        reviewRating = mDialog.findViewById(R.id.rating);
+        reviewText = mDialog.findViewById(R.id.reviewText);
+        postReview = mDialog.findViewById(R.id.uploadImage);
+
+        postReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDialog.dismiss();
+
+
+            }
+        });
+
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.show();
 
 
     }

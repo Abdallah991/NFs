@@ -1,6 +1,7 @@
 package com.fathom.nfs.RecyclersAndAdapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,7 @@ public class BookParentAdapter extends RecyclerView.Adapter<BookParentAdapter.Bo
 
     private Context mContext;
     private ArrayList<BookRowDataModel> mBooks;
-    private BookChildAdapter horizentalAdapter;
+    private BookChildAdapter mBookChildAdapter;
     private NavController mNavController;
     private int actionId;
     private BookArrayViewModel mBookArrayViewModel;
@@ -57,11 +58,16 @@ public class BookParentAdapter extends RecyclerView.Adapter<BookParentAdapter.Bo
 
 
 //        if (horizentalAdapter == null)
-        horizentalAdapter = new BookChildAdapter(mBooks.get(position).getBooks(),mContext, mNavController, actionId, mBookArrayViewModel, position, mBooks);
+        Log.d("Book Parent Adapter", "onBindViewHolder() fired and position is "+ position);
+        Log.d("Book Parent Adapter", "Array size " + mBooks.size());
 
-        holder.recyclerViewHorizontal.setAdapter(horizentalAdapter);
+        ArrayList<ShopItemDataModel> books = mBooks.get(position).getBooks();
 
-        holder.recyclerViewHorizontal.setRecycledViewPool(recycledViewPool);
+        mBookChildAdapter = new BookChildAdapter(books,mContext, mNavController, actionId, mBookArrayViewModel, position, mBooks);
+
+        holder.recyclerViewHorizontal.setAdapter(mBookChildAdapter);
+
+//        holder.recyclerViewHorizontal.setRecycledViewPool(recycledViewPool);
     }
 
     @Override

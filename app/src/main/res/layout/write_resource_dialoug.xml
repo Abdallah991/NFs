@@ -1,0 +1,121 @@
+<androidx.cardview.widget.CardView
+    android:id="@+id/writeAReview"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:padding="20dp"
+    app:cardElevation="10dp"
+    app:cardMaxElevation="20dp"
+    android:layout_gravity="center"
+    android:elevation="1dp"
+    app:cardPreventCornerOverlap="false"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        android:id="@+id/linearLatout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
+            android:weightSum="4">
+
+            <TextView
+                android:id="@+id/doctorNameInDialogue"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:text="Dr. Kulood Ebrahim"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                app:fontFamily="@font/poppins_regular" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/close"
+                android:id="@+id/cancelReview"
+                android:gravity="end"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/reviewDescription"
+            android:layout_width="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/appGrey2"
+            android:textSize="14sp"
+            android:text="Review are public and editable"
+            app:fontFamily="@font/poppins_light"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/reviewDescription2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/appGrey2"
+            android:textSize="14sp"
+            android:text="User profile will not appear with your review"
+            app:fontFamily="@font/poppins_light"
+            android:layout_marginTop="20dp"/>
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rating"
+            android:stepSize="1"
+            android:numStars="5"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:id="@+id/reviewText"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/edit_text_grey"
+            android:ems="10"
+            app:fontFamily="@font/poppins_light"
+            android:gravity="center"
+            android:hint="Type message here.."
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/uploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_gradient"
+            android:text="Select Photo"
+            android:textAllCaps="false"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:fontFamily="@font/poppins"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

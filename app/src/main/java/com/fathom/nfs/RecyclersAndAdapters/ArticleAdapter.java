@@ -73,20 +73,20 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
         holder.bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mArticles.get(position).isBookemark()){
+                if(mArticles.get(position).isBookmark()){
                     holder.bookmark.setImageResource(R.drawable.bookmark_image);
-                    mArticles.get(position).setBookemark(false);
+                    mArticles.get(position).setBookmark(false);
                     articleItemsBookmarked.remove(mArticles.get(position));
 
-                } else if (!mArticles.get(position).isBookemark()){
+                } else if (!mArticles.get(position).isBookmark()){
                     holder.bookmark.setImageResource(R.drawable.bookmarked);
-                    mArticles.get(position).setBookemark(true);
+                    mArticles.get(position).setBookmark(true);
                     articleItemsBookmarked.add(mArticles.get(position));
                 }
             }
         });
 
-        if(mArticles.get(position).isBookemark()){
+        if(mArticles.get(position).isBookmark()){
 
             holder.bookmark.setImageResource(R.drawable.bookmarked);
         }

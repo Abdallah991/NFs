@@ -9,7 +9,7 @@ public class ArticleDataModel {
     private String articleTitle;
     private String authorName;
     private String articleContent;
-    private boolean bookemark;
+    private boolean bookmark;
     private String VideoUrl;
     private String articleType;
 
@@ -42,16 +42,16 @@ public class ArticleDataModel {
         return articleContent;
     }
 
-    public boolean isBookemark() {
-        return bookemark;
+    public boolean isBookmark() {
+        return bookmark;
     }
 
     public String getVideoUrl() {
         return VideoUrl;
     }
 
-    public void setBookemark(boolean bookemark) {
-        this.bookemark = bookemark;
+    public void setBookmark(boolean bookmark) {
+        this.bookmark = bookmark;
     }
 
     public Bitmap getArticleImage() {

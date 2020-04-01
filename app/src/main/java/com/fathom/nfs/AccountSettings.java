@@ -299,6 +299,13 @@ public class AccountSettings extends Fragment {
             @Override
             public void onClick(View view) {
                 mDialog.dismiss();
+                firstName.setEnabled(false);
+                lastName.setEnabled(false);
+                email.setEnabled(false);
+                password.setEnabled(false);
+                confirmPassword.setVisibility(View.GONE);
+                editButton.setVisibility(View.GONE);
+
             }
         });
 

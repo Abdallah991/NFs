@@ -289,8 +289,8 @@ public class Shop extends Fragment {
 
         }
 
-//        mBookParentAdapter.notifyDataSetChanged();
-//        initRecyclers();
+        mBookParentAdapter.notifyDataSetChanged();
+        initRecyclers();
     }
 
     @Override
