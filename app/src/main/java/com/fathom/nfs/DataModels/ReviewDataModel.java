@@ -2,7 +2,7 @@ package com.fathom.nfs.DataModels;
 
 public class ReviewDataModel {
 
-    private int rating;
+    private float rating;
     private String reviewText;
     private String userEmail;
 
@@ -11,15 +11,16 @@ public class ReviewDataModel {
         this.reviewText = ratingText;
     }
 
-    public int getRating() {
+    public ReviewDataModel() {
+    }
+
+    public float getRating() {
         return rating;
     }
 
-    public String getRatingText() {
-        return reviewText;
-    }
 
-    public void setRating(int rating) {
+
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

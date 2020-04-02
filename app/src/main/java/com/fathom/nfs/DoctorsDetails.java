@@ -440,11 +440,13 @@ public class DoctorsDetails extends Fragment {
         reviewText = mDialog.findViewById(R.id.reviewText);
         postReview = mDialog.findViewById(R.id.postReview);
 
+        reviewRating.setRating(3.0f);
+
         postReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(getContext(), "Review is "+reviewText.getText().toString() + " and rating is"+ reviewRating.getRating() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Review is "+reviewText.getText().toString() + " and rating is "+ reviewRating.getRating() , Toast.LENGTH_SHORT).show();
             }
         });
 

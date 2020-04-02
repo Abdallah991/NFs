@@ -19,6 +19,7 @@ import com.amazonaws.mobile.client.UserStateDetails;
 import com.amazonaws.mobile.client.results.SignInResult;
 import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
+import com.fathom.nfs.DataModels.ReviewDataModel;
 import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.DataModels.UserDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
     private DoctorDataModel doctor = new DoctorDataModel();
     private ShopItemDataModel shopItem = new ShopItemDataModel();
     private ArticleDataModel article = new ArticleDataModel();
+    private ReviewDataModel review1 = new ReviewDataModel();
+    private ReviewDataModel review2 = new ReviewDataModel();
+    private ReviewDataModel review3 = new ReviewDataModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +95,8 @@ public class LoginActivity extends AppCompatActivity {
                 SignIn();
 //                uploadDoctors();
 //                uploadShopItems();
-                uploadArticles();
+//                uploadArticles();
+                uploadReviews();
 
             }
         });
@@ -186,6 +191,29 @@ public class LoginActivity extends AppCompatActivity {
         article.setVideoUrl("https://www.youtube.com/watch?v=XHNHq1mC0VQ");
         db.collection("Articles")
                 .document(article.getArticleTitle()).set(article);
+    }
+
+    private void uploadReviews() {
+
+        Log.d("Reviews", "Reviews method triggered");
+
+        review1.setRating(5f);
+        review1.setReviewText("Best doctor ever");
+        review1.setUserEmail("abdulla.alathamnah@gmail.com");
+
+        review2.setRating(4f);
+        review2.setReviewText("great doctor, but the appointment at the clinic was not accurate and had to wait for 3 minutes");
+        review2.setUserEmail("ariel.cap@gmail.com");
+
+        review3.setRating(1f);
+        review3.setReviewText("The doctor didn't pay attention to what I said and was playing Clash of clans while I was talking, what a shitty doctor man");
+        review3.setUserEmail("richard.chowne@gmail.com");
+
+        doctor.setEmail("ahmed.ali@gmail.com");
+
+        db.collection("Doctors")
+                .document(doctor.getEmail()).collection("Reviews")
+                .document(review3.getUserEmail()).set(review3);
     }
 
 }
