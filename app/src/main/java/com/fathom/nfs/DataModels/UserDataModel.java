@@ -18,6 +18,7 @@ public class UserDataModel {
     private ArrayList<ShopItemDataModel> bookmarkedShopItems;
     private ArrayList<ArticleDataModel> bookmarkedArticles;
     private ArrayList<AppointmentDataModel> bookedAppointments;
+    private ArrayList<CartDataModel> orders;
 
     public UserDataModel(String firstName, String lastName, String email, String accountType, int imgUrl) {
         this.firstName = firstName;
@@ -117,5 +118,13 @@ public class UserDataModel {
 
     public void setUserImage(Bitmap userImage) {
         this.userImage = userImage;
+    }
+
+    public ArrayList<CartDataModel> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(ArrayList<CartDataModel> orders) {
+        this.orders = orders;
     }
 }

@@ -1,6 +1,5 @@
 package com.fathom.nfs.DataModels;
 
-import androidx.lifecycle.ViewModel;
 
 public class HelpLinesDataModel  {
 
