@@ -81,6 +81,7 @@
             android:id="@+id/rating"
             android:stepSize="1"
             android:numStars="5"
+            style="@style/foodRatingBar"
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:layout_marginTop="20dp"/>
@@ -102,11 +103,11 @@
             android:textSize="16sp"/>
 
         <Button
-            android:id="@+id/uploadImage"
+            android:id="@+id/postReview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_gradient"
-            android:text="Select Photo"
+            android:text="Post Review"
             android:textAllCaps="false"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"

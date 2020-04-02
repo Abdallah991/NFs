@@ -7,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,14 +33,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
-import com.fathom.nfs.DataModels.HelpLinesDataModel;
 import com.fathom.nfs.DataModels.ReviewDataModel;
-import com.fathom.nfs.RecyclersAndAdapters.DoctorsAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.ReviewAdapter;
 import com.fathom.nfs.ViewModels.DoctorsViewModel;
-import com.fathom.nfs.ViewModels.HelpLineViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -438,17 +433,18 @@ public class DoctorsDetails extends Fragment {
         EditText reviewText;
         Button postReview;
 
-        mDialog.setContentView(R.layout.write_resource_dialoug);
+        mDialog.setContentView(R.layout.write_review_dialoug);
         doctorName = mDialog.findViewById(R.id.doctorNameInDialogue);
         cancel = mDialog.findViewById(R.id.cancelReview);
         reviewRating = mDialog.findViewById(R.id.rating);
         reviewText = mDialog.findViewById(R.id.reviewText);
-        postReview = mDialog.findViewById(R.id.uploadImage);
+        postReview = mDialog.findViewById(R.id.postReview);
 
         postReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                Toast.makeText(getContext(), "Review is "+reviewText.getText().toString() + " and rating is"+ reviewRating.getRating() , Toast.LENGTH_SHORT).show();
             }
         });
 
