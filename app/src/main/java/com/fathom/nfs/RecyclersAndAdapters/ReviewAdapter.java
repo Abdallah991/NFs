@@ -36,7 +36,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHold
     public void onBindViewHolder(@NonNull ReviewHolder holder, int position) {
 
         float rating =  mReviews.get(position).getRating();
-        String ratingToString = Float.toString(rating);
+        int ratingToInt = (int) rating;
+        String ratingToString = Integer.toString(ratingToInt);
 
         holder.rating.setText(ratingToString);
         holder.reviewText.setText(mReviews.get(position).getReviewText());

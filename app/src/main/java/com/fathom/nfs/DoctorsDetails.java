@@ -3,6 +3,7 @@ package com.fathom.nfs;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -20,6 +21,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,17 +36,23 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.DataModels.ReviewDataModel;
+import com.fathom.nfs.DataModels.ShopItemDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.ReviewAdapter;
 import com.fathom.nfs.ViewModels.DoctorsViewModel;
+import com.fathom.nfs.ViewModels.ReviewViewModel;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.fathom.nfs.DataModels.BookmarkDataModel.doctorItemsBookmarked;
 import static com.fathom.nfs.DataModels.BookmarkDataModel.getPositionOfBookMark;
 import static com.fathom.nfs.DataModels.BookmarkDataModel.isClickedFromBookmarks;
+import static com.fathom.nfs.SignUpActivity.USER;
 
 
 /**
@@ -69,6 +78,7 @@ public class DoctorsDetails extends Fragment {
     private ReviewAdapter mReviewAdapter;
     private ArrayList<ReviewDataModel> mReviews = new ArrayList<>();
     private int position;
+    private int positionOfReview;
     private int positionOfBookmarked;
     private TextView aboutTitle;
     private TextView aboutContent;
@@ -86,9 +96,20 @@ public class DoctorsDetails extends Fragment {
     private Button writeReview;
     private Button bookAppointment;
     private String phone;
+    public static String doctorEmailId;
     private NavController mNavController;
     private ImageButton backButton;
     private Dialog mDialog;
+    private ReviewViewModel mReviewViewModel;
+    private ReviewDataModel review = new ReviewDataModel();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private TextView doctorName;
+    private ImageView cancel;
+    private RatingBar reviewRating;
+    private EditText reviewText;
+    private Button postReview;
+
+
 
 
 
@@ -169,6 +190,9 @@ public class DoctorsDetails extends Fragment {
                 if (!isClickedFromBookmarks()) {
                     DoctorDataModel doctor = doctorsList.get(position);
 
+//                    int reviewsNumber = doctor.getReviews().size();
+//
+//                    Toast.makeText(getContext(), "This doctor have "+reviewsNumber + " reviews", Toast.LENGTH_SHORT).show();
                     // Updating the UI of the Doctors details
                     firstName.setText(doctor.getDoctorFirstName());
                     lastName.setText(doctor.getDoctorLastName());
@@ -181,6 +205,9 @@ public class DoctorsDetails extends Fragment {
                     educationDegree2.setVisibility(View.GONE);
                     educationDegree2Description.setVisibility(View.GONE);
                     phone = doctor.getPhone();
+                    doctorEmailId = doctor.getEmail();
+
+                    initRecycler();
                 }
 
                 // TODO: persist the book marks
@@ -190,6 +217,7 @@ public class DoctorsDetails extends Fragment {
                     lastName.setText(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorLastName());
                     rating.setText(Double.toString(doctorItemsBookmarked.get(positionOfBookmarked).getRating()));
                     doctorImage.setImageBitmap(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorImage());
+                    doctorEmailId = doctorItemsBookmarked.get(positionOfBookmarked).getEmail();
 
 
 
@@ -198,6 +226,28 @@ public class DoctorsDetails extends Fragment {
 
             }
         });
+
+        mReviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
+
+
+        // TODO: delay the call for the Reviews
+        mReviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
+
+        Toast.makeText(getContext(), doctorEmailId, Toast.LENGTH_SHORT).show();
+
+        mReviewViewModel.initReviews(doctorEmailId);
+        positionOfReview = mReviewViewModel.getPositionOfReview();
+
+        mReviewViewModel.getReviews().observe(getViewLifecycleOwner(), new Observer<List<ReviewDataModel>>() {
+            @Override
+            public void onChanged(List<ReviewDataModel> reviewDataModels) {
+
+                mReviewAdapter.notifyDataSetChanged();
+                initRecycler();
+
+            }
+        });
+
 
 
 
@@ -397,8 +447,8 @@ public class DoctorsDetails extends Fragment {
         });
 
 
-        initRecycler();
-
+//        initRecycler();
+        loadingReviews();
 
 
     }
@@ -407,14 +457,7 @@ public class DoctorsDetails extends Fragment {
     // initializing the review recycler
     private void initRecycler() {
 
-        ReviewDataModel review1 = new ReviewDataModel(4,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.");
-        ReviewDataModel review2 = new ReviewDataModel(3,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.");
-        ReviewDataModel review3 = new ReviewDataModel(5,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.");
-
-        mReviews.add(review1);
-        mReviews.add(review2);
-        mReviews.add(review3);
-
+        mReviews = (ArrayList<ReviewDataModel>) mReviewViewModel.getReviews().getValue();
         mReviewAdapter = new ReviewAdapter(mReviews, getContext());
         mReviewRecycler.setAdapter(mReviewAdapter);
         mReviewRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -427,12 +470,6 @@ public class DoctorsDetails extends Fragment {
 
     private void openDialog() {
 
-        TextView doctorName;
-        ImageView cancel;
-        RatingBar reviewRating;
-        EditText reviewText;
-        Button postReview;
-
         mDialog.setContentView(R.layout.write_review_dialoug);
         doctorName = mDialog.findViewById(R.id.doctorNameInDialogue);
         cancel = mDialog.findViewById(R.id.cancelReview);
@@ -441,12 +478,23 @@ public class DoctorsDetails extends Fragment {
         postReview = mDialog.findViewById(R.id.postReview);
 
         reviewRating.setRating(3.0f);
+        doctorName.setText("Dr. " + firstName.getText()+" "+ lastName.getText());
 
         postReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(getContext(), "Review is "+reviewText.getText().toString() + " and rating is "+ reviewRating.getRating() , Toast.LENGTH_SHORT).show();
+                if (reviewText.getText().toString().equals("")) {
+
+                Toast.makeText(getContext(), "The Review have no content " , Toast.LENGTH_SHORT).show();
+
+                }
+                else {
+
+                    uploadReviews();
+
+                }
+
             }
         });
 
@@ -456,11 +504,73 @@ public class DoctorsDetails extends Fragment {
                 mDialog.dismiss();
 
 
+
             }
         });
 
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDialog.show();
+
+
+    }
+
+    private void reviews(String email) {}
+
+    private void loadingReviews() {
+
+        Handler myHandler;
+        int SPLASH_TIME_OUT = 3000;
+        myHandler = new Handler();
+
+        Log.d("Reviews", "testing if the variable will keep the eamil value");
+
+        // showing the Splash screen for two seconds then going to on boarding activity
+        myHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                Toast.makeText(getContext(), "Doctor email is  " + doctorEmailId , Toast.LENGTH_SHORT).show();
+
+
+                mReviewViewModel.initReviews(doctorEmailId);
+                positionOfReview = mReviewViewModel.getPositionOfReview();
+                mReviews = (ArrayList<ReviewDataModel>) mReviewViewModel.getReviews().getValue();
+                mReviewViewModel.getReviews().observe(getViewLifecycleOwner(), new Observer<List<ReviewDataModel>>() {
+                    @Override
+                    public void onChanged(List<ReviewDataModel> reviewDataModels) {
+
+                        mReviewAdapter.notifyDataSetChanged();
+
+                initRecycler();
+
+                    }
+                });
+
+            }
+        }, SPLASH_TIME_OUT);
+    }
+
+
+    private void uploadReviews() {
+
+        Log.d("Reviews", "Reviews method triggered");
+
+        SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
+        String userEmail = prefs.getString("EMAIL", "");
+
+//        review.setRating(5f);
+//        review.setReviewText("Best doctor ever");
+        review.setRating(reviewRating.getRating());
+        review.setReviewText(reviewText.getText().toString());
+        review.setDoctorEmail(doctorEmailId);
+        review.setUserEmail(userEmail);
+//        review.setDoctorEmail("ahmed.ali@gmail.com");
+
+        db.collection("Reviews")
+                .document(userEmail+review.getDoctorEmail()).set(review);
+
+        mDialog.dismiss();
+
+        Toast.makeText(getContext(), "Your Review been submitted and awaiting approval " , Toast.LENGTH_SHORT).show();
 
 
     }

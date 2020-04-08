@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import com.fathom.nfs.DataModels.DoctorDataModel;
+import com.fathom.nfs.DataModels.ReviewDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -30,6 +31,7 @@ public class DoctorsRepository {
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private StorageReference userImageRef;
+    private ArrayList<ReviewDataModel> doctorReviews = new ArrayList<>();
 
 
     public static DoctorsRepository getInstance() {
@@ -73,7 +75,16 @@ public class DoctorsRepository {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 if (mDoctorsItems.size() <= task.getResult().size()) {
-                                    mDoctorsItems.add(document.toObject(DoctorDataModel.class));
+                                    DoctorDataModel doctor = document.toObject(DoctorDataModel.class);
+                                    mDoctorsItems.add(doctor);
+
+//                                    Log.d("Doctor Review", " array size detected");
+
+//                                    if (doctor.getReviews().size() != 0) {
+//
+//                                      Log.d("Doctor Review", " array size detected");
+//
+//                                    }
                                 }
 
                                 Log.d(TAG, "Task size " + task.getResult().size());

@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 //                uploadDoctors();
 //                uploadShopItems();
 //                uploadArticles();
-                uploadReviews();
+//                uploadReviews();
 
             }
         });
@@ -200,20 +200,21 @@ public class LoginActivity extends AppCompatActivity {
         review1.setRating(5f);
         review1.setReviewText("Best doctor ever");
         review1.setUserEmail("abdulla.alathamnah@gmail.com");
+        review1.setDoctorEmail("ahmed.ali@gmail.com");
 
         review2.setRating(4f);
         review2.setReviewText("great doctor, but the appointment at the clinic was not accurate and had to wait for 3 minutes");
         review2.setUserEmail("ariel.cap@gmail.com");
+        review2.setDoctorEmail("ahmed.ali@gmail.com");
+
 
         review3.setRating(1f);
         review3.setReviewText("The doctor didn't pay attention to what I said and was playing Clash of clans while I was talking, what a shitty doctor man");
         review3.setUserEmail("richard.chowne@gmail.com");
+        review3.setDoctorEmail("ahmed.ali@gmail.com");
 
-        doctor.setEmail("ahmed.ali@gmail.com");
-
-        db.collection("Doctors")
-                .document(doctor.getEmail()).collection("Reviews")
-                .document(review3.getUserEmail()).set(review3);
+        db.collection("Reviews")
+                .document(review3.getUserEmail() + review3.getDoctorEmail()).set(review3);
     }
 
 }
