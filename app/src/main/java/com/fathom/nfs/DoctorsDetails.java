@@ -428,6 +428,21 @@ public class DoctorsDetails extends Fragment {
             }
         });
 
+        doctorEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Email button pressed", Toast.LENGTH_SHORT).show();
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ doctorEmailId});
+                email.putExtra(Intent.EXTRA_SUBJECT, "Inquirey");
+                email.putExtra(Intent.EXTRA_TEXT, "I want to ask you about");
+                email.setType("message/rfc822");
+
+                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+
+            }
+        });
+
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
