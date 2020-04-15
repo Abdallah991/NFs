@@ -56,7 +56,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder>
     public void onBindViewHolder(@NonNull VideoAdapter.VideoHolder holder, final int position) {
 
         Log.d(TAG, "OnBindViewHolder: Called.");
-        holder.videoImage.setImageResource(mVideos.get(position).getImageUrl());
+        holder.videoImage.setImageBitmap(mVideos.get(position).getArticleImage());
         holder.uploaderName.setText(mVideos.get(position).getAuthorName());
         holder.videoTitle.setText(mVideos.get(position).getArticleTitle());
 

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.fathom.nfs.DataModels.ArticleCategoryDataModel;
 import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.CategoryDataModel;
+import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.ArticleAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.HoizontalArticleAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.HorizontalRecyclerView;
@@ -144,27 +145,44 @@ public class Articles extends Fragment {
         horizontalAdapter = new HoizontalArticleAdapter(mArticleCategories, getContext(), actionId, mNavController, mArticleCategoryViewModel);
         recyclerView.setAdapter(horizontalAdapter);
 
+        ArrayList<ArticleDataModel> allArticles = (ArrayList<ArticleDataModel>) mArticleViewModel.getArticles().getValue();
+        for (ArticleDataModel article : allArticles) {
+            if (article.getArticleType().equals("Videos")) {
+                mVideos.add(article);
+            }
+        }
+        for (ArticleDataModel article : allArticles) {
+            if (article.getArticleType().equals("Articles")) {
+                mArticles.add(article);
+            }
+        }
+        for (ArticleDataModel article : allArticles) {
+            if (article.getArticleType().equals("Community")) {
+                mCommunities.add(article);
+            }
+        }
+        for (ArticleDataModel article : allArticles) {
+            if (article.getArticleType().equals("Blog")) {
+                mBlogs.add(article);
+            }
+        }
 
         // setting the articles adapter to recycler
-        mArticles = mArticleCategories.get(0).getArticles();
         mArticleAdapter = new ArticleAdapter(mArticles, getContext(), mNavController, actionArticle, mArticleViewModel);
         mArticlesRecycler.setAdapter(mArticleAdapter);
         mArticlesRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // setting the video adapter to recycler
-        mVideos = mArticleCategories.get(1).getArticles();
         mVideoAdapter = new VideoAdapter(mVideos, getContext(), mNavController, actionVideo, mArticleViewModel);
         mVideosRecycler.setAdapter(mVideoAdapter);
         mVideosRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // setting the blog adapter to recycler
-        mBlogs = mArticleCategories.get(2).getArticles();
         mBlogAdapter = new ArticleAdapter(mBlogs, getContext(), mNavController, actionArticle, mArticleViewModel);
         mBlogRecycler.setAdapter(mBlogAdapter);
         mBlogRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // setting the community adapter to recycler
-        mCommunities = mArticleCategories.get(3).getArticles();
         mCommunityAdapter = new ArticleAdapter(mCommunities, getContext(), mNavController, actionArticle, mArticleViewModel);
         mCommunityRecycler.setAdapter(mCommunityAdapter);
         mCommunityRecycler.setLayoutManager(new LinearLayoutManager(getContext()));

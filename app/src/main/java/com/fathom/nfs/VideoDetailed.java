@@ -76,7 +76,7 @@ public class VideoDetailed extends Fragment {
 
                 ArticleDataModel article = articleDataModels.get(position);
 
-                videoImage.setImageResource(article.getImageUrl());
+                videoImage.setImageBitmap(article.getArticleImage());
                 videoTitle.setText(article.getArticleTitle());
                 videoUploader.setText(article.getAuthorName());
                 youtubeLink = article.getVideoUrl();
