@@ -82,8 +82,6 @@ public class ReviewRepository {
 
                                 Log.d(TAG, "Review array size " + mReviews.size());
 
-
-
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -92,37 +90,6 @@ public class ReviewRepository {
                 });
 
         Log.d(TAG," Loading the data is DONE");
-
-//        if (mReviews.isEmpty()) {
-//            mReviews.add (
-//                    new ReviewDataModel(5, "The doctor is amazing",
-//                            "abdulla.alathamnah@gmail.com", "eman.moosa@gmail.com"));
-//
-//            mReviews.add (
-//                    new ReviewDataModel(4, "The doctor is great",
-//                            "ariel.cap@gmail.com", "eman.moosa@gmail.com"));
-//
-//            mReviews.add (
-//                    new ReviewDataModel(3, "The reception made me wait for one hour",
-//                            "arnel.renolds@gmail.com", "eman.moosa@gmail.com"));
-//
-//            mReviews.add (
-//                    new ReviewDataModel(2, "this doctor didnt help me at all and I don't recommend her at all",
-//                            "heba.ali@gmail.com", "eman.moosa@gmail.com"));
-//
-//
-//            mReviews.add (
-//                    new ReviewDataModel(1, "shit doctor, don't ever go there. she didn't even listen to what I was saying and she was playing candy crush",
-//                            "narjes.kazerooni@gmail.com", "eman.moosa@gmail.com"));
-//
-//
-//            mReviews.add (
-//                    new ReviewDataModel(5, "I recommend this doctor to everyone, she was amazing",
-//                            "norah.ali@gmail.com", "eman.moosa@gmail.com"));
-
-
-
-
 
     }
 }

@@ -1,6 +1,7 @@
 package com.fathom.nfs;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,14 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.fathom.nfs.DataModels.AppointmentDataModel;
+import com.fathom.nfs.DataModels.MessageDataModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,6 +38,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.fathom.nfs.DoctorsDetails.doctorEmailId;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,22 +50,25 @@ public class SetAppointment extends Fragment {
     private LinearLayout setAppointmentContent;
     private CalendarView mCalendarView;
     private Calendar calendar;
+    private AppointmentDataModel appointment = new AppointmentDataModel();
     private Spinner startTime;
     private Spinner startAmPm;
     private Spinner endTime;
     private Spinner endAmPm;
     private Button bookAppointment;
     private ImageView backButton;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String Day;
+    private String Month;
+
 
     public SetAppointment() {
-        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_set_appointment, container, false);
     }
 
@@ -85,9 +100,7 @@ public class SetAppointment extends Fragment {
         startAmPm.setAdapter(AmPmAdapter);
         endAmPm.setAdapter(AmPmAdapter);
 
-
         Date date = new Date();
-
         try {
             mCalendarView.setDate(calendar.getTime());
         } catch (OutOfDateRangeException e) {
@@ -98,12 +111,18 @@ public class SetAppointment extends Fragment {
 
         Toast.makeText(getContext(),"Calender is "+ calendar.getTime()   , Toast.LENGTH_SHORT).show();
 
-
         mCalendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
             public void onDayClick(EventDay eventDay) {
 
-                showAppointmentsForTheDay(eventDay.getCalendar().getTime());
+//                showAppointmentsForTheDay(eventDay.getCalendar().getTime());
+                Toast.makeText(getContext(),""+ (eventDay.getCalendar().get(Calendar.MONTH)+1) , Toast.LENGTH_SHORT).show();
+                int day = eventDay.getCalendar().get(Calendar.DAY_OF_MONTH);
+                int month = (eventDay.getCalendar().get(Calendar.MONTH)+1);
+                Toast.makeText(getContext(),"date is " +day +" /"+ month  , Toast.LENGTH_SHORT).show();
+//                Day = Integer.toString(day);
+//                Month = Integer.toString(month);
+
 
             }
         });
@@ -130,12 +149,33 @@ public class SetAppointment extends Fragment {
                         "Appointment is " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
                         " to "+ endTime.getSelectedItem().toString()+ " "+ endAmPm.getSelectedItem().toString(),
                         Toast.LENGTH_SHORT).show();
+
+                appointment.setDoctorName(doctorEmailId);
+                appointment.setTo(doctorEmailId);
+                appointment.setMessage("Hello there you appointment is from " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
+                        " to "+ endTime.getSelectedItem().toString()+ " "+ endAmPm.getSelectedItem().toString() );
+                appointment.setDay(Day);
+                appointment.setMonth(Month);
+                FirebaseFirestore.getInstance().
+                        collection("Appointments").add(appointment).
+                        addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                Log.d("Appointment", "Appointment set Success");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Appointment", "Appointment set Failure");
+
+                    }
+                });
             }
         });
     }
 
 
-    private void showAppointmentsForTheDay(Date date) {
+    private String showAppointmentsForTheDay(Date date) {
 
         String dayOfWeek = "null";
 
@@ -163,52 +203,11 @@ public class SetAppointment extends Fragment {
 
 
         }
-        Toast.makeText(getContext(),"The day is " + dayOfWeek   , Toast.LENGTH_SHORT).show();
+        return dayOfWeek;
 
-        ;
+
 
     }
 
 
-    private void creatEventOnCalender() {
-
-//        Event event = new Event()
-//                .setSummary("Google I/O 2015")
-//                .setLocation("800 Howard St., San Francisco, CA 94103")
-//                .setDescription("A chance to hear more about Google's developer products.");
-//
-//        DateTime startDateTime = new DateTime("2015-05-28T09:00:00-07:00");
-//        EventDateTime start = new EventDateTime()
-//                .setDateTime(startDateTime)
-//                .setTimeZone("America/Los_Angeles");
-//        event.setStart(start);
-//
-//        DateTime endDateTime = new DateTime("2015-05-28T17:00:00-07:00");
-//        EventDateTime end = new EventDateTime()
-//                .setDateTime(endDateTime)
-//                .setTimeZone("America/Los_Angeles");
-//        event.setEnd(end);
-//
-//        String[] recurrence = new String[] {"RRULE:FREQ=DAILY;COUNT=2"};
-//        event.setRecurrence(Arrays.asList(recurrence));
-//
-//        EventAttendee[] attendees = new EventAttendee[] {
-//                new EventAttendee().setEmail("lpage@example.com"),
-//                new EventAttendee().setEmail("sbrin@example.com"),
-//        };
-//        event.setAttendees(Arrays.asList(attendees));
-//
-//        EventReminder[] reminderOverrides = new EventReminder[] {
-//                new EventReminder().setMethod("email").setMinutes(24 * 60),
-//                new EventReminder().setMethod("popup").setMinutes(10),
-//        };
-//        Event.Reminders reminders = new Event.Reminders()
-//                .setUseDefault(false)
-//                .setOverrides(Arrays.asList(reminderOverrides));
-//        event.setReminders(reminders);
-//
-//        String calendarId = "primary";
-//        event = service.events().insert(calendarId, event).execute();
-//        System.out.printf("Event created: %s\n", event.getHtmlLink());
-    }
 }
