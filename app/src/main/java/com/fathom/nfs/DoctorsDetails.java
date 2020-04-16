@@ -2,6 +2,7 @@ package com.fathom.nfs;
 
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -108,6 +109,8 @@ public class DoctorsDetails extends Fragment {
     private RatingBar reviewRating;
     private EditText reviewText;
     private Button postReview;
+    private static ProgressDialog myProgressDialog;
+
 
 
 
@@ -233,7 +236,7 @@ public class DoctorsDetails extends Fragment {
         // TODO: delay the call for the Reviews
         mReviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
 
-        Toast.makeText(getContext(), doctorEmailId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), doctorEmailId, Toast.LENGTH_SHORT).show();
 
         mReviewViewModel.initReviews(doctorEmailId);
         positionOfReview = mReviewViewModel.getPositionOfReview();
@@ -463,6 +466,11 @@ public class DoctorsDetails extends Fragment {
 
 
 //        initRecycler();
+        myProgressDialog = new ProgressDialog(getContext());
+        myProgressDialog.setProgressStyle(R.style.MyAlertDialogStyle);
+        myProgressDialog.setCancelable(false);
+        myProgressDialog.setMessage("Please Wait ...");
+        myProgressDialog.show();
         loadingReviews();
 
 
@@ -534,7 +542,7 @@ public class DoctorsDetails extends Fragment {
     private void loadingReviews() {
 
         Handler myHandler;
-        int SPLASH_TIME_OUT = 3000;
+        int SPLASH_TIME_OUT = 1000;
         myHandler = new Handler();
 
         Log.d("Reviews", "testing if the variable will keep the eamil value");
@@ -556,6 +564,8 @@ public class DoctorsDetails extends Fragment {
                         mReviewAdapter.notifyDataSetChanged();
 
                 initRecycler();
+                myProgressDialog.dismiss();
+
 
                     }
                 });
@@ -589,6 +599,8 @@ public class DoctorsDetails extends Fragment {
 
 
     }
+
+
 
 
 }

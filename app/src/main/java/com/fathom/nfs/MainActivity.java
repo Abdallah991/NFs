@@ -301,8 +301,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void getImage() {
 
+        SharedPreferences prefs = getSharedPreferences(USER, MODE_PRIVATE);
+        String userEmail = prefs.getString("EMAIL", "");
 
-        userImageRef = storageRef.child("abdulla.alathamnah@gmail.com");
+        userImageRef = storageRef.child(userEmail);
 
 
         userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {

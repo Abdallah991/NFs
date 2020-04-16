@@ -477,7 +477,7 @@ public class Home extends Fragment {
 
 
 
-            Toast.makeText(getContext(), "User is " +user.getFirstName() , Toast.LENGTH_SHORT ).show();
+//            Toast.makeText(getContext(), "User is " +user.getFirstName() , Toast.LENGTH_SHORT ).show();
 //            sliderUserImage.setImageResource(R.drawable.user);
 
 
@@ -487,8 +487,8 @@ public class Home extends Fragment {
 
     private void setUpDisplayName() {
 
-        SharedPreferences preferences = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
-        String name = preferences.getString("FirstName", null);
+        SharedPreferences preferences = getActivity().getSharedPreferences(USER, 0);
+        String name = preferences.getString("FIRST_NAME", "");
         Log.d(TAG6, name);
         userName.setText(name);
 

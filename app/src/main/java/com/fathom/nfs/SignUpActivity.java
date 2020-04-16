@@ -164,6 +164,8 @@ public class SignUpActivity extends AppCompatActivity {
                                     LoginActivity.class);
                             startActivity(intent);
                             finish();
+                                                Toast.makeText(getApplicationContext(), "You can Login now",
+                                                        Toast.LENGTH_SHORT).show();
 
                                             }
                                         }

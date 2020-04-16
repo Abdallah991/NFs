@@ -83,6 +83,7 @@ public class Doctors extends Fragment {
 
                 Log.d("MVVM"," Adpter is being notified with any CHANGE");
                 mDoctorsAdapter.notifyDataSetChanged();
+                initRecycler();
             }
         });
 

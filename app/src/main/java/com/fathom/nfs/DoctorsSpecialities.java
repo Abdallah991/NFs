@@ -97,6 +97,8 @@ public class DoctorsSpecialities extends Fragment {
 
                 Log.d("MVVM"," Adpter is being notified with any CHANGE");
                 mDoctorsAdapter.notifyDataSetChanged();
+                initRecycler(categoryName);
+
             }
         });
 
@@ -143,7 +145,7 @@ public class DoctorsSpecialities extends Fragment {
 
         ArrayList<DoctorDataModel> filteredDoctors = new ArrayList<>();
 
-        Toast.makeText(getContext(), "the array size is :"+ mDoctors.size(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "the array size is :"+ mDoctors.size(), Toast.LENGTH_SHORT).show();
 
         // setting the adapter to recycler
         mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
