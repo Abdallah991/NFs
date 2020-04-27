@@ -137,12 +137,12 @@ public class Home extends Fragment {
 
          mSearchView = view.findViewById(R.id.search);
          searchList = view.findViewById(R.id.searchResults);
-
          userName = view.findViewById(R.id.userName);
+
 
         LayoutInflater inflater = getLayoutInflater();
 //        View slider = inflater.from(getApplicationContext()).inflate(R.layout.drawer_header, null);
-        ViewGroup viewRoot = (ViewGroup) inflater.inflate(R.layout.drawer_header,null);
+        View viewRoot = inflater.inflate(R.layout.drawer_header,null);
 
         Log.d("User Image", " " + sliderUserImage);
         sliderUserImage = viewRoot.findViewById(R.id.sliderUserImage);
@@ -541,7 +541,7 @@ public class Home extends Fragment {
                 initRecyclerView();
                 Log.d(TAG2, "initialising recycler with a delay called ");
 
-                sliderUserImage.setImageBitmap(user.getUserImage());
+                sliderUserImage.setImageResource(R.drawable.user);
 
                 myProgressDialog.dismiss();
             }

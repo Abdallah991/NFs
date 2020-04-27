@@ -16,12 +16,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 
 public class AboutNfs extends Fragment {
 
-    private ConstraintLayout aboutContent;
+    private LinearLayout aboutContent;
     private ImageButton backButton;
 
 
