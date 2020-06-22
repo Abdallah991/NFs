@@ -34,7 +34,7 @@
                     android:layout_height="30dp"
                     android:layout_weight="1.5"
                     android:layout_gravity="center"
-                    android:id="@+id/backButtontoDoctorDetailed"
+                    android:id="@+id/backButtonToDoctorDetailed"
                     android:src="@drawable/arrow_back_purple"/>
                 <LinearLayout
                     android:layout_width="0dp"

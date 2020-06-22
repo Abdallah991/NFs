@@ -46,6 +46,7 @@ import com.fathom.nfs.ViewModels.DoctorsViewModel;
 import com.fathom.nfs.ViewModels.ReviewViewModel;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,18 +99,25 @@ public class DoctorsDetails extends Fragment {
     private Button bookAppointment;
     private String phone;
     public static String doctorEmailId;
+    public static String gender;
+    public static String doctorFullName;
+    public static String appointmentSpeciality;
     private NavController mNavController;
     private ImageButton backButton;
     private Dialog mDialog;
     private ReviewViewModel mReviewViewModel;
     private ReviewDataModel review = new ReviewDataModel();
+    private DoctorDataModel doctor = new DoctorDataModel();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private TextView doctorName;
     private ImageView cancel;
     private RatingBar reviewRating;
     private EditText reviewText;
     private Button postReview;
+    private TextView speciality;
     private static ProgressDialog myProgressDialog;
+    private static DecimalFormat df = new DecimalFormat("0.0");
+
 
 
 
@@ -149,6 +157,7 @@ public class DoctorsDetails extends Fragment {
         lastName = view.findViewById(R.id.doctorLastName);
         rating = view.findViewById(R.id.ratingValueDetailedDoctor);
         doctorImage = view.findViewById(R.id.DoctorImage);
+        speciality = view.findViewById(R.id.specialty);
 
         aboutTitle = view.findViewById(R.id.aboutTitle);
         aboutContent = view.findViewById(R.id.aboutContent);
@@ -199,16 +208,20 @@ public class DoctorsDetails extends Fragment {
                     // Updating the UI of the Doctors details
                     firstName.setText(doctor.getDoctorFirstName());
                     lastName.setText(doctor.getDoctorLastName());
-                    rating.setText(Double.toString(doctor.getRating()));
+                    rating.setText(df.format(doctor.getRating()));
                     doctorImage.setImageBitmap(doctor.getDoctorImage());
                     aboutContent.setText(doctor.getAbout());
                     experienceContent.setText(doctor.getExperience());
                     educationDegree1.setText(doctor.getEducation());
+                    speciality.setText(doctor.getSpecialty()+" ");
                     educationDegree1Description.setVisibility(View.GONE);
                     educationDegree2.setVisibility(View.GONE);
                     educationDegree2Description.setVisibility(View.GONE);
                     phone = doctor.getPhone();
                     doctorEmailId = doctor.getEmail();
+                    gender = doctor.getGender();
+                    doctorFullName = "Dr. " +doctor.getDoctorFirstName()+ " " + doctor.getDoctorLastName();
+                    appointmentSpeciality = doctor.getSpecialty();
 
                     initRecycler();
                 }
@@ -321,7 +334,7 @@ public class DoctorsDetails extends Fragment {
                 contactUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 reviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
 
-                                overviewContent.setVisibility(View.VISIBLE);
+                overviewContent.setVisibility(View.VISIBLE);
                 aboutTitle.setVisibility(View.VISIBLE);
                 aboutContent.setVisibility(View.VISIBLE);
                 educationTitle.setVisibility(View.VISIBLE);
@@ -366,8 +379,7 @@ public class DoctorsDetails extends Fragment {
                 doctorEmail.setVisibility(View.GONE);
                 callButton.setVisibility(View.GONE);
 
-
-                                overviewContent.setVisibility(View.GONE);
+                overviewContent.setVisibility(View.GONE);
                 aboutTitle.setVisibility(View.GONE);
                 aboutContent.setVisibility(View.GONE);
                 educationTitle.setVisibility(View.GONE);
@@ -377,6 +389,7 @@ public class DoctorsDetails extends Fragment {
                 educationDegree2Description.setVisibility(View.GONE);
                 experienceTitle.setVisibility(View.GONE);
                 experienceContent.setVisibility(View.GONE);
+                calculateDoctorsReview();
             }
         });
 
@@ -582,13 +595,10 @@ public class DoctorsDetails extends Fragment {
         SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
         String userEmail = prefs.getString("EMAIL", "");
 
-//        review.setRating(5f);
-//        review.setReviewText("Best doctor ever");
-        review.setRating(reviewRating.getRating());
+        review.setRating((int) reviewRating.getRating());
         review.setReviewText(reviewText.getText().toString());
         review.setDoctorEmail(doctorEmailId);
         review.setUserEmail(userEmail);
-//        review.setDoctorEmail("ahmed.ali@gmail.com");
 
         db.collection("Reviews")
                 .document(userEmail+review.getDoctorEmail()).set(review);
@@ -597,8 +607,42 @@ public class DoctorsDetails extends Fragment {
 
         Toast.makeText(getContext(), "Your Review been submitted and awaiting approval " , Toast.LENGTH_SHORT).show();
 
+//        calculateDoctorsReview();
 
     }
+
+    private void calculateDoctorsReview() {
+
+        double numberOfReview = mReviews.size();
+        double reviewSum = 0;
+        double averageReview;
+
+        for (ReviewDataModel review : mReviews) {
+             reviewSum += (int)  review.getRating();
+            }
+        averageReview = ( reviewSum /numberOfReview );
+
+        doctor.setDoctorFirstName((String) firstName.getText());
+        doctor.setDoctorLastName((String) lastName.getText());
+        doctor.setAbout((String) aboutContent.getText());
+        doctor.setBookmark(false);
+        doctor.setEducation((String) educationDegree1.getText());
+        doctor.setEmail(doctorEmailId);
+        doctor.setExperience((String) experienceContent.getText());
+        doctor.setGender(gender);
+        doctor.setRating(averageReview);
+        doctor.setSpecialty((String) speciality.getText());
+        db.collection("Doctors")
+                .document(doctorEmailId).set(doctor);
+        Toast.makeText(getContext(), "the Doctor average Review equals " + averageReview , Toast.LENGTH_SHORT).show();
+
+
+
+
+
+    }
+
+
 
 
 

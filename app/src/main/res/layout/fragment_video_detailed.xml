@@ -11,78 +11,78 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
+
         <ImageButton
+            android:id="@+id/backButtonToArticles"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:id="@+id/backButtonToArticles"
-            android:layout_marginTop="60dp"
             android:layout_marginStart="30dp"
-            android:elevation="1dp"
-            android:scaleType="fitXY"
-            android:background="@null"
-            android:src="@drawable/arrow_back">
-        </ImageButton>
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="40dp"
-            android:id="@+id/bookmarkVideo"
             android:layout_marginTop="60dp"
-            android:layout_marginEnd="30dp"
-            android:layout_gravity="end"
+            android:background="@null"
             android:elevation="1dp"
             android:scaleType="fitXY"
-            android:background="@null"
-            android:src="@drawable/bookmark_image_white">
-        </ImageButton>
+            android:src="@drawable/arrow_back"></ImageButton>
+        <!--        <ImageButton-->
+        <!--            android:layout_width="30dp"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:id="@+id/bookmarkVideo"-->
+        <!--            android:layout_marginTop="60dp"-->
+        <!--            android:layout_marginEnd="30dp"-->
+        <!--            android:layout_gravity="end"-->
+        <!--            android:elevation="1dp"-->
+        <!--            android:scaleType="fitXY"-->
+        <!--            android:background="@null"-->
+        <!--            android:src="@drawable/bookmark_image_white">-->
+        <!--        </ImageButton>-->
 
         <ImageView
+            android:id="@+id/videoDetailedImage"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:scaleType="fitXY"
-            android:src="@drawable/suicide_article"
-            android:id="@+id/videoDetailedImage"/>
+            android:src="@drawable/suicide_article" />
+
         <ImageView
             android:id="@+id/playImageDetailed"
             android:layout_width="65dp"
             android:layout_height="75dp"
-            android:scaleType="fitXY"
             android:layout_gravity="center"
-            android:src="@drawable/play_icon"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/play_icon" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="100dp"
             android:id="@+id/videoTitleLayout"
-            android:background="@color/blackOpacity"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
             android:layout_gravity="bottom"
+            android:background="@color/blackOpacity"
             android:elevation="1dp"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/videoDetailedTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Suicide Awareness in the Middle East"
-                android:textSize="20sp"
-                app:fontFamily="@font/poppins_semi_bold"
-                android:textColor="@color/white"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="40dp"/>
+                android:layout_marginEnd="40dp"
+                android:text="Suicide Awareness in the Middle East"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:fontFamily="@font/poppins_semi_bold" />
+
             <TextView
                 android:id="@+id/videoDetailedAuthor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="40dp"
                 android:text="By Dr Muneera"
                 android:textAllCaps="true"
-                android:textSize="11sp"
-                app:fontFamily="@font/poppins"
-                android:textStyle="bold"
                 android:textColor="@color/white"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="40dp"/>
+                android:textSize="11sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins" />
 
         </LinearLayout>
     </FrameLayout>

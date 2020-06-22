@@ -101,7 +101,7 @@ public class OnBoarding extends AppCompatActivity {
             boolean emailVerified = user.isEmailVerified();
 
 
-            Toast.makeText(getApplicationContext(), name +" "+ emailVerified, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), name +" "+ emailVerified, Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(getApplicationContext(),
                                     MainActivity.class);

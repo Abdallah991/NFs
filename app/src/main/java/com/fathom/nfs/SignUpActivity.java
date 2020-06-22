@@ -119,7 +119,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
 
                     }
-//                sendEmailVerification();
 
             }
         });
@@ -192,25 +191,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-//    private void sendEmailVerification() {
-//
-//        mAuth.sendSignInLinkToEmail(email.getText().toString(), actionCodeSettings)
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful()) {
-//                            Log.d(TAG, "Email sent.");
-//                            Toast.makeText(getApplicationContext(), "Verification email sent.",
-//                                    Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(getApplicationContext(),
-//                                    LoginActivity.class);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-//                    }
-//                });
-//
-//    }
 
     private boolean isEmailValid(String email) {
 
@@ -232,24 +212,6 @@ public class SignUpActivity extends AppCompatActivity {
         return password.length() > 6;
     }
 
-    private void saveUserInfo() {
-        String FirstName = firstName.getText().toString();
-        String LastName = lastName.getText().toString();
-        String Email = email.getText().toString();
-        String Password = password.getText().toString();
-//        UserDataModel user = new UserDataModel();
-//        user.setFirstName(FirstName);
-//        user.setLastName(LastName);
-//        user.setEmail(Email);
-//        user.setPassword(Password);
-        SharedPreferences userPrefs = getSharedPreferences(USER, 0);
-        userPrefs.edit().putString("FIRST_NAME", FirstName).apply();
-        userPrefs.edit().putString("LAST_NAME", LastName).apply();
-        userPrefs.edit().putString("EMAIL", Email).apply();
-        userPrefs.edit().putString("PASSWORD", Password).apply();
-
-
-    }
 
     // TODO: change the color of Sign Up button to primary color when fields are properly fixed
 }

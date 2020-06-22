@@ -25,7 +25,7 @@
         android:text="About Nfs"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
-        app:fontFamily="@font/poppins_semi_bold" />
+        app:fontFamily="@font/poppins_semi_bold"/>
 
     <TextView
         android:id="@+id/textView"

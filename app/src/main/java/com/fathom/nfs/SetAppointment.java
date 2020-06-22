@@ -2,6 +2,7 @@ package com.fathom.nfs;
 
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,13 +33,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.fathom.nfs.DoctorsDetails.appointmentSpeciality;
 import static com.fathom.nfs.DoctorsDetails.doctorEmailId;
+import static com.fathom.nfs.DoctorsDetails.doctorFullName;
+import static com.fathom.nfs.SignUpActivity.USER;
 
 
 /**
@@ -57,9 +62,14 @@ public class SetAppointment extends Fragment {
     private Spinner endAmPm;
     private Button bookAppointment;
     private ImageView backButton;
+    private TextView doctorNameInAppointment;
+    private TextView specialtyInAppointment;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String Day;
-    private String Month;
+    private String day;
+    private String month;
+    private String doctorName;
+    private String doctorEmail;
+    private String speciality;
 
 
     public SetAppointment() {
@@ -85,14 +95,21 @@ public class SetAppointment extends Fragment {
         endTime = view.findViewById(R.id.endTime);
         endAmPm = view.findViewById(R.id.endAMPM);
         bookAppointment = view.findViewById(R.id.appointmentBooking);
-        backButton = view.findViewById(R.id.backButtontoDoctorDetailed);
-
+        backButton = view.findViewById(R.id.backButtonToDoctorDetailed);
+        doctorNameInAppointment = view.findViewById(R.id.doctorNameInAppointment);
+        specialtyInAppointment = view.findViewById(R.id.specialtyInAppointment);
+        // static variable to show what is the name of the doctor
+        doctorName = doctorFullName;
+        speciality = appointmentSpeciality;
+        doctorNameInAppointment.setText(doctorName);
+        specialtyInAppointment.setText(speciality);
         ArrayAdapter<String> timeAdapter = new ArrayAdapter<String>(getContext(),
                 R.layout.spinner_item, getResources().getStringArray(R.array.timings));
         ArrayAdapter<String> AmPmAdapter = new ArrayAdapter<String>(getContext(),
                 R.layout.spinner_item, getResources().getStringArray(R.array.AMPM));
         timeAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         AmPmAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+
 
         startTime.setAdapter(timeAdapter);
         endTime.setAdapter(timeAdapter);
@@ -109,7 +126,7 @@ public class SetAppointment extends Fragment {
 
         showAppointmentsForTheDay(calendar.getTime());
 
-        Toast.makeText(getContext(),"Calender is "+ calendar.getTime()   , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),"Calender is "+ calendar.getTime()   , Toast.LENGTH_SHORT).show();
 
         mCalendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
@@ -117,12 +134,48 @@ public class SetAppointment extends Fragment {
 
 //                showAppointmentsForTheDay(eventDay.getCalendar().getTime());
                 Toast.makeText(getContext(),""+ (eventDay.getCalendar().get(Calendar.MONTH)+1) , Toast.LENGTH_SHORT).show();
-                int day = eventDay.getCalendar().get(Calendar.DAY_OF_MONTH);
-                int month = (eventDay.getCalendar().get(Calendar.MONTH)+1);
-                Toast.makeText(getContext(),"date is " +day +" /"+ month  , Toast.LENGTH_SHORT).show();
-//                Day = Integer.toString(day);
-//                Month = Integer.toString(month);
-
+                int dayOfMonth = eventDay.getCalendar().get(Calendar.DAY_OF_MONTH);
+                int monthOfYear = (eventDay.getCalendar().get(Calendar.MONTH)+1);
+                day = Integer.toString(dayOfMonth);
+                switch (monthOfYear) {
+                    case 1:
+                        month = "JAN";
+                        break;
+                    case 2:
+                        month = "FEB";
+                        break;
+                    case 3:
+                        month = "MAR";
+                        break;
+                    case 4:
+                        month = "APR";
+                        break;
+                    case 5:
+                        month = "MAY";
+                        break;
+                    case 6:
+                        month = "JUN";
+                        break;
+                    case 7:
+                        month = "JUL";
+                        break;
+                    case 8:
+                        month = "AUG";
+                        break;
+                    case 9:
+                        month = "SEP";
+                        break;
+                    case 10:
+                        month = "OCT";
+                        break;
+                    case 11:
+                        month = "NOV";
+                        break;
+                    case 12:
+                        month = "DEC";
+                        break;
+                }
+//                Toast.makeText(getContext(),"date is " +day +" / "+ month  , Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -145,17 +198,29 @@ public class SetAppointment extends Fragment {
         bookAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                SharedPreferences preferences = getActivity().getSharedPreferences(USER, 0);
+                String firstName = preferences.getString("FirstName", "");
+                String lastName = preferences.getString("LastName", "");
+                String email = preferences.getString("Email", "");
+
                 Toast.makeText(getContext(),
                         "Appointment is " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
                         " to "+ endTime.getSelectedItem().toString()+ " "+ endAmPm.getSelectedItem().toString(),
                         Toast.LENGTH_SHORT).show();
 
-                appointment.setDoctorName(doctorEmailId);
+                appointment.setDoctorName(doctorFullName);
                 appointment.setTo(doctorEmailId);
                 appointment.setMessage("Hello there you appointment is from " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
                         " to "+ endTime.getSelectedItem().toString()+ " "+ endAmPm.getSelectedItem().toString() );
-                appointment.setDay(Day);
-                appointment.setMonth(Month);
+                appointment.setDay(day);
+                appointment.setMonth(month);
+                appointment.setTiming(startTime.getSelectedItem().toString()+startAmPm.getSelectedItem().toString()+ " to "
+                        +endTime.getSelectedItem().toString()+endAmPm.getSelectedItem().toString());
+                appointment.setUserEmail(email);
+                appointment.setUserName(firstName +" "+ lastName);
+                appointment.setSpecialty(speciality);
+
                 FirebaseFirestore.getInstance().
                         collection("Appointments").add(appointment).
                         addOnCompleteListener(new OnCompleteListener<DocumentReference>() {

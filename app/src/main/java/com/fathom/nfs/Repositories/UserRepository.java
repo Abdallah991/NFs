@@ -62,7 +62,7 @@ public class UserRepository {
 
 
         SharedPreferences prefs = mContext.getSharedPreferences(USER, MODE_PRIVATE);
-        String docName = prefs.getString("EMAIL", "No name");
+        String docName = prefs.getString("Email", "No name");
 
         DocumentReference docRef = db.collection("Users").document(docName);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -86,10 +86,10 @@ public class UserRepository {
 
     private void getImage (MutableLiveData<UserDataModel> user) {
 
+        SharedPreferences preferences = mContext.getSharedPreferences(USER, 0);
+        String email = preferences.getString("Email", "");
 
-
-
-            userImageRef = storageRef.child(user.getValue().getEmail());
+            userImageRef = storageRef.child(email);
 
 
             userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -98,7 +98,7 @@ public class UserRepository {
                     // Use the bytes to display the image
 
                     Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    user.getValue().setUserImage(bmp);
+                    User.getValue().setUserImage(bmp);
 
                     Log.d(TAG, " Loading the Image is DONE");
 

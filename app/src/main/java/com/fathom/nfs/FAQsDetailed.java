@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -51,6 +52,8 @@ public class FAQsDetailed extends Fragment {
     private TextView detailedSectionText;
     private ImageView monsterImage;
     private ImageButton backButton;
+    private int actionToDoctors = R.id.action_FAQsDetailed_to_doctors;
+    private Button findDoctor;
 
     public FAQsDetailed() {
         // Required empty public constructor
@@ -74,6 +77,8 @@ public class FAQsDetailed extends Fragment {
         detailedSectionText = view.findViewById(R.id.faqsDetailedText);
         monsterImage = view.findViewById(R.id.faqsDetailedMonster);
         backButton = view.findViewById(R.id.backButtonToFaqs);
+        findDoctor = view.findViewById(R.id.faqsDoctorButton);
+
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
 
@@ -105,6 +110,13 @@ public class FAQsDetailed extends Fragment {
             @Override
             public void onClick(View view) {
                 mNavController.navigateUp();
+            }
+        });
+
+        findDoctor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNavController.navigate(actionToDoctors);
             }
         });
 

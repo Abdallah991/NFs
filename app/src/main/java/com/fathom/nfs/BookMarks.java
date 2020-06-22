@@ -54,17 +54,14 @@ public class BookMarks extends Fragment {
     private NavController mNavController;
     private TextView bookmarkedTitle;
     private TextView doctorsTitleBookmark;
-    private ImageView monster1;
     private LinearLayout doctors;
     private Button allDoctors;
     private TextView bookmarkedTitle2;
     private TextView articlesBookmarkedTitle;
-    private ImageView monster2;
     private LinearLayout linearLayout3;
     private Button allArticles;
     private TextView bookmarkedTitle3;
     private TextView shopBookmarkTitle;
-    private ImageView monster3;
     private LinearLayout linearLayout4;
     private Button allShop;
     private Button filterDoctors;
@@ -105,16 +102,13 @@ public class BookMarks extends Fragment {
         allShop = view.findViewById(R.id.viewAllShop);
         bookmarkedTitle = view.findViewById(R.id.bookmarkedTitle);
         doctorsTitleBookmark = view.findViewById(R.id.doctorsTitleBookmark);
-        monster1 = view.findViewById(R.id.monster1);
         doctors = view.findViewById(R.id.linearLayout2);
         bookmarkedTitle2 = view.findViewById(R.id.bookmarkedTitle2);
         articlesBookmarkedTitle = view.findViewById(R.id.articlesBookmarkedTitle);
-        monster2 = view.findViewById(R.id.monster2);
         linearLayout3 = view.findViewById(R.id.linearLayout3);
 
         bookmarkedTitle3 = view.findViewById(R.id.bookmarkedTitle3);
         shopBookmarkTitle = view.findViewById(R.id.shopBookmarkTitle);
-        monster3 = view.findViewById(R.id.monster3);
         linearLayout4 = view.findViewById(R.id.linearLayout4);
 
         filterDoctors = view.findViewById(R.id.filterDoctors);
@@ -135,19 +129,16 @@ public class BookMarks extends Fragment {
 
                 bookmarkedTitle.setVisibility(View.VISIBLE);
                 doctorsTitleBookmark.setVisibility(View.VISIBLE);
-                monster1.setVisibility(View.VISIBLE);
                 doctors.setVisibility(View.VISIBLE);
                 allDoctors.setVisibility(View.VISIBLE);
 
                 bookmarkedTitle2.setVisibility(View.GONE);
                 articlesBookmarkedTitle.setVisibility(View.GONE);
-                monster2.setVisibility(View.GONE);
                 linearLayout3.setVisibility(View.GONE);
                 allArticles.setVisibility(View.GONE);
 
                 bookmarkedTitle3.setVisibility(View.GONE);
                 shopBookmarkTitle.setVisibility(View.GONE);
-                monster3.setVisibility(View.GONE);
                 linearLayout4.setVisibility(View.GONE);
                 allShop.setVisibility(View.GONE);
 
@@ -155,7 +146,6 @@ public class BookMarks extends Fragment {
 
                     bookmarkedTitle.setVisibility(View.GONE);
                     doctorsTitleBookmark.setVisibility(View.GONE);
-                    monster1.setVisibility(View.GONE);
                     doctors.setVisibility(View.GONE);
                     allDoctors.setVisibility(View.GONE);
 
@@ -176,19 +166,16 @@ public class BookMarks extends Fragment {
 
                 bookmarkedTitle.setVisibility(View.GONE);
                 doctorsTitleBookmark.setVisibility(View.GONE);
-                monster1.setVisibility(View.GONE);
                 doctors.setVisibility(View.GONE);
                 allDoctors.setVisibility(View.GONE);
 
                 bookmarkedTitle2.setVisibility(View.VISIBLE);
                 articlesBookmarkedTitle.setVisibility(View.VISIBLE);
-                monster2.setVisibility(View.VISIBLE);
                 linearLayout3.setVisibility(View.VISIBLE);
                 allArticles.setVisibility(View.VISIBLE);
 
                 bookmarkedTitle3.setVisibility(View.GONE);
                 shopBookmarkTitle.setVisibility(View.GONE);
-                monster3.setVisibility(View.GONE);
                 linearLayout4.setVisibility(View.GONE);
                 allShop.setVisibility(View.GONE);
 
@@ -196,7 +183,6 @@ public class BookMarks extends Fragment {
 
                     bookmarkedTitle2.setVisibility(View.GONE);
                     articlesBookmarkedTitle.setVisibility(View.GONE);
-                    monster2.setVisibility(View.GONE);
                     linearLayout3.setVisibility(View.GONE);
                     allArticles.setVisibility(View.GONE);
 
@@ -218,19 +204,16 @@ public class BookMarks extends Fragment {
 
                 bookmarkedTitle.setVisibility(View.GONE);
                 doctorsTitleBookmark.setVisibility(View.GONE);
-                monster1.setVisibility(View.GONE);
                 doctors.setVisibility(View.GONE);
                 allDoctors.setVisibility(View.GONE);
 
                 bookmarkedTitle2.setVisibility(View.GONE);
                 articlesBookmarkedTitle.setVisibility(View.GONE);
-                monster2.setVisibility(View.GONE);
                 linearLayout3.setVisibility(View.GONE);
                 allArticles.setVisibility(View.GONE);
 
                 bookmarkedTitle3.setVisibility(View.VISIBLE);
                 shopBookmarkTitle.setVisibility(View.VISIBLE);
-                monster3.setVisibility(View.VISIBLE);
                 linearLayout4.setVisibility(View.VISIBLE);
                 allShop.setVisibility(View.VISIBLE);
 
@@ -238,7 +221,6 @@ public class BookMarks extends Fragment {
 
                     bookmarkedTitle3.setVisibility(View.GONE);
                     shopBookmarkTitle.setVisibility(View.GONE);
-                    monster3.setVisibility(View.GONE);
                     linearLayout4.setVisibility(View.GONE);
                     allShop.setVisibility(View.GONE);
 
@@ -257,7 +239,6 @@ public class BookMarks extends Fragment {
 
             bookmarkedTitle.setVisibility(View.GONE);
             doctorsTitleBookmark.setVisibility(View.GONE);
-            monster1.setVisibility(View.GONE);
             doctors.setVisibility(View.GONE);
             allDoctors.setVisibility(View.GONE);
 
@@ -267,7 +248,6 @@ public class BookMarks extends Fragment {
 
             bookmarkedTitle2.setVisibility(View.GONE);
             articlesBookmarkedTitle.setVisibility(View.GONE);
-            monster2.setVisibility(View.GONE);
             linearLayout3.setVisibility(View.GONE);
             allArticles.setVisibility(View.GONE);
 
@@ -277,7 +257,6 @@ public class BookMarks extends Fragment {
 
             bookmarkedTitle3.setVisibility(View.GONE);
             shopBookmarkTitle.setVisibility(View.GONE);
-            monster3.setVisibility(View.GONE);
             linearLayout4.setVisibility(View.GONE);
             allShop.setVisibility(View.GONE);
 

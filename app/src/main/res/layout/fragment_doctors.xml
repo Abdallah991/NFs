@@ -74,44 +74,41 @@
                     android:layout_marginStart="20dp"
                     android:padding="10dp"
                     android:background="@drawable/button_filter"
-                    android:elevation="20dp"
                     android:layout_marginBottom="5dp"
                     android:text="@string/psychiatry"
+                    android:id="@+id/psychiatryFilter"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="11sp"
-                    android:textStyle="italic"
-                    app:fontFamily="@font/poppins_semi_bold" />
+                    app:fontFamily="@font/poppins_light" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/button_filter"
-                    android:elevation="20dp"
                     android:text="@string/psychology"
+                    android:id="@+id/psychologyFilter"
                     android:padding="10dp"
                     android:textAllCaps="false"
                     android:layout_marginBottom="5dp"
                     android:textColor="@color/colorPrimary"
                     android:textSize="11sp"
-                    android:textStyle="italic"
-                    app:fontFamily="@font/poppins_semi_bold" />
+                    app:fontFamily="@font/poppins_light" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/button_filter"
-                    android:elevation="20dp"
                     android:padding="10dp"
                     android:text="@string/behavioral_therapy"
+                    android:id="@+id/behavioralTherapyFilter"
                     android:textAllCaps="false"
                     android:layout_marginBottom="5dp"
                     android:textColor="@color/colorPrimary"
                     android:textSize="11sp"
-                    android:textStyle="italic"
-                    app:fontFamily="@font/poppins_semi_bold" />
+                    app:fontFamily="@font/poppins_light" />
             </LinearLayout>
 
             <LinearLayout
@@ -125,32 +122,30 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/button_filter"
-                    android:elevation="20dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:padding="10dp"
                     android:text="@string/alternative_healing"
+                    android:id="@+id/alternativeHealingFilter"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="11sp"
-                    android:textStyle="italic"
-                    app:fontFamily="@font/poppins_semi_bold" />
+                    app:fontFamily="@font/poppins_light" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/button_filter"
-                    android:elevation="20dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:text="Counselor"
+                    android:id="@+id/counselorFilter"
                     android:padding="10dp"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="11sp"
-                    android:textStyle="italic"
-                    app:fontFamily="@font/poppins_semi_bold" />
+                    app:fontFamily="@font/poppins_light" />
             </LinearLayout>
 
             <LinearLayout
@@ -164,24 +159,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/button_filter"
-                    android:elevation="20dp"
                     android:padding="10dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:text="Female"
+                    android:id="@+id/femaleFilter"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="11sp"
-                    android:textStyle="italic"
-                    app:fontFamily="@font/poppins_semi_bold" />
+                    app:fontFamily="@font/poppins_light" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/male"
+                    android:id="@+id/maleFilter"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/button_filter"
-                    android:elevation="20dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:padding="10dp"
@@ -189,8 +182,7 @@
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="11sp"
-                    android:textStyle="italic"
-                    app:fontFamily="@font/poppins_semi_bold" />
+                    app:fontFamily="@font/poppins_light" />
             </LinearLayout>
         </LinearLayout>
 

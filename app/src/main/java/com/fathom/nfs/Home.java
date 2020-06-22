@@ -33,6 +33,8 @@ import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.fathom.nfs.DataModels.AppointmentDataModel;
 import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
@@ -42,6 +44,7 @@ import com.fathom.nfs.RecyclersAndAdapters.ArticleAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.DoctorsAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.HorizontalRecyclerView;
 import com.fathom.nfs.RecyclersAndAdapters.ShopItemAdapter;
+import com.fathom.nfs.ViewModels.AppointmentViewModel;
 import com.fathom.nfs.ViewModels.ArticleViewModel;
 import com.fathom.nfs.ViewModels.CategoryViewModel;
 import com.fathom.nfs.ViewModels.DoctorsViewModel;
@@ -60,7 +63,7 @@ import static com.fathom.nfs.SignUpActivity.USER;
 public class Home extends Fragment {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private UserDataModel user = new UserDataModel();
+    public static UserDataModel user = new UserDataModel();
 
     // TAG for Debugging
     private static final String TAG = "Recycler View";
@@ -74,14 +77,17 @@ public class Home extends Fragment {
     private ArrayList<DoctorDataModel> homeDoctors = new ArrayList<>();
     private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
     private ArrayList<ArticleDataModel> homeArticles = new ArrayList<>();
+    // will be added when the shop is added
     private ArrayList<ShopItemDataModel> mShopItems = new ArrayList<>();
     private ArrayList<ShopItemDataModel> homeShopItems = new ArrayList<>();
     private ArrayList<CategoryDataModel> mCategories = new ArrayList<>();
     private RecyclerView mDoctorsRecycler;
     private RecyclerView mArticlesRecycler;
+    // will be added when the shop is added
     private RecyclerView mShopRecycler;
     private DoctorsAdapter mDoctorsAdapter;
     private ArticleAdapter mArticleAdapter;
+    // will be added when the shop is added
     private ShopItemAdapter mShopItemAdapter;
     private HorizontalRecyclerView horizontalAdapter;
     private ScrollView content;
@@ -89,6 +95,8 @@ public class Home extends Fragment {
     private DoctorsViewModel mDoctorsViewModel;
     private CategoryViewModel mCategoryViewModel;
     private ArticleViewModel mArticleViewModel;
+    private AppointmentViewModel mAppointmentViewModel;
+    // will be added when the shop is added
     private ShopItemsViewModel mShopItemsViewModel;
     private UserViewModel mUserViewModel;
     private SearchView mSearchView;
@@ -98,17 +106,21 @@ public class Home extends Fragment {
 
     private Button viewAllDoctors;
     private Button viewAllArticles;
+    // will be added when the shop is added
     private Button viewAllShopItems;
 
     private final int actionId = R.id.action_homeFragment_to_doctorsDetails;
     private int actionSpecialityId = R.id.action_homeFragment_to_doctorsSpecialities;
     private int actionArticle = R.id.action_homeFragment_to_articleDetailed2;
+    // will be added when the shop is added
     private int actionToDetailedShopItem = R.id.action_homeFragment_to_shopItemDetailed;
 
     private TextView userName;
     private ImageView sliderUserImage;
     private DoctorDataModel doctor = new DoctorDataModel();
     private static ProgressDialog myProgressDialog;
+
+    public static String userFirstName;
 
 
 
@@ -133,7 +145,9 @@ public class Home extends Fragment {
          content = view.findViewById(R.id.content);
          mDoctorsRecycler = view.findViewById(R.id.doctorsRecyclerView);
          mArticlesRecycler = view.findViewById(R.id.articlesRecyclerView);
-         mShopRecycler = view.findViewById(R.id.shopRecyclerView);
+
+        // will be added when the shop is added
+//         mShopRecycler = view.findViewById(R.id.shopRecyclerView);
 
          mSearchView = view.findViewById(R.id.search);
          searchList = view.findViewById(R.id.searchResults);
@@ -177,7 +191,7 @@ public class Home extends Fragment {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
              @Override
              public boolean onQueryTextSubmit(String s) {
-                 Toast.makeText(getContext(),"Submit "   , Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getContext(),"Submit ", Toast.LENGTH_SHORT).show();
 
 
                  searchList.setVisibility(View.GONE);
@@ -219,7 +233,7 @@ public class Home extends Fragment {
 
                     case "Shop":
 //                    case 0:
-                        mNavController.navigate(R.id.action_homeFragment_to_shopFragment);
+                        mNavController.navigate(R.id.action_homeFragment_to_comingSoon);
                         break;
 //                    case 1:
                     case "Appointments":
@@ -263,8 +277,7 @@ public class Home extends Fragment {
             @Override
             public void onChanged(UserDataModel userDataModel) {
                 user = userDataModel;
-//                user.notify();
-                userName.setText(user.getFirstName());
+
             }
         });
 
@@ -305,21 +318,35 @@ public class Home extends Fragment {
             }
         });
 
-        mShopItemsViewModel = new ViewModelProvider(requireActivity()).get(ShopItemsViewModel.class);
-        mShopItemsViewModel.initShopItem();
+        SharedPreferences preferences = getActivity().getSharedPreferences(USER, 0);
+        String email = preferences.getString("Email", "");
 
-        mShopItemsViewModel.getShopItems().observe(getViewLifecycleOwner(), new Observer<List<ShopItemDataModel>>() {
+        mAppointmentViewModel =  new ViewModelProvider(requireActivity()).get(AppointmentViewModel.class);
+        mAppointmentViewModel.initAppointments(email);
+        mAppointmentViewModel.getAppointments().observe(getViewLifecycleOwner(), new Observer<List<AppointmentDataModel>>() {
             @Override
-            public void onChanged(List<ShopItemDataModel> shopItemDataModels) {
-
-                mShopItemAdapter.notifyDataSetChanged();
+            public void onChanged(List<AppointmentDataModel> appointmentDataModels) {
             }
         });
+
+        // will be added when the shop is added
+//        mShopItemsViewModel = new ViewModelProvider(requireActivity()).get(ShopItemsViewModel.class);
+//        mShopItemsViewModel.initShopItem();
+//
+//        mShopItemsViewModel.getShopItems().observe(getViewLifecycleOwner(), new Observer<List<ShopItemDataModel>>() {
+//            @Override
+//            public void onChanged(List<ShopItemDataModel> shopItemDataModels) {
+//
+//                mShopItemAdapter.notifyDataSetChanged();
+//            }
+//        });
 
 
         viewAllDoctors = view.findViewById(R.id.viewDoctors);
         viewAllArticles = view.findViewById(R.id.viewArticles);
-        viewAllShopItems = view.findViewById(R.id.viewShop);
+
+        // will be added when the shop is added
+//        viewAllShopItems = view.findViewById(R.id.viewShop);
         // Readjusting the position of layout elements
         ViewCompat.setLayoutDirection(content, ViewCompat.LAYOUT_DIRECTION_LTR);
 
@@ -332,13 +359,14 @@ public class Home extends Fragment {
             }
         });
 
-        viewAllShopItems.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mNavController.navigate(R.id.action_homeFragment_to_shopFragment);
-
-            }
-        });
+        // will be added when the shop is added
+//        viewAllShopItems.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mNavController.navigate(R.id.action_homeFragment_to_shopFragment);
+//
+//            }
+//        });
 
         viewAllArticles.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -363,7 +391,7 @@ public class Home extends Fragment {
         String userFirstName = prefs.getString("FirstName", "");
 
 
-            if ((!userFirstName.equals("")) && userName.getText().equals("")) {
+            if ((userFirstName.equals("")) && userName.getText().equals("")) {
                 setUpDisplayName();
 
         }
@@ -411,11 +439,12 @@ public class Home extends Fragment {
         mArticlesRecycler.setAdapter(mArticleAdapter);
         mArticlesRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // will be added when the shop is added
         // setting the adapter to recycler
-        mShopItems = (ArrayList<ShopItemDataModel>) mShopItemsViewModel.getShopItems().getValue();
-        mShopItemAdapter = new ShopItemAdapter(homeShopItems, getContext(), mNavController, actionToDetailedShopItem, mShopItemsViewModel);
-        mShopRecycler.setAdapter(mShopItemAdapter);
-        mShopRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+//        mShopItems = (ArrayList<ShopItemDataModel>) mShopItemsViewModel.getShopItems().getValue();
+//        mShopItemAdapter = new ShopItemAdapter(homeShopItems, getContext(), mNavController, actionToDetailedShopItem, mShopItemsViewModel);
+//        mShopRecycler.setAdapter(mShopItemAdapter);
+//        mShopRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
@@ -438,7 +467,9 @@ public class Home extends Fragment {
         if (!mDoctors.isEmpty()) {
             i = mDoctors.size();
             j = mArticles.size();
-            k = mShopItems.size();
+
+            // will be added when the shop is added
+//            k = mShopItems.size();
 
             if (homeDoctors.isEmpty()) {
                 for (DoctorDataModel doctor : mDoctors) {
@@ -459,17 +490,20 @@ public class Home extends Fragment {
 
             }
 
-            if(homeShopItems.isEmpty()) {
-                for (ShopItemDataModel shopItem : mShopItems) {
-                    homeShopItems.add(shopItem);
-
-                }
-                homeShopItems.subList(3, k).clear();
-
-            }
+            // will be added when the shop is added
+//            if(homeShopItems.isEmpty()) {
+//                for (ShopItemDataModel shopItem : mShopItems) {
+//                    homeShopItems.add(shopItem);
+//
+//                }
+//                homeShopItems.subList(3, k).clear();
+//
+//            }
 
 
         }
+
+        setUpDisplayName();
 
         initRecyclerView();
 
@@ -488,9 +522,21 @@ public class Home extends Fragment {
     private void setUpDisplayName() {
 
         SharedPreferences preferences = getActivity().getSharedPreferences(USER, 0);
-        String name = preferences.getString("FIRST_NAME", "");
+        String name = preferences.getString("FirstName", "");
+
         Log.d(TAG6, name);
-        userName.setText(name);
+//        Toast.makeText(getContext(), name +"hey", Toast.LENGTH_SHORT).show();
+
+        if( name == "") {
+            userName.setText(user.getFirstName());
+            userFirstName = user.getFirstName();
+
+        }
+        else {
+            userName.setText(name);
+
+        }
+
 
 
 
@@ -524,18 +570,21 @@ public class Home extends Fragment {
                     homeArticles.add(article);
                 }
 
-                for (ShopItemDataModel shopItem : mShopItems) {
-                    homeShopItems.add(shopItem);
-                }
+                // will be added when the shop is added
+//                for (ShopItemDataModel shopItem : mShopItems) {
+//                    homeShopItems.add(shopItem);
+//                }
 
                 i = mDoctors.size();
                 j = mArticles.size();
-                k = mShopItems.size();
+                // will be added when the shop is added
+//                k = mShopItems.size();
 
 
                 homeDoctors.subList(3, i).clear();
                 homeArticles.subList(3, j).clear();
-                homeShopItems.subList(3, k).clear();
+                // will be added when the shop is added
+//                homeShopItems.subList(3, k).clear();
 
 
                 initRecyclerView();
@@ -544,6 +593,7 @@ public class Home extends Fragment {
                 sliderUserImage.setImageResource(R.drawable.user);
 
                 myProgressDialog.dismiss();
+                setUpDisplayName();
             }
         }, SPLASH_TIME_OUT);
     }

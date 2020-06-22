@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 user = userDataModel;
 
 //                sliderUserImage.setImageBitmap(user.getUserImage());
-                getImage();
+//                getImage();
                 loadingImage(user);
 
             }
@@ -302,8 +302,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void getImage() {
 
         SharedPreferences prefs = getSharedPreferences(USER, MODE_PRIVATE);
-        String userEmail = prefs.getString("EMAIL", "");
+        String userEmail = prefs.getString("Email", "");
 
+        Toast.makeText(getApplicationContext(), userEmail, Toast.LENGTH_SHORT).show();
         userImageRef = storageRef.child(userEmail);
 
 

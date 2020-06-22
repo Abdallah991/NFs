@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -52,12 +53,14 @@ public class DoctorsSpecialities extends Fragment {
     private DoctorsViewModel mDoctorsViewModel;
     private CategoryViewModel mCategoryViewModel;
     private final int actionId= R.id.action_doctorsSpecialities_to_doctorsDetails;
+    private int actionFindDoctors = R.id.action_doctorsSpecialities_to_doctors;
     private TextView specialityQ;
     private ImageView specialityImage;
     private TextView SpecialityText;
     private int position;
     private String categoryName;
     private ImageButton backButton;
+    private Button findDoctor;
 
 
 
@@ -86,6 +89,7 @@ public class DoctorsSpecialities extends Fragment {
         specialityImage = view.findViewById(R.id.quesionImage);
         SpecialityText = view.findViewById(R.id.doctorsSpecialityText);
         backButton = view.findViewById(R.id.backButtonToDoctors);
+        findDoctor = view.findViewById(R.id.findDoctorButtonInSpeciality);
 
         // Calling the View Model
         mDoctorsViewModel = new ViewModelProvider(requireActivity()).get(DoctorsViewModel.class);
@@ -129,6 +133,14 @@ public class DoctorsSpecialities extends Fragment {
             }
         });
 
+        findDoctor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNavController.navigate(actionFindDoctors);
+
+            }
+        });
+
         // Readjusting the position of layout elements
         ViewCompat.setLayoutDirection(doctorsSpecialityContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
@@ -145,9 +157,6 @@ public class DoctorsSpecialities extends Fragment {
 
         ArrayList<DoctorDataModel> filteredDoctors = new ArrayList<>();
 
-//        Toast.makeText(getContext(), "the array size is :"+ mDoctors.size(), Toast.LENGTH_SHORT).show();
-
-        // setting the adapter to recycler
         mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
         for (DoctorDataModel doctor : mDoctors) {
             if (doctor.getSpecialty().equals(category)) {

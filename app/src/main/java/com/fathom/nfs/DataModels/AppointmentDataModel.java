@@ -7,11 +7,11 @@ public class AppointmentDataModel {
     private String doctorName;
     private String specialty;
     private String timing;
-    private boolean bookedAppointemnt;
-    private String AMPM;
-    private String dayOfTheWeek;
     private String to;
     private String message;
+    private String userEmail;
+    private String userName;
+    private String documentId;
 
 
     public AppointmentDataModel(String day, String month, String doctorName, String specialty, String timing) {
@@ -65,29 +65,6 @@ public class AppointmentDataModel {
         this.timing = timing;
     }
 
-    public boolean isBookedAppointemnt() {
-        return bookedAppointemnt;
-    }
-
-    public void setBookedAppointemnt(boolean bookedAppointemnt) {
-        this.bookedAppointemnt = bookedAppointemnt;
-    }
-
-    public String getAMPM() {
-        return AMPM;
-    }
-
-    public void setAMPM(String AMPM) {
-        this.AMPM = AMPM;
-    }
-
-    public String getDayOfTheWeek() {
-        return dayOfTheWeek;
-    }
-
-    public void setDayOfTheWeek(String dayOfTheWeek) {
-        this.dayOfTheWeek = dayOfTheWeek;
-    }
 
     public String getTo() {
         return to;
@@ -103,5 +80,29 @@ public class AppointmentDataModel {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 }

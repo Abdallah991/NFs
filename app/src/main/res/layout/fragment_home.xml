@@ -236,60 +236,60 @@
                 app:fontFamily="@font/poppins_regular"
                 android:layout_below="@id/viewArticles" />
 
-            <TextView
-                android:id="@+id/shopTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="@string/shop"
-                android:textColor="@color/colorPrimary"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                app:fontFamily="@font/poppins"
-                android:layout_below="@id/newIn3" />
-            <ImageView
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:layout_toEndOf="@id/shopTitle"
-                android:src="@drawable/shop_monster"
-                android:layout_marginStart="70dp"
-                android:layout_marginEnd="80dp"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/newIn3"/>
+<!--            <TextView-->
+<!--                android:id="@+id/shopTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:text="@string/shop"-->
+<!--                android:textColor="@color/colorPrimary"-->
+<!--                android:textSize="35sp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:fontFamily="@font/poppins"-->
+<!--                android:layout_below="@id/newIn3" />-->
+<!--            <ImageView-->
+<!--                android:layout_width="130dp"-->
+<!--                android:layout_height="130dp"-->
+<!--                android:layout_toEndOf="@id/shopTitle"-->
+<!--                android:src="@drawable/shop_monster"-->
+<!--                android:layout_marginStart="70dp"-->
+<!--                android:layout_marginEnd="80dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_below="@id/newIn3"/>-->
 
-            <LinearLayout
-                android:id="@+id/linearLayout4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/shopTitle">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linearLayout4"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_below="@id/shopTitle">-->
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/shopRecyclerView"
-                    class="androidx.appcompat.app.AlertController$RecycleListView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="20dp">
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/shopRecyclerView"-->
+<!--                    class="androidx.appcompat.app.AlertController$RecycleListView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:layout_marginBottom="20dp">-->
 
-                </androidx.recyclerview.widget.RecyclerView>
+<!--                </androidx.recyclerview.widget.RecyclerView>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-            <Button
-                android:id="@+id/viewShop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_gradient"
-                app:fontFamily="@font/poppins"
-                android:textStyle="bold"
-                android:text="@string/allProducts"
-                android:layout_margin="20dp"
-                android:layout_marginBottom="80dp"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:layout_below="@id/linearLayout4"/>
+<!--            <Button-->
+<!--                android:id="@+id/viewShop"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@drawable/button_gradient"-->
+<!--                app:fontFamily="@font/poppins"-->
+<!--                android:textStyle="bold"-->
+<!--                android:text="@string/allProducts"-->
+<!--                android:layout_margin="20dp"-->
+<!--                android:layout_marginBottom="80dp"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="18sp"-->
+<!--                android:layout_below="@id/linearLayout4"/>-->
             <TextView
                 android:id="@+id/newIn4"
                 android:layout_width="wrap_content"
@@ -300,7 +300,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 app:fontFamily="@font/poppins_regular"
-                android:layout_below="@id/viewShop" />
+                android:layout_below="@id/viewArticles" />
 
 
 

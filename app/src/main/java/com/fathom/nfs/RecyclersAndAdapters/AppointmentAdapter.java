@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fathom.nfs.DataModels.AppointmentDataModel;
 import com.fathom.nfs.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -60,7 +63,22 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "clicked on: " + mAppointments.get(position));
-                Toast.makeText(mContext, "clicked "+ mAppointments.get(position) , Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "clicked "+ mAppointments.get(position) , Toast.LENGTH_SHORT).show();
+
+                FirebaseFirestore.getInstance().collection("Appointments").document(mAppointments.get(position).getDocumentId())
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error deleting document", e);
+                            }
+                        });
 
             }
         });

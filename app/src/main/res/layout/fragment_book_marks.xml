@@ -72,10 +72,8 @@
                 android:textAllCaps="false"
                 android:layout_marginTop="@dimen/fab_margin"
                 android:layout_marginBottom="@dimen/fab_margin"
-                app:fontFamily="@font/poppins_semi_bold"
-                android:textStyle="italic"
-                android:layout_marginStart="20dp"
-                android:elevation="20dp"/>
+                app:fontFamily="@font/poppins_light"
+                android:layout_marginStart="20dp"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -87,8 +85,7 @@
                 android:id="@+id/filterArticles"
                 android:layout_marginTop="@dimen/fab_margin"
                 android:layout_marginBottom="@dimen/fab_margin"
-                app:fontFamily="@font/poppins_semi_bold"
-                android:textStyle="italic"
+                app:fontFamily="@font/poppins_light"
                 android:layout_marginStart="20dp"
                 android:elevation="20dp"/>
             <Button
@@ -102,8 +99,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="11sp"
                 android:textAllCaps="false"
-                app:fontFamily="@font/poppins_semi_bold"
-                android:textStyle="italic"
+                app:fontFamily="@font/poppins_light"
                 android:layout_marginStart="20dp"
                 android:elevation="20dp"/>
 
@@ -132,16 +128,16 @@
             android:textStyle="bold"
             app:fontFamily="@font/poppins"
             android:layout_below="@id/bookmarkedTitle" />
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_toEndOf="@id/doctorsTitleBookmark"
-            android:src="@drawable/doctors_monster"
-            android:layout_marginStart="70dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/monster1"
-            android:layout_below="@id/doctorsTitleBookmark"/>
+<!--        <ImageView-->
+<!--            android:layout_width="130dp"-->
+<!--            android:layout_height="130dp"-->
+<!--            android:layout_toEndOf="@id/doctorsTitleBookmark"-->
+<!--            android:src="@drawable/doctors_monster"-->
+<!--            android:layout_marginStart="70dp"-->
+<!--            android:layout_marginEnd="80dp"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:id="@+id/monster1"-->
+<!--            android:layout_below="@id/doctorsTitleBookmark"/>-->
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -199,16 +195,16 @@
             android:textStyle="bold"
             app:fontFamily="@font/poppins"
             android:layout_below="@id/bookmarkedTitle2" />
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_toEndOf="@id/articlesBookmarkedTitle"
-            android:src="@drawable/article_monster"
-            android:id="@+id/monster2"
-            android:layout_marginStart="70dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/bookmarkedTitle2"/>
+<!--        <ImageView-->
+<!--            android:layout_width="130dp"-->
+<!--            android:layout_height="130dp"-->
+<!--            android:layout_toEndOf="@id/articlesBookmarkedTitle"-->
+<!--            android:src="@drawable/article_monster"-->
+<!--            android:id="@+id/monster2"-->
+<!--            android:layout_marginStart="70dp"-->
+<!--            android:layout_marginEnd="80dp"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:layout_below="@id/bookmarkedTitle2"/>-->
 
         <LinearLayout
             android:id="@+id/linearLayout3"
@@ -267,16 +263,16 @@
             android:textStyle="bold"
             app:fontFamily="@font/poppins"
             android:layout_below="@id/bookmarkedTitle3" />
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:layout_toEndOf="@id/shopBookmarkTitle"
-            android:src="@drawable/shop_monster"
-            android:id="@+id/monster3"
-            android:layout_marginStart="70dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/bookmarkedTitle3"/>
+<!--        <ImageView-->
+<!--            android:layout_width="130dp"-->
+<!--            android:layout_height="130dp"-->
+<!--            android:layout_toEndOf="@id/shopBookmarkTitle"-->
+<!--            android:src="@drawable/shop_monster"-->
+<!--            android:id="@+id/monster3"-->
+<!--            android:layout_marginStart="70dp"-->
+<!--            android:layout_marginEnd="80dp"-->
+<!--            android:layout_marginTop="15dp"-->
+<!--            android:layout_below="@id/bookmarkedTitle3"/>-->
 
         <LinearLayout
             android:id="@+id/linearLayout4"

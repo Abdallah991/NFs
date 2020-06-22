@@ -29,6 +29,7 @@ public class HorizontalRecyclerView extends RecyclerView.Adapter<HorizontalRecyc
     private int actionSpecialityId;
     private int actionShop = R.id.action_homeFragment_to_shopFragment;
     private int actionBlog = R.id.action_homeFragment_to_articles;
+    private int actionComingSoon = R.id.action_homeFragment_to_comingSoon;
     private NavController mNavController;
     private CategoryViewModel mModel;
 
@@ -75,7 +76,7 @@ public class HorizontalRecyclerView extends RecyclerView.Adapter<HorizontalRecyc
                 Log.d(TAG, "onClick: clicked on an image: " + mCategories.get(position));
 
                 if (position == 5 ){
-                    mNavController.navigate(actionShop);
+                    mNavController.navigate(actionComingSoon);
                 }
 
                 else if (position == 4) {

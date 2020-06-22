@@ -94,6 +94,9 @@
         <action
             android:id="@+id/action_homeFragment_to_bookMarksFragment"
             app:destination="@id/bookMarksFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_comingSoon"
+            app:destination="@id/comingSoon" />
     </fragment>
 
     <fragment
@@ -151,6 +154,9 @@
         <action
             android:id="@+id/action_doctorsSpecialities_to_doctorsDetails"
             app:destination="@id/doctorsDetails" />
+        <action
+            android:id="@+id/action_doctorsSpecialities_to_doctors"
+            app:destination="@id/doctors" />
     </fragment>
     <fragment
         android:id="@+id/articles"
@@ -211,7 +217,11 @@
         android:id="@+id/FAQsDetailed"
         android:name="com.fathom.nfs.FAQsDetailed"
         android:label="fragment_faqs_detailed"
-        tools:layout="@layout/fragment_faqs_detailed" />
+        tools:layout="@layout/fragment_faqs_detailed" >
+        <action
+            android:id="@+id/action_FAQsDetailed_to_doctors"
+            app:destination="@id/doctors" />
+    </fragment>
     <fragment
         android:id="@+id/doctorLocation"
         android:name="com.fathom.nfs.DoctorLocation"
@@ -227,4 +237,9 @@
         android:name="com.fathom.nfs.Chat"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/comingSoon"
+        android:name="com.fathom.nfs.ComingSoon"
+        android:label="fragment_coming_soon"
+        tools:layout="@layout/fragment_coming_soon" />
 </navigation>

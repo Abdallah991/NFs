@@ -51,9 +51,6 @@ public class HelpLineRepository {
 
         if (mHelpLineItems.isEmpty()) {
         mHelpLineItems.add (
-                new HelpLinesDataModel(R.drawable.suicide, R.drawable.suicide_image, "suicide helpline", "+97333224001")
-        );
-        mHelpLineItems.add (
                 new HelpLinesDataModel(R.drawable.abuse, R.drawable.abuse_image, "Abuse helpline", "+96233224001")
         );
         mHelpLineItems.add (

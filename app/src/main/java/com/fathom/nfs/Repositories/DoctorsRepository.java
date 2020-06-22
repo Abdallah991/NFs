@@ -78,13 +78,6 @@ public class DoctorsRepository {
                                     DoctorDataModel doctor = document.toObject(DoctorDataModel.class);
                                     mDoctorsItems.add(doctor);
 
-//                                    Log.d("Doctor Review", " array size detected");
-
-//                                    if (doctor.getReviews().size() != 0) {
-//
-//                                      Log.d("Doctor Review", " array size detected");
-//
-//                                    }
                                 }
 
                                 Log.d(TAG, "Task size " + task.getResult().size());
