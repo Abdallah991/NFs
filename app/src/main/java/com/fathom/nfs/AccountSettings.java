@@ -69,7 +69,7 @@ public class AccountSettings extends Fragment {
     private EditText email;
     private EditText password;
     private EditText confirmPassword;
-    private Button editButton;
+    private Button confirmButton;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private UserDataModel user = new UserDataModel();
     private final String TAG = "Account";
@@ -107,7 +107,7 @@ public class AccountSettings extends Fragment {
         email = view.findViewById(R.id.emailAccount);
         password = view.findViewById(R.id.passwordAccount);
         confirmPassword = view.findViewById(R.id.confirmPasswordAccount);
-        editButton = view.findViewById(R.id.edit);
+        confirmButton = view.findViewById(R.id.confirm);
         accountSettingsContent = view.findViewById(R.id.accountContent);
 
         mDialog = new Dialog(getContext());
@@ -125,7 +125,7 @@ public class AccountSettings extends Fragment {
         ViewCompat.setLayoutDirection(accountSettingsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
         confirmPassword.setVisibility(View.GONE);
-        editButton.setVisibility(View.GONE);
+        confirmButton.setVisibility(View.GONE);
 
         pullData();
         getImage();
@@ -140,18 +140,22 @@ public class AccountSettings extends Fragment {
             @Override
             public void onClick(View view) {
 
-                firstName.setEnabled(true);
-                lastName.setEnabled(true);
-                email.setEnabled(true);
-                password.setEnabled(true);
-                confirmPassword.setVisibility(View.VISIBLE);
-                editButton.setVisibility(View.VISIBLE);
-
-                openDialog();
+                if (editProfile.getText().toString().equals("Edit")) {
+                    firstName.setEnabled(true);
+                    lastName.setEnabled(true);
+                    email.setEnabled(true);
+                    password.setEnabled(true);
+                    confirmPassword.setVisibility(View.VISIBLE);
+                    confirmButton.setVisibility(View.VISIBLE);
+                    editProfile.setText("Edit photo");
+                } else if (editProfile.getText().toString().equals("Edit photo")) {
+                    openDialog();
+                    editProfile.setText("Edit");
+                }
             }
         });
 
-        editButton.setOnClickListener(new View.OnClickListener() {
+        confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -191,7 +195,7 @@ public class AccountSettings extends Fragment {
                 email.setEnabled(false);
                 password.setEnabled(false);
                 confirmPassword.setVisibility(View.GONE);
-                editButton.setVisibility(View.GONE);
+                confirmButton.setVisibility(View.GONE);
 
             }
         });
@@ -229,6 +233,7 @@ public class AccountSettings extends Fragment {
                 lastName.setText(user.getLastName());
                 email.setText(user.getEmail());
                 password.setText(user.getPassword());
+                confirmPassword.setText(user.getPassword());
             }
         });
     }
@@ -304,7 +309,7 @@ public class AccountSettings extends Fragment {
                 email.setEnabled(false);
                 password.setEnabled(false);
                 confirmPassword.setVisibility(View.GONE);
-                editButton.setVisibility(View.GONE);
+                confirmButton.setVisibility(View.GONE);
 
             }
         });

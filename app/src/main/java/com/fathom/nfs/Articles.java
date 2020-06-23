@@ -147,12 +147,12 @@ public class Articles extends Fragment {
 
         ArrayList<ArticleDataModel> allArticles = (ArrayList<ArticleDataModel>) mArticleViewModel.getArticles().getValue();
         for (ArticleDataModel article : allArticles) {
-            if (article.getArticleType().equals("Videos")) {
+            if (article.getArticleType().equals("Video")) {
                 mVideos.add(article);
             }
         }
         for (ArticleDataModel article : allArticles) {
-            if (article.getArticleType().equals("Articles")) {
+            if (article.getArticleType().equals("Article")) {
                 mArticles.add(article);
             }
         }

@@ -102,8 +102,7 @@
             android:layout_margin="20dp">
             <ImageView
                 android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/doctor1"/>
+                android:layout_height="50dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -114,7 +113,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/writerDetailedName"
-                    android:text="Dr. Muneera Al Shiakh"
+                    android:text="Narjes Kazerooni"
                     android:textColor="@color/colorPrimary"
                     android:textAllCaps="true"
                     android:textSize="12sp"
@@ -125,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
                     android:id="@+id/uploaderDetailedSpeciality"
-                    android:text="@string/psychiatry"
+                    android:text=""
                     android:textSize="14sp"
                     android:textStyle="italic"
                     app:fontFamily="@font/poppins_light"/>

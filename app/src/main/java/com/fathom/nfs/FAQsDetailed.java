@@ -98,6 +98,7 @@ public class FAQsDetailed extends Fragment {
 
                 title.setText("What is "+(FAQsSection.getFAQCategory()) + " ?");
                 monsterImage.setImageResource(FAQsSection.getCategoryName().getCategoryMonster());
+                detailedSectionText.setText(FAQsSection.getCategoryName().getCategoryDescription());
 
 
             }

@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 public class AboutNfs extends Fragment {
 
-    private LinearLayout aboutContent;
+    private ConstraintLayout aboutContent;
     private ImageButton backButton;
 
 

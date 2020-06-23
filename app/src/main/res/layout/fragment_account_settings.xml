@@ -149,12 +149,12 @@
         app:layout_constraintGuide_percent="0.70" />
 
     <Button
-        android:id="@+id/edit"
+        android:id="@+id/confirm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@drawable/button_gradient"
-        android:text="@string/edit"
+        android:text="@string/confirm"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"

@@ -112,8 +112,12 @@ Sapien faucibus et molestie ac feugiat. Est placerat in egestas erat imperdiet s
     <string name="confirmation_code">Confirmation Code</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="edit">Edit</string>
-    <string name="about">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna.</string>
+    <string name="about">We understand life can be stressful and it keeps becoming harder and harder to find what your mental health desires. Whether you’re a mom, a student, an entrepreneur, or working a full-time job 
+we believe that you matter and we understand it can be difficult to find the help you’re trying to get this is why we exist whether you need a psychiatrist, psychologist, or counselor we are here.
+
+NFS is your place to find the help you need whenever you decide to seek it. e value you as a human being and we wish the best for you to stay safe and healthy. 
+\n\n
+The NFS team</string>
     <string name="coming_soon">Coming Soon</string>
-
-
+    <string name="confirm">Confirm</string>
 </resources>
