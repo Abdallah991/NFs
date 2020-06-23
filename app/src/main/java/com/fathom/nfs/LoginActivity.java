@@ -35,7 +35,6 @@ import static com.fathom.nfs.SignUpActivity.USER;
 public class LoginActivity extends AppCompatActivity {
 
     // declaring class variables
-    private TextView appName;
     private TextView forgotPassword;
     private EditText userName;
     private EditText password;
@@ -57,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // init member variables
-        appName = findViewById(R.id.appTitle);
         forgotPassword = findViewById(R.id.forgotPassword);
         userName = findViewById(R.id.email);
         password = findViewById(R.id.lastName);

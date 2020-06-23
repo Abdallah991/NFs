@@ -33,7 +33,6 @@ import java.util.Map;
 public class SignUpActivity extends AppCompatActivity {
 
     // init member variables
-    private TextView appName;
     private Button login;
     private Button signUp;
     private EditText firstName;
@@ -57,7 +56,6 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // linking the variables with the view components
-        appName = findViewById(R.id.appTitle);
         login = findViewById(R.id.sendPassword);
         signUp = findViewById(R.id.signUp);
         firstName = findViewById(R.id.firstName);
@@ -66,19 +64,6 @@ public class SignUpActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         mAuth = FirebaseAuth.getInstance();
 
-
-//        actionCodeSettings =
-//                ActionCodeSettings.newBuilder()
-//                        // URL you want to redirect back to. The domain (www.example.com) for this
-//                        // URL must be whitelisted in the Firebase Console.
-//                        .setUrl("https://www.example.com/finishSignUp?cartId=1234")
-//                        // This must be true
-//                        .setHandleCodeInApp(true)
-//                        .setAndroidPackageName(
-//                                "com.fathom.nfs",
-//                                true, /* installIfNotAvailable */
-//                                "12"    /* minimumVersion */)
-//                        .build();
 
 
         // go back to Login Activity

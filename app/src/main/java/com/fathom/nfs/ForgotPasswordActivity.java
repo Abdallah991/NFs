@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     // init member variables
-    private TextView appName;
+
     private TextView noAccount;
     private EditText email;
     private Button login;
@@ -35,7 +35,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
 
         // linking variable to view components
-        appName = findViewById(R.id.appTitle);
         noAccount = findViewById(R.id.noAccount);
         email = findViewById(R.id.email);
         login = findViewById(R.id.login);
@@ -62,33 +61,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             }
                         });
 
-//                AWSMobileClient.getInstance().forgotPassword(username, new Callback<ForgotPasswordResult>() {
-//                    @Override
-//                    public void onResult(final ForgotPasswordResult result) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Log.d(TAG, "forgot password state: " + result.getState());
-//                                switch (result.getState()) {
-//                                    case CONFIRMATION_CODE:
-//                                        Log.e(TAG,"Confirmation code is sent to reset password");
-//                                        Intent intent = new Intent(getApplicationContext(),
-//                                                NewPasswordActivity.class);
-//                                        startActivity(intent);
-//                                        break;
-//                                    default:
-//                                        Log.e(TAG, "un-supported forgot password state");
-//                                        break;
-//                                }
-//                            }
-//                        });
-//                    }
-//
-//                    @Override
-//                    public void onError(Exception e) {
-//                        Log.e(TAG, "forgot password error", e);
-//                    }
-//                });
             }
         });
 

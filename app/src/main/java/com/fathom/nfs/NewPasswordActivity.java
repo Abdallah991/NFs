@@ -68,33 +68,7 @@ public class NewPasswordActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(getApplicationContext(), "The passwords don't match", Toast.LENGTH_SHORT).show();
                 }
-//                AWSMobileClient.getInstance().confirmForgotPassword(NewPassword, NewPasswordConfirmation, new Callback<ForgotPasswordResult>() {
-//                    @Override
-//                    public void onResult(final ForgotPasswordResult result) {
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Log.d(TAG, "forgot password state: " + result.getState());
-//                                switch (result.getState()) {
-//                                    case DONE:
-//                                        Log.e(TAG,"Password changed successfully");
-//                                        Intent intent = new Intent(getApplicationContext(),
-//                                                LoginActivity.class);
-//                                        startActivity(intent);
-//                                        break;
-//                                    default:
-//                                        Log.e(TAG, "un-supported forgot password state");
-//                                        break;
-//                                }
-//                            }
-//                        });
-//                    }
 //
-//                    @Override
-//                    public void onError(Exception e) {
-//                        Log.e(TAG, "forgot password error", e);
-//                    }
-//                });
             }
         });
     }

@@ -39,7 +39,6 @@ public class OnBoarding extends AppCompatActivity {
     private OnBoardingAdapter mOnBoardingAdapter;
     private ImageButton btnNext;
     private TextView skipView;
-    private TextView appName;
     private int position = 0;
 
     @Override
@@ -50,13 +49,12 @@ public class OnBoarding extends AppCompatActivity {
         // linking variables to views
         btnNext = findViewById(R.id.next);
         skipView = findViewById(R.id.skip);
-        appName = findViewById(R.id.appTitle);
 
         // fill List for OnBoarding
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem(R.drawable.nfs_monsters03, R.string.question1, R.string.description1));
-        mList.add(new ScreenItem(R.drawable.nfs_monsters07, R.string.question2, R.string.description2));
-        mList.add(new ScreenItem(R.drawable.nfs_monsters08, R.string.question3, R.string.description3));
+        mList.add(new ScreenItem(R.drawable.monster1, R.string.question1, R.string.description1));
+        mList.add(new ScreenItem(R.drawable.monster2, R.string.question2, R.string.description2));
+        mList.add(new ScreenItem(R.drawable.monster3, R.string.question3, R.string.description3));
 
 
         //setup ViewPager
