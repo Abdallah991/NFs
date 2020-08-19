@@ -81,20 +81,8 @@
                                 android:gravity="end"/>
 
                     </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/doctorsAddress"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1234 Street, 710 Building, 22 Office Manama, Bahrain"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginEnd="50dp"
-                            android:textColor="@color/appGrey2"
-                            android:layout_marginBottom="20dp"
-                            android:textSize="14sp"
-                            app:fontFamily="@font/poppins_light" />
                 <Button
-                    android:id="@+id/bookAppointment"
+                    android:id="@+id/googleMaps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_gradient"

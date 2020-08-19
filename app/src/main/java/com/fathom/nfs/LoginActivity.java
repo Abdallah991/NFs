@@ -90,7 +90,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SignIn();
+                    SignIn();
+
+
 //                uploadArticle();
 
             }
@@ -129,10 +131,17 @@ public class LoginActivity extends AppCompatActivity {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 String name = user.getDisplayName();
 //                                Toast.makeText(getApplicationContext(), name, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(),
-                                        MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                FirebaseUser signedUpUser = FirebaseAuth.getInstance().getCurrentUser();
+                                boolean emailVerified = signedUpUser.isEmailVerified();
+                                if (emailVerified) {
+                                    Intent intent = new Intent(getApplicationContext(),
+                                            MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else  {
+                                    Toast.makeText(getApplicationContext(), "Please Verify the email that have been sent to you", Toast.LENGTH_SHORT).show();
+                                }
+
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());

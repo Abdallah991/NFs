@@ -51,11 +51,11 @@ public class HelpLineRepository {
 
         if (mHelpLineItems.isEmpty()) {
         mHelpLineItems.add (
-                new HelpLinesDataModel(R.drawable.abuse, R.drawable.abuse_image, "Abuse helpline", "+96233224001")
+                new HelpLinesDataModel(R.drawable.abuse, R.drawable.abuse_image, "Abuse helpline", "+97366710901")
         );
-        mHelpLineItems.add (
-                new HelpLinesDataModel(R.drawable.depression, R.drawable.depression_image,"Depression helpline", "+4355664427")
-        );
+//        mHelpLineItems.add (
+//                new HelpLinesDataModel(R.drawable.depression, R.drawable.depression_image,"Depression helpline", "+4355664427")
+//        );
 
         Log.d("MVVM"," Loading the data is DONE");
 

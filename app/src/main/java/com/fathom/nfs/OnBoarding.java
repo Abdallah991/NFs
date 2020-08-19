@@ -112,7 +112,7 @@ public class OnBoarding extends AppCompatActivity {
 
     private void goToLogin() {
         // TODO: destroy the the current activity and go to Login
-        Toast.makeText(this, "Go to Login", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Go to Login", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getApplicationContext(),
                 LoginActivity.class);
         startActivity(intent);
@@ -120,5 +120,21 @@ public class OnBoarding extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
 
+            String name = user.getDisplayName();
+            boolean emailVerified = user.isEmailVerified();
+
+
+//            Toast.makeText(getApplicationContext(), name +" "+ emailVerified, Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getApplicationContext(),
+                    MainActivity.class);
+            startActivity(intent);
+        }
+    }
 }

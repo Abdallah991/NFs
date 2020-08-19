@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -98,6 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
                         && isPasswordValid(password.getText().toString())) {
                     SignUp();
                     uploadUser();
+
                 } else
                     {
                         Toast.makeText(getApplicationContext(), "Email And/or password are invalid",
@@ -144,6 +146,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Log.d(TAG, "User profile updated.");
+                                                sendVerificationEmail();
                                                 Intent intent = new Intent(getApplicationContext(),
                                     LoginActivity.class);
                             startActivity(intent);
@@ -195,6 +198,27 @@ public class SignUpActivity extends AppCompatActivity {
             user.setPassword(password);
         }
         return password.length() > 6;
+    }
+
+    private void sendVerificationEmail() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "We sent you a verification Email", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else
+                        {
+
+
+                        }
+                    }
+                });
+
     }
 
 

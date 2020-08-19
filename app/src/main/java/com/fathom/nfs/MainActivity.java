@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,20 +24,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.client.Callback;
-import com.amazonaws.mobile.client.SignOutOptions;
 import com.fathom.nfs.DataModels.UserDataModel;
 import com.fathom.nfs.ViewModels.UserViewModel;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -61,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView closeDrawerButton;
     private UserViewModel mUserViewModel;
     private ImageView sliderUserImage;
+    private TextView userName;
+    private TextView accountType;
     private String TAG = "HOME";
     private UserDataModel user = new UserDataModel();
     private FirebaseStorage storage;
@@ -86,12 +82,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         logOut = findViewById(R.id.logOut);
         closeDrawerButton = findViewById(R.id.close_btn);
 
-        LayoutInflater inflater = getLayoutInflater();
-//        View slider = inflater.from(getApplicationContext()).inflate(R.layout.drawer_header, null);
-        ViewGroup viewRoot = (ViewGroup) inflater.inflate(R.layout.drawer_header,null);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        userName =  header.findViewById(R.id.userName);
+        accountType =  header.findViewById(R.id.accountType);
+        sliderUserImage = header.findViewById(R.id.sliderUserImage);
+
+
 
         Log.d("User Image", " " + sliderUserImage);
-        sliderUserImage = viewRoot.findViewById(R.id.sliderUserImage);
 
         Log.d("User Image", " " + sliderUserImage);
 
@@ -171,9 +170,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onChanged(UserDataModel userDataModel) {
                 user = userDataModel;
-
-//                sliderUserImage.setImageBitmap(user.getUserImage());
-//                getImage();
+                userName.setText(userDataModel.getFirstName());
+                accountType.setText(userDataModel.getAccountType()+"");
                 loadingImage(user);
 
             }
@@ -275,28 +273,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void loadingImage(UserDataModel userDataModel) {
 
-        Handler myHandler;
-        int SPLASH_TIME_OUT = 8000;
-        myHandler = new Handler();
-
-
-        // showing the Splash screen for two seconds then going to on boarding activity
-        myHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                user = userDataModel;
-
-                // TODO: Persist the image on the slider
-//                sliderUserImage.setImageBitmap(user.getUserImage());
-//                sliderUserImage.setImageResource(R.drawable.user);
-
-
-//                Toast.makeText(getApplicationContext(), "the user is " +user.getUserImage(), Toast.LENGTH_SHORT).show();
-
-
-
-            }
-        }, SPLASH_TIME_OUT);
+      getImage();
     }
 
     private void getImage() {

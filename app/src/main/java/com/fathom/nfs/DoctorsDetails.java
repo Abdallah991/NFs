@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -117,12 +118,8 @@ public class DoctorsDetails extends Fragment {
     private TextView speciality;
     private static ProgressDialog myProgressDialog;
     private static DecimalFormat df = new DecimalFormat("0.0");
-
-
-
-
-
-
+    public static double lat;
+    public static double longt;
 
 
     public DoctorsDetails() {
@@ -185,7 +182,6 @@ public class DoctorsDetails extends Fragment {
         mDialog = new Dialog(getContext());
 
 
-
         ViewCompat.setLayoutDirection(doctorsDetailsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
 
@@ -213,14 +209,17 @@ public class DoctorsDetails extends Fragment {
                     aboutContent.setText(doctor.getAbout());
                     experienceContent.setText(doctor.getExperience());
                     educationDegree1.setText(doctor.getEducation());
-                    speciality.setText(doctor.getSpecialty()+" ");
+                    speciality.setText(doctor.getSpecialty() + " ");
                     educationDegree1Description.setVisibility(View.GONE);
                     educationDegree2.setVisibility(View.GONE);
                     educationDegree2Description.setVisibility(View.GONE);
                     phone = doctor.getPhone();
+                    longt = doctor.getLongt();
+                    lat = doctor.getLat();
+
                     doctorEmailId = doctor.getEmail();
                     gender = doctor.getGender();
-                    doctorFullName = "Dr. " +doctor.getDoctorFirstName()+ " " + doctor.getDoctorLastName();
+                    doctorFullName = "Dr. " + doctor.getDoctorFirstName() + " " + doctor.getDoctorLastName();
                     appointmentSpeciality = doctor.getSpecialty();
 
                     initRecycler();
@@ -234,7 +233,6 @@ public class DoctorsDetails extends Fragment {
                     rating.setText(Double.toString(doctorItemsBookmarked.get(positionOfBookmarked).getRating()));
                     doctorImage.setImageBitmap(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorImage());
                     doctorEmailId = doctorItemsBookmarked.get(positionOfBookmarked).getEmail();
-
 
 
                 }
@@ -265,17 +263,14 @@ public class DoctorsDetails extends Fragment {
         });
 
 
-
-
-
         // Adjusting the UI to display only the overview when the user access it
-                        contactContent.setVisibility(View.GONE);
+        contactContent.setVisibility(View.GONE);
         doctorLocation.setVisibility(View.GONE);
         doctorChat.setVisibility(View.GONE);
         doctorEmail.setVisibility(View.GONE);
         callButton.setVisibility(View.GONE);
 
-                        reviewContent.setVisibility(View.GONE);
+        reviewContent.setVisibility(View.GONE);
         writeReview.setVisibility(View.GONE);
         mReviewRecycler.setVisibility(View.GONE);
 
@@ -288,7 +283,7 @@ public class DoctorsDetails extends Fragment {
                 reviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 contactUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button));
 
-                                overviewContent.setVisibility(View.GONE);
+                overviewContent.setVisibility(View.GONE);
                 aboutTitle.setVisibility(View.GONE);
                 aboutContent.setVisibility(View.GONE);
                 educationTitle.setVisibility(View.GONE);
@@ -304,23 +299,11 @@ public class DoctorsDetails extends Fragment {
                 mReviewRecycler.setVisibility(View.GONE);
 
 
-
                 contactContent.setVisibility(View.VISIBLE);
                 doctorLocation.setVisibility(View.VISIBLE);
                 doctorChat.setVisibility(View.VISIBLE);
                 doctorEmail.setVisibility(View.VISIBLE);
                 callButton.setVisibility(View.VISIBLE);
-
-
-//
-//                contactContent.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//
-//                    mNavController.navigate(R.id.action_doctorsDetails_to_doctorLocation);
-//
-//                    }
-//                });
 
 
             }
@@ -345,18 +328,16 @@ public class DoctorsDetails extends Fragment {
                 experienceTitle.setVisibility(View.VISIBLE);
                 experienceContent.setVisibility(View.VISIBLE);
 
-                                contactContent.setVisibility(View.GONE);
+                contactContent.setVisibility(View.GONE);
                 doctorLocation.setVisibility(View.GONE);
                 doctorChat.setVisibility(View.GONE);
                 doctorEmail.setVisibility(View.GONE);
                 callButton.setVisibility(View.GONE);
 
 
-                                reviewContent.setVisibility(View.GONE);
+                reviewContent.setVisibility(View.GONE);
                 writeReview.setVisibility(View.GONE);
                 mReviewRecycler.setVisibility(View.GONE);
-
-
 
 
             }
@@ -369,11 +350,11 @@ public class DoctorsDetails extends Fragment {
                 contactUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 overviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
 
-                                reviewContent.setVisibility(View.VISIBLE);
+                reviewContent.setVisibility(View.VISIBLE);
                 writeReview.setVisibility(View.VISIBLE);
                 mReviewRecycler.setVisibility(View.VISIBLE);
 
-                                contactContent.setVisibility(View.GONE);
+                contactContent.setVisibility(View.GONE);
                 doctorLocation.setVisibility(View.GONE);
                 doctorChat.setVisibility(View.GONE);
                 doctorEmail.setVisibility(View.GONE);
@@ -393,10 +374,15 @@ public class DoctorsDetails extends Fragment {
             }
         });
 
+//        if (longt == 0 || lat == 0) {
+//            doctorLocation.setBackgroundResource(R.drawable.button_shadow);
+//        }
+
         doctorLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mNavController.navigate(R.id.action_doctorsDetails_to_doctorLocation);
+                if (longt != 0 || lat != 0) {
+                    mNavController.navigate(R.id.action_doctorsDetails_to_doctorLocation);                }
             }
         });
 
@@ -429,7 +415,7 @@ public class DoctorsDetails extends Fragment {
                     waIntent.setType("text/plain");
                     String text = "YOUR TEXT HERE";
 
-                    PackageInfo info =pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+                    PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
                     //Check if package exists or not. If not then code
                     //in catch block will be called
                     waIntent.setPackage("com.whatsapp");
@@ -447,9 +433,8 @@ public class DoctorsDetails extends Fragment {
         doctorEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Email button pressed", Toast.LENGTH_SHORT).show();
                 Intent email = new Intent(Intent.ACTION_SEND);
-                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ doctorEmailId});
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{doctorEmailId});
                 email.putExtra(Intent.EXTRA_SUBJECT, "Inquirey");
                 email.putExtra(Intent.EXTRA_TEXT, "I want to ask you about");
                 email.setType("message/rfc822");
@@ -462,8 +447,8 @@ public class DoctorsDetails extends Fragment {
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
-//                startActivity(intent);
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                startActivity(intent);
             }
         });
 
@@ -499,8 +484,6 @@ public class DoctorsDetails extends Fragment {
         mReviewRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-
-
     }
 
 
@@ -514,7 +497,7 @@ public class DoctorsDetails extends Fragment {
         postReview = mDialog.findViewById(R.id.postReview);
 
         reviewRating.setRating(3.0f);
-        doctorName.setText("Dr. " + firstName.getText()+" "+ lastName.getText());
+        doctorName.setText("Dr. " + firstName.getText() + " " + lastName.getText());
 
         postReview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -522,10 +505,9 @@ public class DoctorsDetails extends Fragment {
 
                 if (reviewText.getText().toString().equals("")) {
 
-                Toast.makeText(getContext(), "The Review have no content " , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "The Review have no content ", Toast.LENGTH_SHORT).show();
 
-                }
-                else {
+                } else {
 
                     uploadReviews();
 
@@ -540,7 +522,6 @@ public class DoctorsDetails extends Fragment {
                 mDialog.dismiss();
 
 
-
             }
         });
 
@@ -550,7 +531,8 @@ public class DoctorsDetails extends Fragment {
 
     }
 
-    private void reviews(String email) {}
+    private void reviews(String email) {
+    }
 
     private void loadingReviews() {
 
@@ -576,8 +558,15 @@ public class DoctorsDetails extends Fragment {
 
                         mReviewAdapter.notifyDataSetChanged();
 
-                initRecycler();
-                myProgressDialog.dismiss();
+                        initRecycler();
+                        myProgressDialog.dismiss();
+
+                        if (longt == 0 || lat == 0) {
+                            doctorLocation.setBackgroundResource(R.drawable.button_shadow);
+                        } else {
+                            doctorLocation.setBackgroundResource(R.drawable.button_gradient);
+
+                        }
 
 
                     }
@@ -601,11 +590,11 @@ public class DoctorsDetails extends Fragment {
         review.setUserEmail(userEmail);
 
         db.collection("Reviews")
-                .document(userEmail+review.getDoctorEmail()).set(review);
+                .document(userEmail + review.getDoctorEmail()).set(review);
 
         mDialog.dismiss();
 
-        Toast.makeText(getContext(), "Your Review been submitted and awaiting approval " , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Your Review been submitted and awaiting approval ", Toast.LENGTH_SHORT).show();
 
 //        calculateDoctorsReview();
 
@@ -618,9 +607,9 @@ public class DoctorsDetails extends Fragment {
         double averageReview;
 
         for (ReviewDataModel review : mReviews) {
-             reviewSum += (int)  review.getRating();
-            }
-        averageReview = ( reviewSum /numberOfReview );
+            reviewSum += (int) review.getRating();
+        }
+        averageReview = (reviewSum / numberOfReview);
 
         doctor.setDoctorFirstName((String) firstName.getText());
         doctor.setDoctorLastName((String) lastName.getText());
@@ -634,17 +623,14 @@ public class DoctorsDetails extends Fragment {
         doctor.setSpecialty((String) speciality.getText());
         db.collection("Doctors")
                 .document(doctorEmailId).set(doctor);
-        Toast.makeText(getContext(), "the Doctor average Review equals " + averageReview , Toast.LENGTH_SHORT).show();
-
-
-
+        Toast.makeText(getContext(), "the Doctor average Review equals " + averageReview, Toast.LENGTH_SHORT).show();
 
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
-
-
-
-
+    }
 }

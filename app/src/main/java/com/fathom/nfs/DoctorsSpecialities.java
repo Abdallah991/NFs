@@ -160,6 +160,7 @@ public class DoctorsSpecialities extends Fragment {
         mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
         for (DoctorDataModel doctor : mDoctors) {
             if (doctor.getSpecialty().equals(category)) {
+
                 filteredDoctors.add(doctor);
             }
         }

@@ -12,6 +12,7 @@ public class ArticleDataModel {
     private boolean bookmark;
     private String VideoUrl;
     private String articleType;
+    private String authorEducation;
 
     public ArticleDataModel(int imageUrl, String articleTitle, String authorName) {
         this.imageUrl = imageUrl;
@@ -88,5 +89,13 @@ public class ArticleDataModel {
 
     public void setArticleType(String articleType) {
         this.articleType = articleType;
+    }
+
+    public String getAuthorEducation() {
+        return authorEducation;
+    }
+
+    public void setAuthorEducation(String authorEducation) {
+        this.authorEducation = authorEducation;
     }
 }

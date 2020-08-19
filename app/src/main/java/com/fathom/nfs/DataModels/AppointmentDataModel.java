@@ -6,9 +6,10 @@ public class AppointmentDataModel {
     private String month;
     private String doctorName;
     private String specialty;
-    private String timing;
+    private String time;
+    // doctor email
     private String to;
-    private String message;
+    private MessageDataModel message;
     private String userEmail;
     private String userName;
     private String documentId;
@@ -19,7 +20,7 @@ public class AppointmentDataModel {
         this.month = month;
         this.doctorName = doctorName;
         this.specialty = specialty;
-        this.timing = timing;
+        this.time = timing;
     }
 
     public AppointmentDataModel() {
@@ -42,7 +43,7 @@ public class AppointmentDataModel {
     }
 
     public String getTiming() {
-        return timing;
+        return time;
     }
 
     public void setDay(String day) {
@@ -62,7 +63,7 @@ public class AppointmentDataModel {
     }
 
     public void setTiming(String timing) {
-        this.timing = timing;
+        this.time = timing;
     }
 
 
@@ -72,14 +73,6 @@ public class AppointmentDataModel {
 
     public void setTo(String to) {
         this.to = to;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getUserEmail() {
@@ -104,5 +97,21 @@ public class AppointmentDataModel {
 
     public void setDocumentId(String documentId) {
         this.documentId = documentId;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public MessageDataModel getMessage() {
+        return message;
+    }
+
+    public void setMessage(MessageDataModel message) {
+        this.message = message;
     }
 }

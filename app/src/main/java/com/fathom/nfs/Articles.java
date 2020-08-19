@@ -146,24 +146,32 @@ public class Articles extends Fragment {
         recyclerView.setAdapter(horizontalAdapter);
 
         ArrayList<ArticleDataModel> allArticles = (ArrayList<ArticleDataModel>) mArticleViewModel.getArticles().getValue();
-        for (ArticleDataModel article : allArticles) {
-            if (article.getArticleType().equals("Video")) {
-                mVideos.add(article);
+        if(mVideos.isEmpty()) {
+            for (ArticleDataModel article : allArticles) {
+                if (article.getArticleType().equals("Video")) {
+                    mVideos.add(article);
+                }
             }
         }
-        for (ArticleDataModel article : allArticles) {
-            if (article.getArticleType().equals("Article")) {
-                mArticles.add(article);
+        if(mArticles.isEmpty()) {
+            for (ArticleDataModel article : allArticles) {
+                if (article.getArticleType().equals("Article")) {
+                    mArticles.add(article);
+                }
             }
         }
-        for (ArticleDataModel article : allArticles) {
-            if (article.getArticleType().equals("Community")) {
-                mCommunities.add(article);
+        if(mCommunities.isEmpty()) {
+            for (ArticleDataModel article : allArticles) {
+                if (article.getArticleType().equals("Community")) {
+                    mCommunities.add(article);
+                }
             }
         }
-        for (ArticleDataModel article : allArticles) {
-            if (article.getArticleType().equals("Blog")) {
-                mBlogs.add(article);
+        if(mBlogs.isEmpty()) {
+            for (ArticleDataModel article : allArticles) {
+                if (article.getArticleType().equals("Blog")) {
+                    mBlogs.add(article);
+                }
             }
         }
 

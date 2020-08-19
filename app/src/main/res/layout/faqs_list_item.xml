@@ -27,7 +27,7 @@
         android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
         android:textSize="14sp"
         app:fontFamily="@font/poppins_regular"
-        android:textColor="@color/appGrey2"/>
+        android:textColor="@color/appGrey"/>
 
 
 </LinearLayout>

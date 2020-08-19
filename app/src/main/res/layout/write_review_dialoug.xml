@@ -54,26 +54,26 @@
         <TextView
             android:id="@+id/reviewDescription"
             android:layout_width="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/appGrey2"
-            android:textSize="14sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:text="Review are public and editable"
-            app:fontFamily="@font/poppins_light"
-            android:layout_marginTop="20dp"/>
+            android:textColor="@color/appGrey"
+            android:textSize="14sp"
+            app:fontFamily="@font/poppins_light" />
 
         <TextView
             android:id="@+id/reviewDescription2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:textColor="@color/appGrey2"
-            android:textSize="14sp"
             android:text="User profile will not appear with your review"
-            app:fontFamily="@font/poppins_light"
-            android:layout_marginTop="20dp"/>
+            android:textColor="@color/appGrey"
+            android:textSize="14sp"
+            app:fontFamily="@font/poppins_light" />
 
         <RatingBar
             android:layout_width="wrap_content"

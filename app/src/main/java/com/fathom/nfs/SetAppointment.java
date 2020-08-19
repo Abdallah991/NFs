@@ -1,8 +1,11 @@
 package com.fathom.nfs;
 
 
-import android.annotation.SuppressLint;
+
+import android.app.Dialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,7 +13,6 @@ import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +28,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
-
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,8 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -56,6 +54,7 @@ public class SetAppointment extends Fragment {
     private CalendarView mCalendarView;
     private Calendar calendar;
     private AppointmentDataModel appointment = new AppointmentDataModel();
+    private MessageDataModel message = new MessageDataModel();
     private Spinner startTime;
     private Spinner startAmPm;
     private Spinner endTime;
@@ -70,6 +69,8 @@ public class SetAppointment extends Fragment {
     private String doctorName;
     private String doctorEmail;
     private String speciality;
+    // confirmation dialog
+    private Dialog mDialog;
 
 
     public SetAppointment() {
@@ -98,6 +99,8 @@ public class SetAppointment extends Fragment {
         backButton = view.findViewById(R.id.backButtonToDoctorDetailed);
         doctorNameInAppointment = view.findViewById(R.id.doctorNameInAppointment);
         specialtyInAppointment = view.findViewById(R.id.specialtyInAppointment);
+
+        mDialog = new Dialog(getContext());
         // static variable to show what is the name of the doctor
         doctorName = doctorFullName;
         speciality = appointmentSpeciality;
@@ -133,7 +136,6 @@ public class SetAppointment extends Fragment {
             public void onDayClick(EventDay eventDay) {
 
 //                showAppointmentsForTheDay(eventDay.getCalendar().getTime());
-                Toast.makeText(getContext(),""+ (eventDay.getCalendar().get(Calendar.MONTH)+1) , Toast.LENGTH_SHORT).show();
                 int dayOfMonth = eventDay.getCalendar().get(Calendar.DAY_OF_MONTH);
                 int monthOfYear = (eventDay.getCalendar().get(Calendar.MONTH)+1);
                 day = Integer.toString(dayOfMonth);
@@ -204,14 +206,15 @@ public class SetAppointment extends Fragment {
                 String lastName = preferences.getString("LastName", "");
                 String email = preferences.getString("Email", "");
 
-                Toast.makeText(getContext(),
-                        "Appointment is " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
-                        " to "+ endTime.getSelectedItem().toString()+ " "+ endAmPm.getSelectedItem().toString(),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(),
+//                        "Appointment is " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
+//                        " to "+ endTime.getSelectedItem().toString()+ " "+ endAmPm.getSelectedItem().toString(),
+//                        Toast.LENGTH_SHORT).show();
 
                 appointment.setDoctorName(doctorFullName);
                 appointment.setTo(doctorEmailId);
-                appointment.setMessage("Hello there you appointment is from " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
+                message.setSubject("Hello, Appointment from "+email);
+                message.setText("Hello there you appointment is from " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
                         " to "+ endTime.getSelectedItem().toString()+ " "+ endAmPm.getSelectedItem().toString() );
                 appointment.setDay(day);
                 appointment.setMonth(month);
@@ -220,21 +223,10 @@ public class SetAppointment extends Fragment {
                 appointment.setUserEmail(email);
                 appointment.setUserName(firstName +" "+ lastName);
                 appointment.setSpecialty(speciality);
+                appointment.setMessage(message);
 
-                FirebaseFirestore.getInstance().
-                        collection("Appointments").add(appointment).
-                        addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
-                                Log.d("Appointment", "Appointment set Success");
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Appointment", "Appointment set Failure");
+                setAppointment();
 
-                    }
-                });
             }
         });
     }
@@ -270,6 +262,56 @@ public class SetAppointment extends Fragment {
         }
         return dayOfWeek;
 
+
+
+    }
+
+    private void setAppointment() {
+
+        Button confirm;
+        Button cancel;
+        TextView appointmentTiming;
+
+        mDialog.setContentView(R.layout.confirm_appointment_dialog);
+        confirm = mDialog.findViewById(R.id.confirmAppointment);
+        cancel = mDialog.findViewById(R.id.cancelAppointment);
+        appointmentTiming = mDialog.findViewById(R.id.appointmentTime);
+        appointmentTiming.setText("Appointment at "+day+ "/"+month +" "+ startTime.getSelectedItem().toString()+startAmPm.getSelectedItem().toString()+ " to "
+                +endTime.getSelectedItem().toString()+endAmPm.getSelectedItem().toString()+ " with "+ doctorName);
+
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseFirestore.getInstance().
+                        collection("Appointments").add(appointment).
+                        addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                Log.d("Appointment", "Appointment set Success");
+                                mDialog.dismiss();
+                                Toast.makeText(getContext(), "Appointment will be validated by the doctor", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Appointment", "Appointment set Failure");
+
+                    }
+                });
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDialog.dismiss();
+
+
+            }
+        });
+
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.show();
 
 
     }

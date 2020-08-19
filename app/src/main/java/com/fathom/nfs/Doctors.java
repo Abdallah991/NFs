@@ -19,7 +19,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.DoctorsAdapter;
@@ -55,12 +57,15 @@ public class Doctors extends Fragment {
     private Button male;
     private Button female;
     private ArrayList<DoctorDataModel> filteredDoctors = new ArrayList<>();
-
-
-
-
-
-
+    private ImageView monster;
+    private TextView text;
+    // Button statuses
+    private boolean femaleStatus = false;
+    private boolean maleStatus = false;
+//    private boolean psychiatryStatus = false;
+//    private boolean psychologyStatus = false;
+//    private boolean femaleStatus = false;
+//    private boolean femaleStatus = false;
 
 
     public Doctors() {
@@ -88,6 +93,9 @@ public class Doctors extends Fragment {
         counselor = view.findViewById(R.id.counselorFilter);
         male = view.findViewById(R.id.maleFilter);
         female = view.findViewById(R.id.femaleFilter);
+        monster = view.findViewById(R.id.doctorsMonster);
+        text = view.findViewById(R.id.newIn3);
+        text.setVisibility(View.INVISIBLE);
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
@@ -118,10 +126,14 @@ public class Doctors extends Fragment {
                 behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
                 counselor.setBackgroundColor(getResources().getColor(R.color.white));
                 counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
-                male.setBackgroundColor(getResources().getColor(R.color.white));
-                male.setTextColor(getResources().getColor(R.color.colorPrimary));
-                female.setBackgroundColor(getResources().getColor(R.color.white));
-                female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                if (!maleStatus) {
+                    male.setBackgroundColor(getResources().getColor(R.color.white));
+                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                if(!femaleStatus) {
+                    female.setBackgroundColor(getResources().getColor(R.color.white));
+                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
 
                 // filter the recycler to only psychologists
                 filterPsychology();
@@ -141,11 +153,14 @@ public class Doctors extends Fragment {
                 behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
                 counselor.setBackgroundColor(getResources().getColor(R.color.white));
                 counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
-                male.setBackgroundColor(getResources().getColor(R.color.white));
-                male.setTextColor(getResources().getColor(R.color.colorPrimary));
-                female.setBackgroundColor(getResources().getColor(R.color.white));
-                female.setTextColor(getResources().getColor(R.color.colorPrimary));
-
+                if (!maleStatus) {
+                    male.setBackgroundColor(getResources().getColor(R.color.white));
+                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                if(!femaleStatus) {
+                    female.setBackgroundColor(getResources().getColor(R.color.white));
+                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
                 // filter the recycler to only psychiatrists
                 filterPsychiatry();
             }
@@ -164,11 +179,14 @@ public class Doctors extends Fragment {
                 behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
                 counselor.setBackgroundColor(getResources().getColor(R.color.white));
                 counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
-                male.setBackgroundColor(getResources().getColor(R.color.white));
-                male.setTextColor(getResources().getColor(R.color.colorPrimary));
-                female.setBackgroundColor(getResources().getColor(R.color.white));
-                female.setTextColor(getResources().getColor(R.color.colorPrimary));
-
+                if (!maleStatus) {
+                    male.setBackgroundColor(getResources().getColor(R.color.white));
+                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                if(!femaleStatus) {
+                    female.setBackgroundColor(getResources().getColor(R.color.white));
+                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
                 // filter the recycler to only Alternative Healers
                 filterAlternativeHealing();
             }
@@ -187,11 +205,14 @@ public class Doctors extends Fragment {
                 alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
                 counselor.setBackgroundColor(getResources().getColor(R.color.white));
                 counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
-                male.setBackgroundColor(getResources().getColor(R.color.white));
-                male.setTextColor(getResources().getColor(R.color.colorPrimary));
-                female.setBackgroundColor(getResources().getColor(R.color.white));
-                female.setTextColor(getResources().getColor(R.color.colorPrimary));
-
+                if (!maleStatus) {
+                    male.setBackgroundColor(getResources().getColor(R.color.white));
+                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                if(!femaleStatus) {
+                    female.setBackgroundColor(getResources().getColor(R.color.white));
+                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
                 // filter the recycler to only behavioral Therapist
                 filterBehavioralTherapy();
             }
@@ -210,11 +231,14 @@ public class Doctors extends Fragment {
                 alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
                 behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
                 behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
-                male.setBackgroundColor(getResources().getColor(R.color.white));
-                male.setTextColor(getResources().getColor(R.color.colorPrimary));
-                female.setBackgroundColor(getResources().getColor(R.color.white));
-                female.setTextColor(getResources().getColor(R.color.colorPrimary));
-
+                if (!maleStatus) {
+                    male.setBackgroundColor(getResources().getColor(R.color.white));
+                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                if(!femaleStatus) {
+                    female.setBackgroundColor(getResources().getColor(R.color.white));
+                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
                 // filter the recycler to only counselor doctors
                 filterCounselor();
             }
@@ -239,6 +263,8 @@ public class Doctors extends Fragment {
                 female.setTextColor(getResources().getColor(R.color.colorPrimary));
 
                 // filter the recycler to only Male doctors
+                maleStatus = true;
+                femaleStatus = false;
                 filterMale();
 
 
@@ -262,7 +288,8 @@ public class Doctors extends Fragment {
                 counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
                 male.setBackgroundColor(getResources().getColor(R.color.white));
                 male.setTextColor(getResources().getColor(R.color.colorPrimary));
-
+                maleStatus = false;
+                femaleStatus = true;
                 // filter the recycler to only Female doctors
                 filterFemale();
 
@@ -293,64 +320,185 @@ public class Doctors extends Fragment {
 
     private void filterPsychiatry() {
 
-        if(!filteredDoctors.isEmpty()) {
-            filteredDoctors = new ArrayList<>();
-        }
-        for (DoctorDataModel doctor : mDoctors) {
-
-            if (doctor.getSpecialty().equals("Psychiatry")) {
-                filteredDoctors.add(doctor);
+            if (!filteredDoctors.isEmpty()) {
+                filteredDoctors = new ArrayList<>();
             }
+            if (!maleStatus || !femaleStatus) {
+                filteredDoctors = new ArrayList<>();
+                for (DoctorDataModel doctor : mDoctors) {
+
+                    if (doctor.getSpecialty().equals("Psychiatry")) {
+                        filteredDoctors.add(doctor);
+                    }
+                }
+            }
+
+        if (maleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Psychiatry") && doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
         }
-        initRecycler();
+        if (femaleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Psychiatry") && doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        initFilterRecycler();
     }
 
     // filter code
     private void filterPsychology() {
-        if(!filteredDoctors.isEmpty()) {
+        if (!filteredDoctors.isEmpty()) {
             filteredDoctors = new ArrayList<>();
         }
-        for (DoctorDataModel doctor : mDoctors) {
+        if (!maleStatus || !femaleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
 
-            if (doctor.getSpecialty().equals("Psychology")) {
-                filteredDoctors.add(doctor);
+                if (doctor.getSpecialty().equals("Psychology")) {
+                    filteredDoctors.add(doctor);
+                }
             }
         }
-        initRecycler();
+
+        if (maleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Psychology") && doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        if (femaleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Psychology") && doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+       initFilterRecycler();
     }
 
     private void filterAlternativeHealing() {
-        if(!filteredDoctors.isEmpty()) {
+        if (!filteredDoctors.isEmpty()) {
             filteredDoctors = new ArrayList<>();
         }
-        for (DoctorDataModel doctor : mDoctors) {
+        if (!maleStatus || !femaleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
 
-            if (doctor.getSpecialty().equals("Alternative Healing")) {
-                filteredDoctors.add(doctor);
+                if (doctor.getSpecialty().equals("Alternative Healing")) {
+                    filteredDoctors.add(doctor);
+                }
             }
         }
-        initRecycler();
+
+        if (maleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Alternative Healing") && doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        if (femaleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Alternative Healing") && doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        initFilterRecycler();
+
     }
 
     private void filterBehavioralTherapy() {
-        if(!filteredDoctors.isEmpty()) {
+        if (!filteredDoctors.isEmpty()) {
             filteredDoctors = new ArrayList<>();
         }
-        for (DoctorDataModel doctor : mDoctors) {
+        if (!maleStatus || !femaleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
 
-            if (doctor.getSpecialty().equals("Behavioral Therapy")) {
-                filteredDoctors.add(doctor);
+                if (doctor.getSpecialty().equals("Behavioral Therapy")) {
+                    filteredDoctors.add(doctor);
+                }
             }
         }
-        initRecycler();
+
+        if (maleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Behavioral Therapy") && doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        if (femaleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Behavioral Therapy") && doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        initFilterRecycler();
     }
 
     private void filterCounselor() {
-        if(!filteredDoctors.isEmpty()) {
-            // resetting the array so it can load all the doctors
+        if (!filteredDoctors.isEmpty()) {
             filteredDoctors = new ArrayList<>();
         }
-        initRecycler();
+        if (!maleStatus || !femaleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Counselor")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+        }
+
+        if (maleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Counselor") && doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        if (femaleStatus) {
+            filteredDoctors = new ArrayList<>();
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Counselor") && doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        initFilterRecycler();
     }
 
     private void filterFemale() {
@@ -377,5 +525,16 @@ public class Doctors extends Fragment {
             }
         }
         initRecycler();
+    }
+
+    private void initFilterRecycler() {
+        mDoctorsAdapter = new DoctorsAdapter(filteredDoctors, getContext(), mNavController, actionId, mDoctorsViewModel);
+        mDcotrosRecycler.setAdapter(mDoctorsAdapter);
+        mDcotrosRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        if (filteredDoctors.isEmpty()) {
+            text.setVisibility(View.INVISIBLE);
+
+        }
     }
 }

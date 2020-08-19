@@ -19,6 +19,8 @@ public class DoctorDataModel {
     private String experience;
     private String gender;
     private String phone;
+    private double lat;
+    private double longt;
     private ArrayList<ReviewDataModel> reviews = new ArrayList<>();
     public static ArrayList<AppointmentDataModel> doctorAppointments = new ArrayList<>();
 
@@ -177,5 +179,21 @@ public class DoctorDataModel {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLongt() {
+        return longt;
+    }
+
+    public void setLongt(double longt) {
+        this.longt = longt;
     }
 }

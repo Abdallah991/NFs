@@ -87,7 +87,7 @@
             android:layout_marginTop="15dp"
             android:textSize="16sp"
             android:text="Brave Monster Plushie"
-            android:textColor="@color/appGrey2"
+            android:textColor="@color/appGrey"
             app:fontFamily="@font/poppins_light"
             android:id="@+id/ShopItemDetailedDescription"/>
 
@@ -123,7 +123,7 @@
             android:layout_marginBottom="15dp"
             android:textSize="16sp"
             android:text="Product Information"
-            android:textColor="@color/appGrey2"
+            android:textColor="@color/appGrey"
             app:fontFamily="@font/poppins_regular"
             android:id="@+id/videoDescription"/>
         <LinearLayout

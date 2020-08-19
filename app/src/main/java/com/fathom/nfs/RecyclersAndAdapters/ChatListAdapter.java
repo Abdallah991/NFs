@@ -106,15 +106,15 @@ public class ChatListAdapter extends BaseAdapter {
         final MessageDataModel messageDataModel = getItem(i);
         final ViewHolder holder = (ViewHolder) view.getTag();
 
-        boolean isMe = messageDataModel.getAuthor().equals(displayName);
-
-        setChatRowAppearance(isMe, holder);
-
-        String author = messageDataModel.getAuthor();
-        String msg = messageDataModel.getMessage();
-
-        holder.authorName.setText(author);
-        holder.body.setText(msg);
+//        boolean isMe = messageDataModel.getAuthor().equals(displayName);
+//
+//        setChatRowAppearance(isMe, holder);
+//
+//        String author = messageDataModel.getAuthor();
+//        String msg = messageDataModel.getMessage();
+//
+//        holder.authorName.setText(author);
+//        holder.body.setText(msg);
 
         return view;
     }

@@ -2,22 +2,30 @@ package com.fathom.nfs.DataModels;
 
 public class MessageDataModel {
 
-    private String message;
-    private String author;
+    private String subject;
+    private String text;
 
     public MessageDataModel(String message, String author) {
-        this.message = message;
-        this.author = author;
+        this.subject = message;
+        this.text = author;
     }
 
     public MessageDataModel() {
     }
 
-    public String getMessage() {
-        return message;
+    public String getSubject() {
+        return subject;
     }
 
-    public String getAuthor() {
-        return author;
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

@@ -170,6 +170,7 @@ public class AccountSettings extends Fragment {
                 user.setLastName(lastName.getText().toString());
                 user.setEmail(email.getText().toString());
                 user.setPassword(password.getText().toString());
+                user.setAccountType("normal");
 
                 if (confirmPassword.getText().toString().length() < 6) {
 
@@ -211,7 +212,7 @@ public class AccountSettings extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "User password updated.");
-                            Toast.makeText(getContext(), "User password updated.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Your Information have been updated!", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -229,12 +230,27 @@ public class AccountSettings extends Fragment {
             public void onChanged(UserDataModel userDataModel) {
                 user = userDataModel;
 
-                firstName.setText(user.getFirstName());
-                lastName.setText(user.getLastName());
-                email.setText(user.getEmail());
-                password.setText(user.getPassword());
-                confirmPassword.setText(user.getPassword());
+                SharedPreferences preferences = getActivity().getSharedPreferences(USER, 0);
+                String emailValue = preferences.getString("Email", "");
+                String firstNameValue = preferences.getString("FirstName", "");
+                String lastNameValue = preferences.getString("LastName", "");
+                String passwordValue = preferences.getString("Password", "");
+
+                if(!firstNameValue.equals("")) {
+                    firstName.setText(firstNameValue);
+                    lastName.setText(lastNameValue);
+                    email.setText(emailValue);
+                    password.setText(passwordValue);
+                    confirmPassword.setText(passwordValue);
+                } else {
+                    firstName.setText(user.getFirstName());
+                    lastName.setText(user.getLastName());
+                    email.setText(user.getEmail());
+                    password.setText(user.getPassword());
+                    confirmPassword.setText(user.getPassword());
+                }
             }
+
         });
     }
 
@@ -279,6 +295,8 @@ public class AccountSettings extends Fragment {
             imageUri = data.getData();
             userImage.setImageURI(imageUri);
         }
+        
+        mDialog.dismiss();
 
     }
 

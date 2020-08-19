@@ -67,8 +67,6 @@ public class HelpLineRecycler extends RecyclerView.Adapter<HelpLineRecycler.Item
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "clicked on: " + helpLineItems.get(position));
-                Toast.makeText(mContext, "clicked "+ helpLineItems.get(position) , Toast.LENGTH_SHORT).show();
-
                 mNavController.navigate(R.id.action_helpLinesFragment_to_helpLineDescription);
                 mHelpLineViewModel.select(helpLineItems, position);
 

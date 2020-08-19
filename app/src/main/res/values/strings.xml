@@ -111,13 +111,12 @@ Sapien faucibus et molestie ac feugiat. Est placerat in egestas erat imperdiet s
     <string name="change_password">Change Password</string>
     <string name="confirmation_code">Confirmation Code</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="edit">Edit</string>
-    <string name="about">We understand life can be stressful and it keeps becoming harder and harder to find what your mental health desires. Whether you’re a mom, a student, an entrepreneur, or working a full-time job 
-we believe that you matter and we understand it can be difficult to find the help you’re trying to get this is why we exist whether you need a psychiatrist, psychologist, or counselor we are here.
-
-NFS is your place to find the help you need whenever you decide to seek it. e value you as a human being and we wish the best for you to stay safe and healthy. 
-\n\n
-The NFS team</string>
+    <string name="about">NFS” (pronounced Nafis) means ‘the self’ in Arabic, which is the most important thing, looking out for yourself. During emergency landings in an airplane, you first place the oxygen mask on yourself before assisting others. To help others and be a contributing member to society, you must first help yourself.
+NFS is an all-inclusive domain for everything Bahrain (and the rest of the Middle East) has to offer in terms of mental health; whether it’s locating a specific type of therapist, reading articles, locating helplines, donating to charities, purchasing books and journals, and more. It is a safe and accessible space for people to enhance their ‘NFS’ mentally, spiritually, and physically. It is a start to the path of self enhancement, and enlightenment. Let us help you be your change.</string>
     <string name="coming_soon">Coming Soon</string>
     <string name="confirm">Confirm</string>
+    <string name="edit">Edit</string>
+    <string name="this_content_is_not_intended_to_be_a_substitute_for_professional_medical_advice_diagnosis_or_treatment">*This content is not intended to be a substitute for professional medical advice, diagnosis, or treatment.</string>
+    <string name="click_here_to_view">Click here to view</string>
+    <string name="cancel">Cancel</string>
 </resources>

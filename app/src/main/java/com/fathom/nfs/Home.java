@@ -3,10 +3,18 @@ package com.fathom.nfs;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
@@ -62,7 +70,6 @@ import static com.fathom.nfs.SignUpActivity.USER;
 
 public class Home extends Fragment {
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static UserDataModel user = new UserDataModel();
 
     // TAG for Debugging
@@ -122,6 +129,13 @@ public class Home extends Fragment {
 
     public static String userFirstName;
 
+    // terms and Conditions
+    private Dialog mDialog;
+
+    // Drawer Layout
+    private TextView userNameDrawer;
+    private TextView accountType;
+
 
 
     public Home() {
@@ -130,11 +144,38 @@ public class Home extends Fragment {
     }
 
 
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+////        // This callback will only be called when MyFragment is at least Started.
+////        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+////            @Override
+////            public void handleOnBackPressed() {
+////                // Handle the back button event
+////                getActivity().moveTaskToBack(true);
+////                getActivity().finish();
+////
+////            }
+////        };
+////        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);
+//
+//        // The callback can be enabled or disabled here or in handleOnBackPressed()
+//    }
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+
+
+
+        // The callback can be enabled or disabled here or in handleOnBackPressed()
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -146,8 +187,12 @@ public class Home extends Fragment {
          mDoctorsRecycler = view.findViewById(R.id.doctorsRecyclerView);
          mArticlesRecycler = view.findViewById(R.id.articlesRecyclerView);
 
+         // Dialog intialization
+        mDialog = new Dialog(getContext());
+
+
         // will be added when the shop is added
-//         mShopRecycler = view.findViewById(R.id.shopRecyclerView);
+        // mShopRecycler = view.findViewById(R.id.shopRecyclerView);
 
          mSearchView = view.findViewById(R.id.search);
          searchList = view.findViewById(R.id.searchResults);
@@ -160,7 +205,8 @@ public class Home extends Fragment {
 
         Log.d("User Image", " " + sliderUserImage);
         sliderUserImage = viewRoot.findViewById(R.id.sliderUserImage);
-
+        userName = view.findViewById(R.id.userName);
+        accountType = view.findViewById(R.id.accountType);
 
         Log.d("User Image", " " + sliderUserImage);
 
@@ -191,7 +237,6 @@ public class Home extends Fragment {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
              @Override
              public boolean onQueryTextSubmit(String s) {
-                 Toast.makeText(getContext(),"Submit ", Toast.LENGTH_SHORT).show();
 
 
                  searchList.setVisibility(View.GONE);
@@ -226,7 +271,6 @@ public class Home extends Fragment {
 
                String listItem = (String) searchList.getItemAtPosition(i);
 
-                Toast.makeText(getContext(),"Selected item is " +listItem   , Toast.LENGTH_SHORT).show();
 
 
                 switch (listItem) {
@@ -389,6 +433,7 @@ public class Home extends Fragment {
             }
         SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
         String userFirstName = prefs.getString("FirstName", "");
+        String userFirstTime = prefs.getString("FirsTime", "");
 
 
             if ((userFirstName.equals("")) && userName.getText().equals("")) {
@@ -405,6 +450,9 @@ public class Home extends Fragment {
                 myProgressDialog.show();
             }
 
+            if(userFirstTime.equals("")) {
+                showPrivacyAndTerms();
+            }
 
 
 
@@ -426,8 +474,6 @@ public class Home extends Fragment {
 
         // setting the adapter to recycler
         mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
-
-
         mDoctorsAdapter = new DoctorsAdapter(homeDoctors, getContext(), mNavController, actionId, mDoctorsViewModel );
         mDoctorsRecycler.setAdapter(mDoctorsAdapter);
         mDoctorsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -592,9 +638,46 @@ public class Home extends Fragment {
 
                 sliderUserImage.setImageResource(R.drawable.user);
 
+
                 myProgressDialog.dismiss();
                 setUpDisplayName();
             }
         }, SPLASH_TIME_OUT);
     }
+
+    private void showPrivacyAndTerms() {
+
+        Button accept;
+        TextView viewTerms;
+
+        mDialog.setContentView(R.layout.terms_and_condition_dialog);
+        accept = mDialog.findViewById(R.id.acceptTerms);
+        viewTerms = mDialog.findViewById(R.id.link);
+
+        accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences(USER , Context.MODE_PRIVATE).edit();
+                editor.putString("FirsTime", "NO");
+                editor.apply();
+                mDialog.dismiss();
+            }
+        });
+
+        viewTerms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.nfsapp.online/legal/"));
+                startActivity(browserIntent);
+
+            }
+        });
+
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        mDialog.show();
+
+
+    }
+
+
 }
