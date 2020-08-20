@@ -89,7 +89,7 @@ public class UserRepository {
         SharedPreferences preferences = mContext.getSharedPreferences(USER, 0);
         String email = preferences.getString("Email", "");
 
-            userImageRef = storageRef.child(email);
+            userImageRef = storageRef.child(email+"ProfileImage.jpeg");
 
 
             userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {

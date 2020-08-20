@@ -38,6 +38,7 @@ public class ArticleDetailed extends Fragment {
     private ImageView articleImage;
     private TextView articleTitle;
     private TextView author;
+    private TextView articleAuthor;
     private TextView articleContent;
     private TextView authorEducation;
     private ScrollView articleDetailedContent;
@@ -69,6 +70,7 @@ public class ArticleDetailed extends Fragment {
         articleTitle = view.findViewById(R.id.articleDetailedTitle);
         articleContent = view.findViewById(R.id.articleContent);
         author = view.findViewById(R.id.authorDetailedName);
+        articleAuthor = view.findViewById(R.id.articleAuthor);
         authorEducation = view.findViewById(R.id.authorDetailedSpeciality);
         articleDetailedContent = view.findViewById(R.id.articleDetailed);
         backButton = view.findViewById(R.id.backButtonToArticlesFromDetailedArticle);
@@ -86,8 +88,9 @@ public class ArticleDetailed extends Fragment {
                 articleImage.setImageBitmap(article.getArticleImage());
                 articleTitle.setText(article.getArticleTitle());
                 author.setText(article.getAuthorName());
+                articleAuthor.setText(article.getAuthorName());
                 articleContent.setText((article.getArticleContent()));
-                authorEducation.setText(article.getAuthorEducation());
+                authorEducation.setText(article.getAuthorEducation()+" ");
             }
         });
 
@@ -112,8 +115,9 @@ public class ArticleDetailed extends Fragment {
                 articleImage.setImageBitmap(article.getArticleImage());
                 articleTitle.setText(article.getArticleTitle());
                 author.setText(article.getAuthorName());
+                articleAuthor.setText(article.getAuthorName());
                 articleContent.setText((article.getArticleContent()));
-                authorEducation.setText(article.getAuthorEducation());
+                authorEducation.setText(article.getAuthorEducation()+" ");
             }
         });
 

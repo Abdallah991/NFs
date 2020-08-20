@@ -46,7 +46,7 @@
                 android:layout_weight="1"
                 android:src="@drawable/close"
                 android:id="@+id/cancelUploading"
-                android:gravity="end"/>
+                android:gravity="end" />
 
         </LinearLayout>
 
@@ -55,19 +55,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/appGrey2"
-            android:layout_marginBottom="20dp"/>
-        <Button
-            android:id="@+id/uploadImage"
+            android:layout_marginBottom="20dp" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_gradient"
-            android:text="Select Photo"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:fontFamily="@font/poppins"
-            android:layout_marginBottom="20dp"/>
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/uploadImage"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_gradient"
+                android:text="@string/select_photo"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins"
+                android:layout_marginBottom="20dp" />
+
+            <Button
+                android:id="@+id/selectMonster"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_gradient"
+                android:text="@string/select_monster"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:fontFamily="@font/poppins"
+                android:layout_marginBottom="20dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,6 +81,7 @@ public class AccountSettings extends Fragment {
     private StorageReference storageRef;
     private StorageReference userImageRef;
     private Dialog mDialog;
+    private Dialog monsterDialog;
     private UserViewModel mUserViewModel;
 
 
@@ -111,6 +113,7 @@ public class AccountSettings extends Fragment {
         accountSettingsContent = view.findViewById(R.id.accountContent);
 
         mDialog = new Dialog(getContext());
+        monsterDialog = new Dialog(getContext());
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
@@ -119,7 +122,7 @@ public class AccountSettings extends Fragment {
         SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
         String docName = prefs.getString("EMAIL", "No name");
 
-        userImageRef = storageRef.child(docName);
+        userImageRef = storageRef.child(docName+"ProfileImage.jpeg");
 
 
         ViewCompat.setLayoutDirection(accountSettingsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
@@ -261,6 +264,7 @@ public class AccountSettings extends Fragment {
 
     private void uploadUserImage() {
 
+        userImageRef = storageRef.child(user.getEmail()+"ProfileImage.jpeg");
         userImage.setDrawingCacheEnabled(true);
         userImage.buildDrawingCache();
         Bitmap bitmap = ((BitmapDrawable) userImage.getDrawable()).getBitmap();
@@ -305,16 +309,25 @@ public class AccountSettings extends Fragment {
         ImageView selectedImage;
         ImageView cancel;
         Button uploadUserPhoto;
+        Button selectMonster;
 
         mDialog.setContentView(R.layout.uploade_image_dialogue);
         selectedImage = mDialog.findViewById(R.id.userImageViewer);
         cancel = mDialog.findViewById(R.id.cancelUploading);
         uploadUserPhoto = mDialog.findViewById(R.id.uploadImage);
+        selectMonster = mDialog.findViewById(R.id.selectMonster);
 
         uploadUserPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openGallery();
+            }
+        });
+
+        selectMonster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMonsterDialog();
             }
         });
 
@@ -352,5 +365,197 @@ public class AccountSettings extends Fragment {
                 userImage.setImageBitmap(user.getUserImage());
             }
         });
+    }
+
+    private void openMonsterDialog() {
+
+        mDialog.dismiss();
+        ImageView monster1;
+        ImageView monster2;
+        ImageView monster3;
+        ImageView monster4;
+        ImageView monster5;
+        ImageView monster6;
+        ImageView monster7;
+        ImageView monster8;
+        LinearLayout selector1;
+        LinearLayout selector2;
+        LinearLayout selector3;
+        LinearLayout selector4;
+        LinearLayout selector5;
+        LinearLayout selector6;
+        LinearLayout selector7;
+        LinearLayout selector8;
+        ImageView cancel;
+        Button confirmMonster;
+
+        monsterDialog.setContentView(R.layout.monsters_dialog);
+        monster1 = monsterDialog.findViewById(R.id.monster1);
+        monster2 = monsterDialog.findViewById(R.id.monster2);
+        monster3 = monsterDialog.findViewById(R.id.monster3);
+        monster4 = monsterDialog.findViewById(R.id.monster4);
+        monster5 = monsterDialog.findViewById(R.id.monster5);
+        monster6 = monsterDialog.findViewById(R.id.monster6);
+        monster7 = monsterDialog.findViewById(R.id.monster7);
+        monster8 = monsterDialog.findViewById(R.id.monster8);
+        selector1 = monsterDialog.findViewById(R.id.monster1Selector);
+        selector2 = monsterDialog.findViewById(R.id.monster2Selector);
+        selector3 = monsterDialog.findViewById(R.id.monster3Selector);
+        selector4 = monsterDialog.findViewById(R.id.monster4Selector);
+        selector5 = monsterDialog.findViewById(R.id.monster5Selector);
+        selector6 = monsterDialog.findViewById(R.id.monster6Selector);
+        selector7 = monsterDialog.findViewById(R.id.monster7Selector);
+        selector8 = monsterDialog.findViewById(R.id.monster8Selector);
+        cancel = monsterDialog.findViewById(R.id.cancelMonsterDialog);
+        confirmMonster = monsterDialog.findViewById(R.id.confirmMonster);
+
+        monster1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selector1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                selector2.setBackgroundColor(getResources().getColor(R.color.white));
+                selector3.setBackgroundColor(getResources().getColor(R.color.white));
+                selector4.setBackgroundColor(getResources().getColor(R.color.white));
+                selector5.setBackgroundColor(getResources().getColor(R.color.white));
+                selector6.setBackgroundColor(getResources().getColor(R.color.white));
+                selector7.setBackgroundColor(getResources().getColor(R.color.white));
+                selector8.setBackgroundColor(getResources().getColor(R.color.white));
+                userImage.setImageResource(R.drawable.monster11);
+            }
+        });
+        monster2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selector2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                selector1.setBackgroundColor(getResources().getColor(R.color.white));
+                selector3.setBackgroundColor(getResources().getColor(R.color.white));
+                selector4.setBackgroundColor(getResources().getColor(R.color.white));
+                selector5.setBackgroundColor(getResources().getColor(R.color.white));
+                selector6.setBackgroundColor(getResources().getColor(R.color.white));
+                selector7.setBackgroundColor(getResources().getColor(R.color.white));
+                selector8.setBackgroundColor(getResources().getColor(R.color.white));
+                userImage.setImageResource(R.drawable.monster12);
+            }
+        });
+        monster3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selector3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                selector2.setBackgroundColor(getResources().getColor(R.color.white));
+                selector1.setBackgroundColor(getResources().getColor(R.color.white));
+                selector4.setBackgroundColor(getResources().getColor(R.color.white));
+                selector5.setBackgroundColor(getResources().getColor(R.color.white));
+                selector6.setBackgroundColor(getResources().getColor(R.color.white));
+                selector7.setBackgroundColor(getResources().getColor(R.color.white));
+                selector8.setBackgroundColor(getResources().getColor(R.color.white));
+                userImage.setImageResource(R.drawable.monster13);
+            }
+        });
+
+        monster4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selector4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                selector2.setBackgroundColor(getResources().getColor(R.color.white));
+                selector3.setBackgroundColor(getResources().getColor(R.color.white));
+                selector1.setBackgroundColor(getResources().getColor(R.color.white));
+                selector5.setBackgroundColor(getResources().getColor(R.color.white));
+                selector6.setBackgroundColor(getResources().getColor(R.color.white));
+                selector7.setBackgroundColor(getResources().getColor(R.color.white));
+                selector8.setBackgroundColor(getResources().getColor(R.color.white));
+                userImage.setImageResource(R.drawable.monster14);
+            }
+        });
+
+        monster5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selector5.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                selector2.setBackgroundColor(getResources().getColor(R.color.white));
+                selector3.setBackgroundColor(getResources().getColor(R.color.white));
+                selector4.setBackgroundColor(getResources().getColor(R.color.white));
+                selector1.setBackgroundColor(getResources().getColor(R.color.white));
+                selector6.setBackgroundColor(getResources().getColor(R.color.white));
+                selector7.setBackgroundColor(getResources().getColor(R.color.white));
+                selector8.setBackgroundColor(getResources().getColor(R.color.white));
+                userImage.setImageResource(R.drawable.monster15);
+
+            }
+
+        });
+
+        monster6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selector6.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                selector2.setBackgroundColor(getResources().getColor(R.color.white));
+                selector3.setBackgroundColor(getResources().getColor(R.color.white));
+                selector4.setBackgroundColor(getResources().getColor(R.color.white));
+                selector5.setBackgroundColor(getResources().getColor(R.color.white));
+                selector1.setBackgroundColor(getResources().getColor(R.color.white));
+                selector7.setBackgroundColor(getResources().getColor(R.color.white));
+                selector8.setBackgroundColor(getResources().getColor(R.color.white));
+                userImage.setImageResource(R.drawable.monster16);
+            }
+        });
+        monster7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selector7.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                selector2.setBackgroundColor(getResources().getColor(R.color.white));
+                selector3.setBackgroundColor(getResources().getColor(R.color.white));
+                selector4.setBackgroundColor(getResources().getColor(R.color.white));
+                selector5.setBackgroundColor(getResources().getColor(R.color.white));
+                selector6.setBackgroundColor(getResources().getColor(R.color.white));
+                selector1.setBackgroundColor(getResources().getColor(R.color.white));
+                selector8.setBackgroundColor(getResources().getColor(R.color.white));
+                userImage.setImageResource(R.drawable.monster17);
+            }
+        });
+
+        monster8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selector8.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                selector2.setBackgroundColor(getResources().getColor(R.color.white));
+                selector3.setBackgroundColor(getResources().getColor(R.color.white));
+                selector4.setBackgroundColor(getResources().getColor(R.color.white));
+                selector5.setBackgroundColor(getResources().getColor(R.color.white));
+                selector6.setBackgroundColor(getResources().getColor(R.color.white));
+                selector7.setBackgroundColor(getResources().getColor(R.color.white));
+                selector1.setBackgroundColor(getResources().getColor(R.color.white));
+                userImage.setImageResource(R.drawable.monster18);
+            }
+        });
+
+
+        confirmMonster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                openGallery();
+                monsterDialog.dismiss();
+
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                monsterDialog.dismiss();
+                firstName.setEnabled(false);
+                lastName.setEnabled(false);
+                email.setEnabled(false);
+                password.setEnabled(false);
+                confirmPassword.setVisibility(View.GONE);
+                confirmButton.setVisibility(View.GONE);
+
+            }
+        });
+
+        monsterDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        monsterDialog.show();
+
+
+
     }
 }

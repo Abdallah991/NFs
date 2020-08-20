@@ -282,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String userEmail = prefs.getString("Email", "");
 
         Toast.makeText(getApplicationContext(), userEmail, Toast.LENGTH_SHORT).show();
-        userImageRef = storageRef.child(userEmail);
+        userImageRef = storageRef.child(userEmail+"ProfileImage.jpeg");
 
 
         userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {

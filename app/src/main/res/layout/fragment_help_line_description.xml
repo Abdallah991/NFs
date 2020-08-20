@@ -36,22 +36,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.5">
+        android:layout_weight="4">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:padding="30dp"
             android:textSize="14sp"
+            android:text="@string/description_of_abuser"
             android:textColor="@color/appGrey2"
             app:fontFamily="@font/poppins_regular"
             android:id="@+id/helpLineText"/>
+        </ScrollView>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3.5">
+        android:layout_weight="1.5">
     <Button
         android:layout_width="match_parent"
         android:id="@+id/callHelp"

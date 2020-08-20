@@ -9,7 +9,10 @@ import androidx.lifecycle.ViewModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.Repositories.DoctorsRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.fathom.nfs.DoctorsDetails.doctorEmailId;
 
 public class DoctorsViewModel extends ViewModel {
 
@@ -47,7 +50,22 @@ public class DoctorsViewModel extends ViewModel {
     // Getting the list
     // Live data that cant be changed
     public LiveData<List<DoctorDataModel>> getDoctors() {
+
         return mDoctors;
+    }
+
+    public void changeRating(double  newRating) {
+        ArrayList<DoctorDataModel> doctors = new ArrayList<>();
+        for (DoctorDataModel doctor: mDoctors.getValue()) {
+
+            if (doctor.getEmail().equals(doctorEmailId)) {
+                doctor.setRating(newRating);
+            }
+
+            doctors.add(doctor);
+        }
+        mDoctors.setValue(doctors);
+
     }
 
 }

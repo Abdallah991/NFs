@@ -120,6 +120,7 @@ public class DoctorsDetails extends Fragment {
     private static DecimalFormat df = new DecimalFormat("0.0");
     public static double lat;
     public static double longt;
+    private DoctorsViewModel mDoctorsViewModel;
 
 
     public DoctorsDetails() {
@@ -186,11 +187,11 @@ public class DoctorsDetails extends Fragment {
 
 
         // Calling the view model
-        DoctorsViewModel model = new ViewModelProvider(requireActivity()).get(DoctorsViewModel.class);
+        mDoctorsViewModel = new ViewModelProvider(requireActivity()).get(DoctorsViewModel.class);
         // Getting the position of the array object
-        position = model.getPositionOfDoctor();
+        position = mDoctorsViewModel.getPositionOfDoctor();
         // Observing the data and updating the UI
-        model.getDoctors().observe(getViewLifecycleOwner(), new Observer<List<DoctorDataModel>>() {
+        mDoctorsViewModel.getDoctors().observe(getViewLifecycleOwner(), new Observer<List<DoctorDataModel>>() {
             @Override
             public void onChanged(List<DoctorDataModel> doctorsList) {
 
@@ -624,6 +625,8 @@ public class DoctorsDetails extends Fragment {
         db.collection("Doctors")
                 .document(doctorEmailId).set(doctor);
         Toast.makeText(getContext(), "the Doctor average Review equals " + averageReview, Toast.LENGTH_SHORT).show();
+
+        mDoctorsViewModel.changeRating(averageReview);
 
 
     }
