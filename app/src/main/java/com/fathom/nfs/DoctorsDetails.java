@@ -210,7 +210,7 @@ public class DoctorsDetails extends Fragment {
                     aboutContent.setText(doctor.getAbout());
                     experienceContent.setText(doctor.getExperience());
                     educationDegree1.setText(doctor.getEducation());
-                    speciality.setText(doctor.getSpecialty() + " ");
+                    speciality.setText(doctor.getSpecialty());
                     educationDegree1Description.setVisibility(View.GONE);
                     educationDegree2.setVisibility(View.GONE);
                     educationDegree2Description.setVisibility(View.GONE);
@@ -624,7 +624,7 @@ public class DoctorsDetails extends Fragment {
         doctor.setSpecialty((String) speciality.getText());
         db.collection("Doctors")
                 .document(doctorEmailId).set(doctor);
-        Toast.makeText(getContext(), "the Doctor average Review equals " + averageReview, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "the Doctor average Review equals " + averageReview, Toast.LENGTH_SHORT).show();
 
         mDoctorsViewModel.changeRating(averageReview);
 

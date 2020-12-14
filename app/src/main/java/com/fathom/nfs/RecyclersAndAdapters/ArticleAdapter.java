@@ -59,7 +59,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
 
         Log.d(TAG, "OnBindViewHolder: Called.");
         holder.articleImage.setImageBitmap(mArticles.get(position).getArticleImage());
-        holder.authorName.setText(mArticles.get(position).getAuthorName());
+        // removing the author name from the article card
+//        holder.authorName.setText(mArticles.get(position).getAuthorName());
+        holder.authorName.setText("");
+
         holder.articleTitle.setText(mArticles.get(position).getArticleTitle());
 
         holder.card.setOnClickListener(new View.OnClickListener() {

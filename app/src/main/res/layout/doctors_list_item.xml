@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    android:text="DR"
+                    android:text=""
                     app:fontFamily="@font/poppins_regular" />
 
                 <TextView

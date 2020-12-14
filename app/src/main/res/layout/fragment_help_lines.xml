@@ -3,58 +3,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="50dp"
+    android:layout_height="match_parent"
     tools:context=".HelpLines"
     android:id="@+id/helpLines">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/help"
-            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:text="@string/weAreHereToHelp"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
-            app:fontFamily="@font/poppins_regular" />
+
+            android:layout_marginStart="30dp"
+            app:fontFamily="@font/poppins_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/titleHelp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:text="@string/helpLines"
+            android:layout_marginStart="30dp"
             android:layout_below="@+id/help"
+            android:text="@string/helpLines"
             android:textColor="@color/colorPrimary"
             android:textSize="35sp"
             android:textStyle="bold"
-            app:fontFamily="@font/poppins" />
+            app:fontFamily="@font/poppins"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/help" />
 
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/titleHelp">
+            android:layout_below="@id/titleHelp"
+            app:layout_constraintTop_toBottomOf="@+id/titleHelp">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/helpLinesRecyclerView"
                 class="androidx.appcompat.app.AlertController$RecycleListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="80dp">
+                android:layout_marginBottom="80dp"
+                android:orientation="vertical">
 
             </androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
 
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
