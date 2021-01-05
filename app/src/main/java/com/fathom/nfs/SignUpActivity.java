@@ -1,9 +1,12 @@
 package com.fathom.nfs;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -158,10 +161,16 @@ public class SignUpActivity extends AppCompatActivity {
                                         }
                                     });
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // If sign up fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                            Toast.makeText(getApplicationContext(), "Oops! the email is already registered!",
                                     Toast.LENGTH_SHORT).show();
+                            Dialog mDialog;
+                            mDialog = new Dialog(SignUpActivity.this);
+                            mDialog.setCancelable(true);
+                            mDialog.setTitle("The email already registered!");
+                            mDialog.show();
+
                         }
 
                         // ...
