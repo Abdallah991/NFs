@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Nfs</string>
+    <string name="app_name">!</string>
     <string name="action_settings">Settings</string>
     <string name="on_boarding">Onboarding</string>
     <string name="question1">Need help?</string>
@@ -151,4 +151,9 @@ FIVE different types of abuse
 •	Digital Abuse: This is a form of emotional/verbal abuse that uses technology or social media to intimidate, harass, bully, stalk or threaten a current or ex-partner.
 •	Financial Abuse: The use of finances or access to finances to control a partner. It’s one of the powerful forms of abuse, and common method of entrapping a partner in the relationship. It’s often given as the reason that victims of abuser stayed in or returned to an abusive relationship.
 </string>
+    <string name="about_nfs">About Nfs</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="report_bug_text">Contact us through our support email “nfs.fthm.app@gmail.com” to report any bug in the app.</string>
+    <string name="book_appointment">Book Appointment</string>
+    <string name="report_a_problem">Report a problem</string>
 </resources>

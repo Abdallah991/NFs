@@ -99,6 +99,14 @@ public class FAQs extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mFAQsSectionsRecycler.setNestedScrollingEnabled(false);
+
+    }
+
     private void initRecycler() {
 
         mFAQs = (ArrayList<FAQsDataModel>) mFAQsViewModel.getFAQs().getValue();

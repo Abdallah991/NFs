@@ -1,6 +1,7 @@
 package com.fathom.nfs.RecyclersAndAdapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,9 @@ public class FAQsAdapter extends RecyclerView.Adapter<FAQsAdapter.FAQHolder> {
     private Context mContext;
     private NavController mNavController;
     private int actionToFragmentDetailed = R.id.action_FAQsFragment_to_FAQsDetailed;
+    private int actionToContactSupport= R.id.action_FAQsFragment_to_contactSupport;
     private FAQsViewModel mFAQsViewModel;
+
 
 
     public FAQsAdapter(ArrayList<FAQsDataModel> FAQs, Context context, NavController navController, FAQsViewModel faQsViewModel) {
@@ -44,14 +47,21 @@ public class FAQsAdapter extends RecyclerView.Adapter<FAQsAdapter.FAQHolder> {
         @Override
         public void onBindViewHolder (@NonNull FAQHolder holder, final int position){
 
-        holder.question.setText("What is "+(mFAQs.get(position).getFAQCategory()) + " ?");
+        holder.question.setText((mFAQs.get(position).getFAQCategory()) );
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mFAQsViewModel.selectFAQs(mFAQs, position);
-                mNavController.navigate(actionToFragmentDetailed);
+                Log.d("FAQS", "The faq category "+ mFAQs.get(position).getFAQCategory());
+                if (mFAQs.get(position).getFAQCategory().equals("Report a problem")) {
+
+                    mNavController.navigate(actionToContactSupport);
+                } else {
+
+                    mNavController.navigate(actionToFragmentDetailed);
+                }
+
             }
         });
 

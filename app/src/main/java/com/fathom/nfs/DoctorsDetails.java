@@ -100,6 +100,7 @@ public class DoctorsDetails extends Fragment {
     private Button bookAppointment;
     private String phone;
     public static String doctorEmailId;
+    public static String doctorId;
     public static String gender;
     public static String doctorFullName;
     public static String appointmentSpeciality;
@@ -219,12 +220,15 @@ public class DoctorsDetails extends Fragment {
                     lat = doctor.getLat();
 
                     doctorEmailId = doctor.getEmail();
+                    doctorId = doctor.getId();
                     gender = doctor.getGender();
                     doctorFullName = "Dr. " + doctor.getDoctorFirstName() + " " + doctor.getDoctorLastName();
                     appointmentSpeciality = doctor.getSpecialty();
 
                     initRecycler();
                 }
+
+                mDoctorsViewModel.getAllDoctors();
 
                 // TODO: persist the book marks
                 if (isClickedFromBookmarks()) {
@@ -408,25 +412,31 @@ public class DoctorsDetails extends Fragment {
             public void onClick(View view) {
 //                mNavController.navigate(R.id.action_doctorsDetails_to_chat);
 
-                PackageManager pm = getContext().getPackageManager();
-                try {
+                if (phone != null) {
+                    PackageManager pm = getContext().getPackageManager();
+//                    try {
 
 
-                    Intent waIntent = new Intent(Intent.ACTION_SEND);
-                    waIntent.setType("text/plain");
-                    String text = "YOUR TEXT HERE";
+                        String url = "https://api.whatsapp.com/send?phone="+phone;
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(url));
+                        startActivity(i);
+//                        Intent waIntent = new Intent(Intent.ACTION_SEND);
+//                        waIntent.setType("text/plain");
+//                        String text = "YOUR TEXT HERE";
+//
+//                        PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
+//                        //Check if package exists or not. If not then code
+//                        //in catch block will be called
+//                        waIntent.setPackage("com.whatsapp");
+//
+//                        waIntent.putExtra(Intent.EXTRA_TEXT, text);
+//                        startActivity(Intent.createChooser(waIntent, "Share with"));
 
-                    PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-                    //Check if package exists or not. If not then code
-                    //in catch block will be called
-                    waIntent.setPackage("com.whatsapp");
-
-                    waIntent.putExtra(Intent.EXTRA_TEXT, text);
-                    startActivity(Intent.createChooser(waIntent, "Share with"));
-
-                } catch (PackageManager.NameNotFoundException e) {
-                    Toast.makeText(getContext(), "WhatsApp not Installed", Toast.LENGTH_SHORT)
-                            .show();
+//                    } catch (PackageManager.NameNotFoundException e) {
+//                        Toast.makeText(getContext(), "WhatsApp not Installed", Toast.LENGTH_SHORT)
+//                                .show();
+//                    }
                 }
             }
         });
@@ -436,7 +446,7 @@ public class DoctorsDetails extends Fragment {
             public void onClick(View v) {
                 Intent email = new Intent(Intent.ACTION_SEND);
                 email.putExtra(Intent.EXTRA_EMAIL, new String[]{doctorEmailId});
-                email.putExtra(Intent.EXTRA_SUBJECT, "Inquirey");
+                email.putExtra(Intent.EXTRA_SUBJECT, "Inquiry");
                 email.putExtra(Intent.EXTRA_TEXT, "I want to ask you about");
                 email.setType("message/rfc822");
 
@@ -448,8 +458,11 @@ public class DoctorsDetails extends Fragment {
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
-                startActivity(intent);
+                if (phone != null){
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -569,6 +582,15 @@ public class DoctorsDetails extends Fragment {
 
                         }
 
+                        if (phone == null) {
+
+                            callButton.setBackgroundResource(R.drawable.button_shadow);
+                            doctorChat.setBackgroundResource(R.drawable.button_shadow);
+                        } else {
+                            callButton.setBackgroundResource(R.drawable.button_gradient);
+                            doctorChat.setBackgroundResource(R.drawable.button_gradient);
+                        }
+
 
                     }
                 });
@@ -612,18 +634,20 @@ public class DoctorsDetails extends Fragment {
         }
         averageReview = (reviewSum / numberOfReview);
 
-        doctor.setDoctorFirstName((String) firstName.getText());
-        doctor.setDoctorLastName((String) lastName.getText());
-        doctor.setAbout((String) aboutContent.getText());
-        doctor.setBookmark(false);
-        doctor.setEducation((String) educationDegree1.getText());
-        doctor.setEmail(doctorEmailId);
-        doctor.setExperience((String) experienceContent.getText());
-        doctor.setGender(gender);
-        doctor.setRating(averageReview);
-        doctor.setSpecialty((String) speciality.getText());
-        db.collection("Doctors")
-                .document(doctorEmailId).set(doctor);
+//        doctor.setDoctorFirstName((String) firstName.getText());
+//        doctor.setDoctorLastName((String) lastName.getText());
+//        doctor.setAbout((String) aboutContent.getText());
+//        doctor.setBookmark(false);
+//        doctor.setEducation((String) educationDegree1.getText());
+//        doctor.setEmail(doctorEmailId);
+//        doctor.setExperience((String) experienceContent.getText());
+//        doctor.setGender(gender);
+//        doctor.setRating(averageReview);
+//        doctor.setSpecialty((String) speciality.getText());
+//        db.collection("Doctors")
+//                .document(doctorEmailId).set(doctor);
+
+        db.collection("Doctors").document(doctorId).update("rating",averageReview);
 //        Toast.makeText(getContext(), "the Doctor average Review equals " + averageReview, Toast.LENGTH_SHORT).show();
 
         mDoctorsViewModel.changeRating(averageReview);

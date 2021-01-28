@@ -62,7 +62,6 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
         // removing the author name from the article card
 //        holder.authorName.setText(mArticles.get(position).getAuthorName());
         holder.authorName.setText("");
-
         holder.articleTitle.setText(mArticles.get(position).getArticleTitle());
 
         holder.card.setOnClickListener(new View.OnClickListener() {
@@ -77,19 +76,25 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
             @Override
             public void onClick(View v) {
                 if(mArticles.get(position).isBookmark()){
+                    mArticleViewModel.unBookmarkItem(mArticles.get(position));
                     holder.bookmark.setImageResource(R.drawable.bookmark_image);
-                    mArticles.get(position).setBookmark(false);
-                    articleItemsBookmarked.remove(mArticles.get(position));
+//                    mArticles.get(position).setBookmark(false);
+//                    articleItemsBookmarked.remove(mArticles.get(position));
+
 
                 } else if (!mArticles.get(position).isBookmark()){
+                    mArticleViewModel.bookmarkItem(mArticles.get(position));
                     holder.bookmark.setImageResource(R.drawable.bookmarked);
-                    mArticles.get(position).setBookmark(true);
-                    articleItemsBookmarked.add(mArticles.get(position));
+//                    mArticles.get(position).setBookmark(true);
+//                    articleItemsBookmarked.add(mArticles.get(position));
+
+                    Log.d("ARTICLE1", "bookmark have been set");
+
                 }
             }
         });
 
-        if(mArticles.get(position).isBookmark()){
+        if(mArticles.get(position).isBookmark())    {
 
             holder.bookmark.setImageResource(R.drawable.bookmarked);
         }

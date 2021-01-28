@@ -249,6 +249,9 @@ public class Home extends Fragment {
 
                  searchList.setVisibility(View.VISIBLE);
                  searchAdapter.getFilter().filter(s);
+                 if (s.isEmpty()) {
+                     searchList.setVisibility(View.INVISIBLE);
+                 }
 
 
                  return false;
@@ -459,6 +462,16 @@ public class Home extends Fragment {
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mDoctorsRecycler.setNestedScrollingEnabled(false);
+        mArticlesRecycler.setNestedScrollingEnabled(false);
+        initRecyclerView();
+
+
+    }
 
     private void initRecyclerView(){
 
@@ -504,37 +517,41 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         Log.d("Home", "onResume() got fired");
-        int i = 0;
-        int j = 0;
+//        int i = 0;
+//        int j = 0;
         int k = 0;
+        initRecyclerView();
+        mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
+        mArticles = (ArrayList<ArticleDataModel>) mArticleViewModel.getArticles().getValue();
+        Log.d("DOCTOR1", mDoctors.size()+" ");
 
         if (!mDoctors.isEmpty()) {
-            i = mDoctors.size();
-            j = mArticles.size();
+//            i = mDoctors.size();
+//            j = mArticles.size();
 
             // will be added when the shop is added
 //            k = mShopItems.size();
 
-            if (homeDoctors.isEmpty()) {
-                for (DoctorDataModel doctor : mDoctors) {
-                    homeDoctors.add(doctor);
 
+            if (homeDoctors.isEmpty()) {
+                for (int i =0; i<3; i++) {
+                    homeDoctors.add(mDoctors.get(i));
 
                 }
-                homeDoctors.subList(3, i).clear();
             }
 
             if (homeArticles.isEmpty()) {
-                for (ArticleDataModel article : mArticles) {
-                    homeArticles.add(article);
-
+                for (int i =0; i<3; i++) {
+                    homeArticles.add(mArticles.get(i));
 
                 }
-                homeArticles.subList(3, j).clear();
 
             }
+//
+//            homeDoctors.subList(3, i).clear();
+//
+//            homeArticles.subList(3, j).clear();
 
             // will be added when the shop is added
 //            if(homeShopItems.isEmpty()) {

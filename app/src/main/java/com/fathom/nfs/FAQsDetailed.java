@@ -96,7 +96,7 @@ public class FAQsDetailed extends Fragment {
                 FAQsDataModel FAQsSection = faQsDataModels.get(position);
                 mFAQs = FAQsSection.getFAQs();
 
-                title.setText("What is "+(FAQsSection.getFAQCategory()) + " ?");
+                title.setText((FAQsSection.getFAQCategory()));
                 monsterImage.setImageResource(FAQsSection.getCategoryName().getCategoryMonster());
                 detailedSectionText.setText(FAQsSection.getCategoryName().getCategoryDescription());
 
@@ -129,6 +129,13 @@ public class FAQsDetailed extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mFAQsRecycler.setNestedScrollingEnabled(false);
+
+    }
     private void initRecycler() {
 
         mFAQs = mFAQsViewModel.getFAQs().getValue().get(position).getFAQs();

@@ -7,6 +7,8 @@ public class BookmarkDataModel {
     public static ArrayList<ShopItemDataModel> shopItemsBookmarked = new ArrayList<>();
     public static ArrayList<DoctorDataModel> doctorItemsBookmarked  = new ArrayList<>();
     public static ArrayList<ArticleDataModel> articleItemsBookmarked = new ArrayList<>();
+
+
     public static int positionOfBookMark;
 
     public static boolean isClickedFromBookmarks() {

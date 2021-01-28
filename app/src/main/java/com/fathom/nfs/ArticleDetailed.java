@@ -82,7 +82,7 @@ public class ArticleDetailed extends Fragment {
         model.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleDataModel>>() {
             @Override
             public void onChanged(List<ArticleDataModel> articleDataModels) {
-                articles = (ArrayList<ArticleDataModel>) articleDataModels;
+//                articles = (ArrayList<ArticleDataModel>) articleDataModels;
                 ArticleDataModel article = articleDataModels.get(position);
 
                 articleImage.setImageBitmap(article.getArticleImage());
@@ -93,6 +93,8 @@ public class ArticleDetailed extends Fragment {
                 authorEducation.setText(article.getAuthorEducation()+" ");
             }
         });
+
+        model.getAllArticles();
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

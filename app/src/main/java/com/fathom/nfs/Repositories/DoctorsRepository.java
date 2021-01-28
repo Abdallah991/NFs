@@ -65,17 +65,19 @@ public class DoctorsRepository {
 
         Log.d(TAG," Loading the data is going to start");
 
-
+        Log.d("DOCTOR2", "call is successful");
         db.collection("Doctors")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            Log.d("DOCTOR2", "call is successful");
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                Log.d("DOCTOR2", document.getId() + " => " + document.getData());
                                 if (mDoctorsItems.size() <= task.getResult().size()) {
                                     DoctorDataModel doctor = document.toObject(DoctorDataModel.class);
+                                    doctor.setId(document.getId());
                                     mDoctorsItems.add(doctor);
 
                                 }
@@ -108,8 +110,10 @@ public class DoctorsRepository {
 
         for (int position = 0; position < query.size(); position++) {
 
-            userImageRef = storageRef.child(mDoctorsItems.get(position).getEmail()+".jpg");
+            userImageRef = storageRef.child(mDoctorsItems.get(position).getImagePath());
 
+            // Old way of getting the Doctor image
+//            userImageRef = storageRef.child(mDoctorsItems.get(position).getEmail()+".jpg");
 
             int doctorPosition = position;
             userImageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -134,7 +138,9 @@ public class DoctorsRepository {
         }
 
 
+
     }
+
 
 
 

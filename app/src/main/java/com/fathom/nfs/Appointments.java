@@ -86,13 +86,21 @@ public class Appointments extends Fragment {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mRecyclerView.setNestedScrollingEnabled(false);
+
+    }
+
     // Calling the recycler
     private void initRecyclerView (){
 
         Log.d(TAG, "initialising the list");
 
         appointments = (ArrayList<AppointmentDataModel>) mAppointmentViewModel.getAppointments().getValue();
-        mAppointmentAdapter = new AppointmentAdapter(appointments, getContext());
+        mAppointmentAdapter = new AppointmentAdapter(appointments, getContext(),mAppointmentViewModel);
         mRecyclerView.setAdapter(mAppointmentAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

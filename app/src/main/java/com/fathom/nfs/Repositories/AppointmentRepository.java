@@ -90,4 +90,10 @@ public class AppointmentRepository {
         Log.d(TAG," Loading the data is DONE");
 
     }
+
+    public void deleteAppointment(AppointmentDataModel appointment) {
+
+        db.collection("Appointments").document(appointment.getDocumentId()).delete();
+
+    }
 }

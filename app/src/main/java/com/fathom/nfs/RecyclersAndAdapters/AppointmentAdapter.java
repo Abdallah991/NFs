@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fathom.nfs.DataModels.AppointmentDataModel;
 import com.fathom.nfs.R;
+import com.fathom.nfs.ViewModels.AppointmentViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,11 +30,13 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     // Declare variables
     private ArrayList<AppointmentDataModel> mAppointments = new ArrayList<>();
     private Context mContext;
+    private AppointmentViewModel model;
 
     // Constructor
-    public AppointmentAdapter(ArrayList<AppointmentDataModel> AppointmentsDetails, Context context) {
+    public AppointmentAdapter(ArrayList<AppointmentDataModel> AppointmentsDetails, Context context, AppointmentViewModel appointmentViewModel) {
         mAppointments = AppointmentsDetails;
         mContext = context;
+        model = appointmentViewModel;
 
     }
 
@@ -83,6 +87,13 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             }
         });
 
+        holder.deleteAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                model.deleteAppointment(mAppointments.get(position));
+            }
+        });
+
 
     }
 
@@ -96,6 +107,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     // Tying the the variables to list item UI elements
     public class AppointmentHolder extends RecyclerView.ViewHolder{
         CardView card;
+        ImageView deleteAppointment;
         TextView day;
         TextView month;
         TextView doctorName;
@@ -107,6 +119,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
             // binding the views with the list items
             card = itemView.findViewById(R.id.appointmentCard);
+            deleteAppointment = itemView.findViewById(R.id.deleteBin);
             day = itemView.findViewById(R.id.day);
             month = itemView.findViewById(R.id.month);
             doctorName = itemView.findViewById(R.id.doctorName);

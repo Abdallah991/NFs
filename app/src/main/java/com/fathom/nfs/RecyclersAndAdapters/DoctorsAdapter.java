@@ -36,7 +36,7 @@ private NavController mNavController;
 // The navigation action Id constant
 private int actionId;
 // Injecting the View Model
-    private DoctorsViewModel mModel;
+private DoctorsViewModel mModel;
 
 
 // Constructor
@@ -52,6 +52,28 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
         mModel = model;
 
         }
+//    public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
+//                          Context context,
+//                          NavController navController,
+//                          int action,
+//                          DoctorsViewModel model,
+//                          boolean bookmarks,
+//                          ArrayList<DoctorDataModel> DoctorsBookmarked) {
+//        mDoctors = DoctorsDetails;
+//        mContext = context;
+//        mNavController = navController;
+//        actionId = action;
+//        mModel = model;
+//        bookmarkpage = bookmarks;
+//        mDoctorsBookmarks = DoctorsBookmarked;
+//
+////        for (DoctorDataModel doctor : DoctorsDetails) {
+////            if(doctor.isBookmark()) {
+////                mDoctorsBookmarks.add(doctor);
+////            }
+////        }
+//
+//    }
 
 
 
@@ -70,36 +92,23 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
     public void onBindViewHolder(@NonNull final DoctorHolder holder, final int position) {
 
         Log.d(TAG, "OnBindViewHolder: Called.");
-        holder.firstName.setText(mDoctors.get(position).getDoctorFirstName());
-        holder.lastName.setText(mDoctors.get(position).getDoctorLastName());
-        double rating = mDoctors.get(position).getRating();
-        String mRating = Double.toString(rating);
-        holder.rating.setText(mRating);
-        // setting image bitmap
-        holder.doctorImage.setImageBitmap(mDoctors.get(position).getDoctorImage());
+            holder.firstName.setText(mDoctors.get(position).getDoctorFirstName());
+            holder.lastName.setText(mDoctors.get(position).getDoctorLastName());
+            double rating = mDoctors.get(position).getRating();
+            String mRating = Double.toString(rating);
+            holder.rating.setText(mRating);
+            // setting image bitmap
+            holder.doctorImage.setImageBitmap(mDoctors.get(position).getDoctorImage());
+
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!mDoctors.get(position).isBookmark()) {
-                    setClickedFromBookmarks(false);
                     mNavController.navigate(actionId);
                     mModel.selectDoctor(mDoctors, position);
-                }
-                else if(mDoctors.get(position).isBookmark()){
-                    if (actionId == R.id.action_homeFragment_to_doctorsDetails) {
-                        
-                        mModel.selectDoctor(mDoctors, position);
-                        setClickedFromBookmarks(true);
-                        mNavController.navigate(actionId);
-                    }
-                    else {
-                        setPositionOfBookMark(position);
-                        setClickedFromBookmarks(true);
-                        mNavController.navigate(actionId);
-                    }
-                }
+//                    mModel.initDoctors();
+
             }
         });
 
@@ -107,21 +116,27 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
             @Override
             public void onClick(View v) {
                 if(mDoctors.get(position).isBookmark()){
+                    mModel.unBookmarkItem(mDoctors.get(position));
                     holder.bookmark.setImageResource(R.drawable.bookmark_image);
-                    mDoctors.get(position).setBookmark(false);
-                    doctorItemsBookmarked.remove(mDoctors.get(position));
+//                    mModel.saveBookmarkedDoctors(mContext);
+//                    mDoctors.get(position).setBookmark(false);
+//                    doctorItemsBookmarked.remove(mDoctors.get(position));
+
 
                 } else if (!mDoctors.get(position).isBookmark()){
+                    mModel.bookmarkItem(mDoctors.get(position));
                     holder.bookmark.setImageResource(R.drawable.bookmarked);
-                    mDoctors.get(position).setBookmark(true);
-                    doctorItemsBookmarked.add(mDoctors.get(position));
+//                    mModel.saveBookmarkedDoctors(mContext);
+//                    mDoctors.get(position).setBookmark(true);
+//                    doctorItemsBookmarked.add(mDoctors.get(position));
                 }
             }
         });
 
-        if(mDoctors.get(position).isBookmark()){
+            if (mDoctors.get(position).isBookmark()) {
 
-            holder.bookmark.setImageResource(R.drawable.bookmarked);
+                holder.bookmark.setImageResource(R.drawable.bookmarked);
+
         }
 
 
@@ -130,7 +145,12 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
 
     @Override
     public int getItemCount() {
+
+
+        Log.d("DOCTOR", "bookmark have been removed" + mDoctors.size());
         return mDoctors.size();
+
+
     }
 
     public class DoctorHolder extends RecyclerView.ViewHolder{

@@ -6,10 +6,15 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.fathom.nfs.DataModels.ArticleDataModel;
+import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.Repositories.ArticlesRepository;
 
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.fathom.nfs.DataModels.BookmarkDataModel.articleItemsBookmarked;
+import static com.fathom.nfs.DataModels.BookmarkDataModel.doctorItemsBookmarked;
 
 public class ArticleViewModel extends ViewModel {
 
@@ -23,6 +28,8 @@ public class ArticleViewModel extends ViewModel {
 
         mArticles.setValue(Items);
         positionOfItems = position;
+        // To hold the articles to the original value
+//        mArticles = mRepository.getArticles();
     }
 
     // Getting the position of the item in the list selected
@@ -43,9 +50,46 @@ public class ArticleViewModel extends ViewModel {
         mArticles = mRepository.getArticles();
     }
 
+    public void getAllArticles() {
+        mArticles = mRepository.getArticles();
+    }
+
     // Getting the list
     // Live data that cant be changed
     public LiveData<List<ArticleDataModel>> getArticles() {
         return mArticles;
+    }
+
+
+    public void bookmarkItem(ArticleDataModel article) {
+        ArrayList<ArticleDataModel> articles = new ArrayList<>();
+        for (ArticleDataModel a: mArticles.getValue()) {
+            if ((article.getArticleTitle()).equals(a.getArticleTitle())) {
+                article.setBookmark(true);
+            }
+            articles.add(a);
+        }
+        mArticles.setValue(articles);
+        Log.d("DOCTOR", "bookmark have been set");
+        articleItemsBookmarked.add(article);
+
+
+    }
+
+    public void unBookmarkItem(ArticleDataModel article) {
+        ArrayList<ArticleDataModel> articles = new ArrayList<>();
+        for (ArticleDataModel a: mArticles.getValue()) {
+            if ((article.getArticleTitle()).equals(a.getArticleTitle())) {
+                article.setBookmark(false);
+            }
+            articles.add(a);
+        }
+        mArticles.setValue(articles);
+
+        articleItemsBookmarked.remove(article);
+
+
+        Log.d("DOCTOR", "bookmark have been removed");
+
     }
 }

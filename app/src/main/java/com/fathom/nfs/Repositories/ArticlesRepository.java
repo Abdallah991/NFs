@@ -111,7 +111,11 @@ public class ArticlesRepository {
 
         for (int position = 0; position < query.size(); position++) {
 
-            userImageRef = storageRef.child(mArticles.get(position).getArticleTitle()+".png");
+            // old way of getting the image
+//            userImageRef = storageRef.child(mArticles.get(position).getArticleTitle()+".png");
+
+            userImageRef = storageRef.child(mArticles.get(position).getImagePath());
+
 
 
             int articlePosition = position;

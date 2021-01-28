@@ -12,14 +12,14 @@
     app:contentInsetStart="0dp"
     app:contentInsetStartWithNavigation="0dp"
     app:navigationIcon="@drawable/menu_hamburger">
-
-    <ImageView
-        android:id="@+id/cartIcon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="start"
-        android:scaleType="centerInside"
-        android:src="@drawable/shopping_cart" />
+<!--Hiding the cart-->
+<!--    <ImageView-->
+<!--        android:id="@+id/cartIcon"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_gravity="start"-->
+<!--        android:scaleType="centerInside"-->
+<!--        android:src="@drawable/shopping_cart" />-->
 
     <ImageView
         android:id="@+id/appTitle"

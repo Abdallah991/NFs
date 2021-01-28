@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.fathom.nfs.DataModels.ArticleCategoryDataModel;
@@ -27,6 +28,7 @@ import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.CategoryDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.ArticleAdapter;
+import com.fathom.nfs.RecyclersAndAdapters.DoctorsAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.HoizontalArticleAdapter;
 import com.fathom.nfs.RecyclersAndAdapters.HorizontalRecyclerView;
 import com.fathom.nfs.RecyclersAndAdapters.VideoAdapter;
@@ -47,6 +49,7 @@ public class Articles extends Fragment {
     private ArrayList<ArticleDataModel> mVideos = new ArrayList<>();
     private ArrayList<ArticleDataModel> mBlogs = new ArrayList<>();
     private ArrayList<ArticleDataModel> mCommunities = new ArrayList<>();
+    private ArrayList<ArticleDataModel> filteredArticles = new ArrayList<>();
     private ArticleCategoryViewModel mArticleCategoryViewModel;
     private ArticleViewModel mArticleViewModel;
     private HoizontalArticleAdapter horizontalAdapter;
@@ -60,6 +63,7 @@ public class Articles extends Fragment {
     private RecyclerView mCommunityRecycler;
     private NavController mNavController;
     private ScrollView articlesContent;
+    private SearchView mSearchView;
     private int actionArticle = R.id.action_articles_to_articleDetailed2;
     private int actionId = R.id.action_articles_to_articleDetailed2;
     private int actionVideo = R.id.action_articles_to_videoDetailed2;
@@ -97,6 +101,7 @@ public class Articles extends Fragment {
         videosLayout = view.findViewById(R.id.videoLayout);
         blogLayout = view.findViewById(R.id.blogsLayout);
         communityLayout = view.findViewById(R.id.communityLayout);
+        mSearchView = view.findViewById(R.id.searchArticle);
 
         mArticleCategoryViewModel = new ViewModelProvider(requireActivity()).get(ArticleCategoryViewModel.class);
         mArticleCategoryViewModel.initArticleCategories();
@@ -119,12 +124,40 @@ public class Articles extends Fragment {
 
                 mArticleAdapter.notifyDataSetChanged();
                 mVideoAdapter.notifyDataSetChanged();
+                mBlogAdapter.notifyDataSetChanged();
+                mCommunityAdapter.notifyDataSetChanged();
+                initRecyclerView();
             }
         });
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         ViewCompat.setLayoutDirection(articlesContent, ViewCompat.LAYOUT_DIRECTION_LTR);
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                searchArticles(s);
+//
+//                if(s.isEmpty()) {
+//                    initRecyclerView();
+//                }
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                searchArticles(s);
+//                if(s.isEmpty()) {
+//                    initRecyclerView();
+//                }
+
+                return false;
+            }
+        });
 
 
 
@@ -133,6 +166,17 @@ public class Articles extends Fragment {
 
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mArticlesRecycler.setNestedScrollingEnabled(false);
+        mVideosRecycler.setNestedScrollingEnabled(false);
+        mBlogRecycler.setNestedScrollingEnabled(false);
+        mCommunityRecycler.setNestedScrollingEnabled(false);
+
+    }
 
     private void initRecyclerView() {
 
@@ -231,5 +275,24 @@ public class Articles extends Fragment {
         blogLayout.setVisibility(View.GONE);
         communityLayout.setVisibility(View.VISIBLE);
 
+    }
+
+    private void searchArticles(String searchQuery) {
+        ArrayList<ArticleDataModel> allArticles = (ArrayList<ArticleDataModel>) mArticleViewModel.getArticles().getValue();
+        filteredArticles = new ArrayList<>();
+        showArticles();
+        for (ArticleDataModel article: allArticles) {
+            if(article.getArticleTitle().toLowerCase().contains(searchQuery.toLowerCase())) {
+                filteredArticles.add(article);
+            }
+        }
+        initFilterRecycler();
+
+    }
+
+    private void initFilterRecycler() {
+        mArticleAdapter = new ArticleAdapter(filteredArticles, getContext(), mNavController, actionArticle, mArticleViewModel);
+        mArticlesRecycler.setAdapter(mArticleAdapter);
+        mArticlesRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

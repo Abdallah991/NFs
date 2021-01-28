@@ -102,6 +102,8 @@ public class SignUpActivity extends AppCompatActivity {
                         && isPasswordValid(password.getText().toString())) {
                     SignUp();
                     uploadUser();
+//                    uploadUser();
+//                    signUp.setEnabled(false);
 
                 } else
                     {
@@ -123,6 +125,7 @@ public class SignUpActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Log.e(TAG, "User is" +currentUser);
+//        signUp.setEnabled(true);
     }
 
 
@@ -154,8 +157,8 @@ public class SignUpActivity extends AppCompatActivity {
                                     LoginActivity.class);
                             startActivity(intent);
                             finish();
-                                                Toast.makeText(getApplicationContext(), "You can Login now",
-                                                        Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Verify your email to login. If you didn't find it in you inbox, check your spam email please!",
+                                                        Toast.LENGTH_LONG).show();
 
                                             }
                                         }
@@ -195,7 +198,7 @@ public class SignUpActivity extends AppCompatActivity {
             user.setEmail(email);
             user.setFirstName(firstName.getText().toString());
             user.setLastName(lastName.getText().toString());
-            user.setPassword(password.getText().toString());
+//            user.setPassword(password.getText().toString());
         }
 
         return email.contains("@");
@@ -217,7 +220,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "We sent you a verification Email", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "We sent you a verification Email", Toast.LENGTH_SHORT).show();
 
                         }
                         else

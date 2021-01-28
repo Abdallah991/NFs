@@ -13,6 +13,8 @@ public class ArticleDataModel {
     private String VideoUrl;
     private String articleType;
     private String authorEducation;
+    private String imagePath;
+
 
     public ArticleDataModel(int imageUrl, String articleTitle, String authorName) {
         this.imageUrl = imageUrl;
@@ -97,5 +99,13 @@ public class ArticleDataModel {
 
     public void setAuthorEducation(String authorEducation) {
         this.authorEducation = authorEducation;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

@@ -19,6 +19,8 @@ public class DoctorDataModel {
     private String experience;
     private String gender;
     private String phone;
+    private String imagePath;
+    private String id;
     private double lat;
     private double longt;
     private ArrayList<ReviewDataModel> reviews = new ArrayList<>();
@@ -195,5 +197,21 @@ public class DoctorDataModel {
 
     public void setLongt(double longt) {
         this.longt = longt;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

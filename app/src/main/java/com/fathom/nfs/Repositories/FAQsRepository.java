@@ -104,15 +104,17 @@ public class FAQsRepository {
                 "Complementary and alternative therapies typically take a holistic approach to your physical and mental health.",
                 R.drawable.alternative_therapy_q);
 
-        String FAQ1 = "Psychiatry";
-        String FAQ2 = "Psychology";
-        String FAQ3 = "Behavioral Therapy";
-        String FAQ4 = "Alternative Therapy";
+        String FAQ1 = "What is Psychiatry?";
+        String FAQ2 = "What is Psychology?";
+        String FAQ3 = "What is Behavioral Therapy?";
+        String FAQ4 = "What is Alternative Therapy?";
+        String FAQ5 = "Report a problem";
 
         FAQsDataModel FAQsDataModel1 = new FAQsDataModel(FAQ1, category1,faqs1);
         FAQsDataModel FAQsDataModel2 = new FAQsDataModel(FAQ2, category2,faqs2);
         FAQsDataModel FAQsDataModel3 = new FAQsDataModel(FAQ3, category3,faqs3);
         FAQsDataModel FAQsDataModel4 = new FAQsDataModel(FAQ4, category4,faqs4);
+        FAQsDataModel FAQsDataModel5 = new FAQsDataModel(FAQ5, category4,faqs4);
 
 
 
@@ -122,6 +124,7 @@ public class FAQsRepository {
             mFAQs.add(FAQsDataModel2);
             mFAQs.add(FAQsDataModel3);
             mFAQs.add(FAQsDataModel4);
+            mFAQs.add(FAQsDataModel5);
 
 
         }

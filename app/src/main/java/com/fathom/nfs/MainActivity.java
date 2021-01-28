@@ -37,6 +37,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseStorage storage;
     private StorageReference storageRef;
     private StorageReference userImageRef;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
@@ -69,12 +72,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // offline support
+//        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+//                .setCacheSizeBytes(FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED)
+//                .build();
+//        db.setFirestoreSettings(settings);
 
 
         // Tying views
         toolbar = findViewById(R.id.app_bar);
         View view = findViewById(R.id.app_bar);
-        ImageView image = view.findViewById(R.id.cartIcon);
+        // Hiding the cart
+//        ImageView cart = view.findViewById(R.id.cartIcon);
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.nav_view);
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -111,8 +120,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
-        image.setScaleX(0.75f);
-        image.setScaleY(0.75f);
+        // Hiding the cart
+
+//        cart.setScaleX(0.75f);
+//        cart.setScaleY(0.75f);
 
 
 
@@ -122,16 +133,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                FirebaseAuth.getInstance().signOut();
 
 
-                Intent intent = new Intent(getApplicationContext(),
-                                LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-
-
+                logout();
 
 
             }
@@ -162,20 +166,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void persistImage() {
 
+try {
+    mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+    mUserViewModel.initUser(getApplicationContext());
 
-        mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        mUserViewModel.initUser(getApplicationContext());
+    mUserViewModel.getUser(getApplicationContext()).observe(this, new Observer<UserDataModel>() {
+        @Override
+        public void onChanged(UserDataModel userDataModel) {
+            user = userDataModel;
+            userName.setText(userDataModel.getFirstName());
+            accountType.setText(userDataModel.getAccountType() + "");
+            loadingImage(user);
 
-        mUserViewModel.getUser(getApplicationContext()).observe(this, new Observer<UserDataModel>() {
-            @Override
-            public void onChanged(UserDataModel userDataModel) {
-                user = userDataModel;
-                userName.setText(userDataModel.getFirstName());
-                accountType.setText(userDataModel.getAccountType()+"");
-                loadingImage(user);
+        }
+    });
+} catch (Exception e) {
+     logout();
 
-            }
-        });
+
+}
     }
 
     // Setting Up One Time Navigation
@@ -281,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences prefs = getSharedPreferences(USER, MODE_PRIVATE);
         String userEmail = prefs.getString("Email", "");
 
-        Toast.makeText(getApplicationContext(), userEmail, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), userEmail, Toast.LENGTH_SHORT).show();
         userImageRef = storageRef.child(userEmail+"ProfileImage.jpeg");
 
 
@@ -309,6 +318,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
     }
+
+    private void logout() {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseAuth.getInstance().signOut();
+
+
+        Intent intent = new Intent(getApplicationContext(),
+                LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 
 
 

@@ -21,7 +21,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.RecyclersAndAdapters.DoctorsAdapter;
@@ -59,13 +61,15 @@ public class Doctors extends Fragment {
     private ArrayList<DoctorDataModel> filteredDoctors = new ArrayList<>();
     private ImageView monster;
     private TextView text;
+    private SearchView mSearchView;
     // Button statuses
     private boolean femaleStatus = false;
     private boolean maleStatus = false;
-//    private boolean psychiatryStatus = false;
-//    private boolean psychologyStatus = false;
-//    private boolean femaleStatus = false;
-//    private boolean femaleStatus = false;
+    private boolean psychiatryStatus = false;
+    private boolean psychologyStatus = false;
+    private boolean alternativeHealingStatus = false;
+    private boolean behavioralTherapyStatus = false;
+    private boolean counselorStatus = false;
 
 
     public Doctors() {
@@ -94,6 +98,7 @@ public class Doctors extends Fragment {
         male = view.findViewById(R.id.maleFilter);
         female = view.findViewById(R.id.femaleFilter);
         monster = view.findViewById(R.id.doctorsMonster);
+        mSearchView = view.findViewById(R.id.searchDoctors);
         text = view.findViewById(R.id.newIn3);
         text.setVisibility(View.INVISIBLE);
 
@@ -116,156 +121,219 @@ public class Doctors extends Fragment {
         psychology.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                psychology.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                psychology.setTextColor(getResources().getColor(R.color.white));
-                psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
-                psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
-                alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
-                alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
-                behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
-                behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
-                counselor.setBackgroundColor(getResources().getColor(R.color.white));
-                counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
-                if (!maleStatus) {
-                    male.setBackgroundColor(getResources().getColor(R.color.white));
-                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
-                }
-                if(!femaleStatus) {
-                    female.setBackgroundColor(getResources().getColor(R.color.white));
-                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
-                }
+                if (!psychologyStatus) {
+                    psychiatryStatus = false;
+                    psychologyStatus = true;
+                    alternativeHealingStatus = true;
+                    behavioralTherapyStatus = false;
+                    counselorStatus = false;
+                    psychology.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    psychology.setTextColor(getResources().getColor(R.color.white));
+                    psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
+                    psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
+                    alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
+                    behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    counselor.setBackgroundColor(getResources().getColor(R.color.white));
+                    counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    if (!maleStatus) {
+                        male.setBackgroundColor(getResources().getColor(R.color.white));
+                        male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    if (!femaleStatus) {
+                        female.setBackgroundColor(getResources().getColor(R.color.white));
+                        female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
 
-                // filter the recycler to only psychologists
-                filterPsychology();
+                    // filter the recycler to only psychologists
+
+                } else {
+                    psychologyStatus = false;
+                    psychology.setBackgroundColor(getResources().getColor(R.color.white));
+                    psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                filterDoctors();
+
             }
         });
 
         psychiatry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                psychiatry.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                psychiatry.setTextColor(getResources().getColor(R.color.white));
-                psychology.setBackgroundColor(getResources().getColor(R.color.white));
-                psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
-                alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
-                alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
-                behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
-                behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
-                counselor.setBackgroundColor(getResources().getColor(R.color.white));
-                counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
-                if (!maleStatus) {
-                    male.setBackgroundColor(getResources().getColor(R.color.white));
-                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                if (!psychiatryStatus) {
+                    psychiatryStatus = true;
+                    psychologyStatus = false;
+                    alternativeHealingStatus = false;
+                    behavioralTherapyStatus = false;
+                    counselorStatus = false;
+                    psychiatry.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    psychiatry.setTextColor(getResources().getColor(R.color.white));
+                    psychology.setBackgroundColor(getResources().getColor(R.color.white));
+                    psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
+                    alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
+                    behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    counselor.setBackgroundColor(getResources().getColor(R.color.white));
+                    counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    if (!maleStatus) {
+                        male.setBackgroundColor(getResources().getColor(R.color.white));
+                        male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    if (!femaleStatus) {
+                        female.setBackgroundColor(getResources().getColor(R.color.white));
+                        female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    // filter the recycler to only psychiatrists
                 }
-                if(!femaleStatus) {
-                    female.setBackgroundColor(getResources().getColor(R.color.white));
-                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                else {
+                    psychiatryStatus = false;
+                    psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
+                    psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
                 }
-                // filter the recycler to only psychiatrists
-                filterPsychiatry();
+
+                filterDoctors();
+
+
             }
         });
 
         alternativeHealing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alternativeHealing.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                alternativeHealing.setTextColor(getResources().getColor(R.color.white));
-                psychology.setBackgroundColor(getResources().getColor(R.color.white));
-                psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
-                psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
-                psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
-                behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
-                behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
-                counselor.setBackgroundColor(getResources().getColor(R.color.white));
-                counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
-                if (!maleStatus) {
-                    male.setBackgroundColor(getResources().getColor(R.color.white));
-                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                if (!alternativeHealingStatus) {
+                    psychiatryStatus = false;
+                    psychologyStatus = false;
+                    alternativeHealingStatus = true;
+                    behavioralTherapyStatus = false;
+                    counselorStatus = false;
+                    alternativeHealing.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    alternativeHealing.setTextColor(getResources().getColor(R.color.white));
+                    psychology.setBackgroundColor(getResources().getColor(R.color.white));
+                    psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
+                    psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
+                    behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    counselor.setBackgroundColor(getResources().getColor(R.color.white));
+                    counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    if (!maleStatus) {
+                        male.setBackgroundColor(getResources().getColor(R.color.white));
+                        male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    if (!femaleStatus) {
+                        female.setBackgroundColor(getResources().getColor(R.color.white));
+                        female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    // filter the recycler to only Alternative Healers
                 }
-                if(!femaleStatus) {
-                    female.setBackgroundColor(getResources().getColor(R.color.white));
-                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                else {
+                    alternativeHealingStatus = false;
+                    alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
+                    alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
                 }
-                // filter the recycler to only Alternative Healers
-                filterAlternativeHealing();
+                filterDoctors();
+
             }
         });
 
         behavioralTherapy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                behavioralTherapy.setTextColor(getResources().getColor(R.color.white));
-                psychology.setBackgroundColor(getResources().getColor(R.color.white));
-                psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
-                psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
-                psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
-                alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
-                alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
-                counselor.setBackgroundColor(getResources().getColor(R.color.white));
-                counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
-                if (!maleStatus) {
-                    male.setBackgroundColor(getResources().getColor(R.color.white));
-                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                if(!behavioralTherapyStatus) {
+                    psychiatryStatus = false;
+                    psychologyStatus = false;
+                    alternativeHealingStatus = false;
+                    behavioralTherapyStatus = true;
+                    counselorStatus = false;
+                    behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    behavioralTherapy.setTextColor(getResources().getColor(R.color.white));
+                    psychology.setBackgroundColor(getResources().getColor(R.color.white));
+                    psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
+                    psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
+                    alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    counselor.setBackgroundColor(getResources().getColor(R.color.white));
+                    counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    if (!maleStatus) {
+                        male.setBackgroundColor(getResources().getColor(R.color.white));
+                        male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    if (!femaleStatus) {
+                        female.setBackgroundColor(getResources().getColor(R.color.white));
+                        female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    // filter the recycler to only behavioral Therapist
+                } else {
+                    behavioralTherapyStatus = false;
+                    behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
+                    behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
                 }
-                if(!femaleStatus) {
-                    female.setBackgroundColor(getResources().getColor(R.color.white));
-                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
-                }
-                // filter the recycler to only behavioral Therapist
-                filterBehavioralTherapy();
+                filterDoctors();
+
             }
         });
 
         counselor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                counselor.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                counselor.setTextColor(getResources().getColor(R.color.white));
-                psychology.setBackgroundColor(getResources().getColor(R.color.white));
-                psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
-                psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
-                psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
-                alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
-                alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
-                behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
-                behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
-                if (!maleStatus) {
-                    male.setBackgroundColor(getResources().getColor(R.color.white));
-                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                if(!counselorStatus) {
+                    psychiatryStatus = false;
+                    psychologyStatus = false;
+                    alternativeHealingStatus = false;
+                    behavioralTherapyStatus = false;
+                    counselorStatus = true;
+                    counselor.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    counselor.setTextColor(getResources().getColor(R.color.white));
+                    psychology.setBackgroundColor(getResources().getColor(R.color.white));
+                    psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
+                    psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
+                    alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
+                    behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    if (!maleStatus) {
+                        male.setBackgroundColor(getResources().getColor(R.color.white));
+                        male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    if (!femaleStatus) {
+                        female.setBackgroundColor(getResources().getColor(R.color.white));
+                        female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    }
+                    // filter the recycler to only counselor doctors
+
+                } else {
+                    counselorStatus = false;
+                    counselor.setBackgroundColor(getResources().getColor(R.color.white));
+                    counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
                 }
-                if(!femaleStatus) {
-                    female.setBackgroundColor(getResources().getColor(R.color.white));
-                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
-                }
-                // filter the recycler to only counselor doctors
-                filterCounselor();
+                filterDoctors();
             }
         });
 
         male.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                male.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                male.setTextColor(getResources().getColor(R.color.white));
-                psychology.setBackgroundColor(getResources().getColor(R.color.white));
-                psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
-                psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
-                psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
-                alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
-                alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
-                behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
-                behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
-                counselor.setBackgroundColor(getResources().getColor(R.color.white));
-                counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
-                female.setBackgroundColor(getResources().getColor(R.color.white));
-                female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                if (!maleStatus) {
+                    maleStatus = true;
+                    femaleStatus = false;
+                    male.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    male.setTextColor(getResources().getColor(R.color.white));
+                    female.setBackgroundColor(getResources().getColor(R.color.white));
+                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+                else {
+                    maleStatus = false;
+                    male.setBackgroundColor(getResources().getColor(R.color.white));
+                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
 
                 // filter the recycler to only Male doctors
-                maleStatus = true;
-                femaleStatus = false;
-                filterMale();
+                filterDoctors();
 
 
             }
@@ -274,34 +342,60 @@ public class Doctors extends Fragment {
         female.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                female.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                female.setTextColor(getResources().getColor(R.color.white));
-                psychology.setBackgroundColor(getResources().getColor(R.color.white));
-                psychology.setTextColor(getResources().getColor(R.color.colorPrimary));
-                psychiatry.setBackgroundColor(getResources().getColor(R.color.white));
-                psychiatry.setTextColor(getResources().getColor(R.color.colorPrimary));
-                alternativeHealing.setBackgroundColor(getResources().getColor(R.color.white));
-                alternativeHealing.setTextColor(getResources().getColor(R.color.colorPrimary));
-                behavioralTherapy.setBackgroundColor(getResources().getColor(R.color.white));
-                behavioralTherapy.setTextColor(getResources().getColor(R.color.colorPrimary));
-                counselor.setBackgroundColor(getResources().getColor(R.color.white));
-                counselor.setTextColor(getResources().getColor(R.color.colorPrimary));
-                male.setBackgroundColor(getResources().getColor(R.color.white));
-                male.setTextColor(getResources().getColor(R.color.colorPrimary));
-                maleStatus = false;
-                femaleStatus = true;
+                if (!femaleStatus) {
+                    maleStatus = false;
+                    femaleStatus = true;
+                    female.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    female.setTextColor(getResources().getColor(R.color.white));
+                    male.setBackgroundColor(getResources().getColor(R.color.white));
+                    male.setTextColor(getResources().getColor(R.color.colorPrimary));
+                } else {
+                    femaleStatus = false;
+                    female.setBackgroundColor(getResources().getColor(R.color.white));
+                    female.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
                 // filter the recycler to only Female doctors
-                filterFemale();
+                filterDoctors();
 
             }
         });
 
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+
+                searchDoctors(s);
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+
+                searchDoctors(s);
+
+
+                return false;
+            }
+        });
 
         // Readjusting the position of layout elements
         ViewCompat.setLayoutDirection(doctorsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
         // Calling Recycler
         initRecycler();
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mDcotrosRecycler.setNestedScrollingEnabled(false);
+
     }
 
     private void initRecycler() {
@@ -318,22 +412,166 @@ public class Doctors extends Fragment {
         mDcotrosRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    private void filterPsychiatry() {
 
-            if (!filteredDoctors.isEmpty()) {
-                filteredDoctors = new ArrayList<>();
-            }
-            if (!maleStatus || !femaleStatus) {
-                filteredDoctors = new ArrayList<>();
-                for (DoctorDataModel doctor : mDoctors) {
 
-                    if (doctor.getSpecialty().equals("Psychiatry")) {
-                        filteredDoctors.add(doctor);
-                    }
+    private void filterDoctors() {
+//        if(!filteredDoctors.isEmpty()) {
+            filteredDoctors = new ArrayList<>();
+//        }
+
+        if (maleStatus && psychiatryStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Psychiatry") && doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
                 }
             }
 
-        if (maleStatus) {
+        }
+        if (maleStatus && psychologyStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Psychology") && doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        else if (maleStatus && alternativeHealingStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Alternative Healing") && doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        else if (maleStatus && behavioralTherapyStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Behavioral Therapy") && doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        else if (maleStatus && counselorStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Counselor") && doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+
+        else if (femaleStatus && psychiatryStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Psychiatry") && doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        else if (femaleStatus && psychologyStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Psychology") && doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        else if (femaleStatus && alternativeHealingStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Alternative Healing") && doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        else if (femaleStatus && behavioralTherapyStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Behavioral Therapy") && doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        else if (femaleStatus && counselorStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+                if (doctor.getSpecialty().equals("Counselor") && doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        else if(maleStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getGender().equals("male")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+//            initRecycler();
+
+        }
+        else if (femaleStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getGender().equals("female")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+            initRecycler();
+
+        }
+        else if (psychiatryStatus) {
+
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Psychiatry")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+//            Toast.makeText(getContext(),"the number of doctors is"+ filteredDoctors, Toast.LENGTH_SHORT).show();
+
+        }
+        else if (psychologyStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Psychology")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+
+        else if (alternativeHealingStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Alternative Healing")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+
+        else if (behavioralTherapyStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Behavioral Therapy")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+
+        else if (counselorStatus) {
+            for (DoctorDataModel doctor : mDoctors) {
+
+                if (doctor.getSpecialty().equals("Counselor")) {
+                    filteredDoctors.add(doctor);
+                }
+            }
+
+        }
+        else if (maleStatus && psychiatryStatus) {
             filteredDoctors = new ArrayList<>();
             for (DoctorDataModel doctor : mDoctors) {
                 if (doctor.getSpecialty().equals("Psychiatry") && doctor.getGender().equals("male")) {
@@ -342,190 +580,23 @@ public class Doctors extends Fragment {
             }
 
         }
-        if (femaleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-
-                if (doctor.getSpecialty().equals("Psychiatry") && doctor.getGender().equals("female")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
+        else {
+            filteredDoctors.addAll(mDoctors);
+            initRecycler();
 
         }
-        initFilterRecycler();
-    }
 
-    // filter code
-    private void filterPsychology() {
-        if (!filteredDoctors.isEmpty()) {
-            filteredDoctors = new ArrayList<>();
-        }
-        if (!maleStatus || !femaleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-
-                if (doctor.getSpecialty().equals("Psychology")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
+        if(filteredDoctors.isEmpty()) {
+            initFilterRecycler();
+        } else {
+            initFilterRecycler();
+            initRecycler();
         }
 
-        if (maleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-                if (doctor.getSpecialty().equals("Psychology") && doctor.getGender().equals("male")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-
-        }
-        if (femaleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-
-                if (doctor.getSpecialty().equals("Psychology") && doctor.getGender().equals("female")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-
-        }
-       initFilterRecycler();
-    }
-
-    private void filterAlternativeHealing() {
-        if (!filteredDoctors.isEmpty()) {
-            filteredDoctors = new ArrayList<>();
-        }
-        if (!maleStatus || !femaleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-
-                if (doctor.getSpecialty().equals("Alternative Healing")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-        }
-
-        if (maleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-                if (doctor.getSpecialty().equals("Alternative Healing") && doctor.getGender().equals("male")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-
-        }
-        if (femaleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-
-                if (doctor.getSpecialty().equals("Alternative Healing") && doctor.getGender().equals("female")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-
-        }
-        initFilterRecycler();
 
     }
 
-    private void filterBehavioralTherapy() {
-        if (!filteredDoctors.isEmpty()) {
-            filteredDoctors = new ArrayList<>();
-        }
-        if (!maleStatus || !femaleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
 
-                if (doctor.getSpecialty().equals("Behavioral Therapy")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-        }
-
-        if (maleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-                if (doctor.getSpecialty().equals("Behavioral Therapy") && doctor.getGender().equals("male")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-
-        }
-        if (femaleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-
-                if (doctor.getSpecialty().equals("Behavioral Therapy") && doctor.getGender().equals("female")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-
-        }
-        initFilterRecycler();
-    }
-
-    private void filterCounselor() {
-        if (!filteredDoctors.isEmpty()) {
-            filteredDoctors = new ArrayList<>();
-        }
-        if (!maleStatus || !femaleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-
-                if (doctor.getSpecialty().equals("Counselor")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-        }
-
-        if (maleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-                if (doctor.getSpecialty().equals("Counselor") && doctor.getGender().equals("male")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-
-        }
-        if (femaleStatus) {
-            filteredDoctors = new ArrayList<>();
-            for (DoctorDataModel doctor : mDoctors) {
-
-                if (doctor.getSpecialty().equals("Counselor") && doctor.getGender().equals("female")) {
-                    filteredDoctors.add(doctor);
-                }
-            }
-
-        }
-        initFilterRecycler();
-    }
-
-    private void filterFemale() {
-        if(!filteredDoctors.isEmpty()) {
-            filteredDoctors = new ArrayList<>();
-        }
-        for (DoctorDataModel doctor : mDoctors) {
-
-            if (doctor.getGender().equals("female")) {
-                filteredDoctors.add(doctor);
-            }
-        }
-        initRecycler();
-    }
-
-    private void filterMale() {
-        if(!filteredDoctors.isEmpty()) {
-            filteredDoctors = new ArrayList<>();
-        }
-        for (DoctorDataModel doctor : mDoctors) {
-
-            if (doctor.getGender().equals("male")) {
-                filteredDoctors.add(doctor);
-            }
-        }
-        initRecycler();
-    }
 
     private void initFilterRecycler() {
         mDoctorsAdapter = new DoctorsAdapter(filteredDoctors, getContext(), mNavController, actionId, mDoctorsViewModel);
@@ -537,4 +608,19 @@ public class Doctors extends Fragment {
 
         }
     }
+
+    private void searchDoctors(String searchQuery) {
+
+        filteredDoctors = new ArrayList<>();
+        for (DoctorDataModel doctor : mDoctors) {
+            if ((doctor.getDoctorFirstName().toLowerCase()
+                    +doctor.getDoctorLastName().toLowerCase())
+                    .contains(searchQuery.toLowerCase())) {
+                filteredDoctors.add(doctor);
+            }
+        }
+//        Toast.makeText(getContext(), filteredDoctors.toString(), Toast.LENGTH_SHORT ).show();
+        initFilterRecycler();
+    }
+
 }

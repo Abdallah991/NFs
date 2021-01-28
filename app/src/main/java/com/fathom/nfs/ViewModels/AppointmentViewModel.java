@@ -7,8 +7,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.fathom.nfs.DataModels.AppointmentDataModel;
+import com.fathom.nfs.DataModels.DoctorDataModel;
 import com.fathom.nfs.Repositories.AppointmentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppointmentViewModel extends ViewModel {
@@ -46,4 +48,19 @@ public class AppointmentViewModel extends ViewModel {
         return mAppointments;
     }
 
+
+    // Delete appointment from the backend
+    // Remove the appointment from the mAppointments
+    public void deleteAppointment(AppointmentDataModel appointment) {
+        Log.d("APPOINT","Delete appointment triggered!");
+        mRepository.deleteAppointment(appointment);
+        ArrayList<AppointmentDataModel> appointments = new ArrayList<>();
+        for (AppointmentDataModel a: mAppointments.getValue()) {
+            if (!a.getDocumentId().equals(appointment.getDocumentId())) {
+                appointments.add(a);
+            }
+        }
+        mAppointments.setValue(appointments);
+
+    }
 }

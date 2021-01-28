@@ -213,9 +213,9 @@ public class SetAppointment extends Fragment {
 
                 appointment.setDoctorName(doctorFullName);
                 appointment.setTo(doctorEmailId);
-                message.setSubject("Hello, Appointment from "+email);
-                message.setText("Hello there you appointment is from " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
-                        " to "+ endTime.getSelectedItem().toString()+ " "+ endAmPm.getSelectedItem().toString() );
+                message.setSubject("Appointment request from "+email);
+                message.setText("Hello "+doctorFullName+",\n "+"My name is "+firstName + " "+lastName+" I would like to book an appointment from " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
+                        " to "+ endTime.getSelectedItem().toString()+ " "+ endAmPm.getSelectedItem().toString() +" \n Thank you." );
                 appointment.setDay(day);
                 appointment.setMonth(month);
                 appointment.setTiming(startTime.getSelectedItem().toString()+startAmPm.getSelectedItem().toString()+ " to "

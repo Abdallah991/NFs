@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.DataModels.DoctorDataModel;
@@ -32,6 +36,7 @@ import com.fathom.nfs.ViewModels.DoctorsViewModel;
 import com.fathom.nfs.ViewModels.ShopItemsViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.fathom.nfs.DataModels.BookmarkDataModel.articleItemsBookmarked;
 import static com.fathom.nfs.DataModels.BookmarkDataModel.doctorItemsBookmarked;
@@ -67,12 +72,17 @@ public class BookMarks extends Fragment {
     private Button filterDoctors;
     private Button filterShops;
     private Button filterArticles;
+    private ArrayList<DoctorDataModel> mDoctors = new ArrayList<>();
+    private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
+//    private ArrayList<DoctorDataModel> mDoctorsBookmarked = new ArrayList<>();
     private ArticleViewModel mArticleViewModel;
     private DoctorsViewModel mDoctorsViewModel;
     private ShopItemsViewModel mShopItemsViewModel;
     private final int actionId = R.id.action_bookMarksFragment_to_doctorsDetails2;
-    private int actionArticle = R.id.action_homeFragment_to_articleDetailed2;
+    private int actionArticle = R.id.action_bookMarksFragment_to_articleDetailed2;
     private int actionToDetailedShopItem = R.id.action_homeFragment_to_shopItemDetailed;
+    private int actionToAllDoctors = R.id.action_bookMarksFragment_to_doctors;
+    private int actionToAllArticles = R.id.action_bookMarksFragment_to_articles;
 
 
     public BookMarks() {
@@ -232,8 +242,24 @@ public class BookMarks extends Fragment {
 
 
 
-
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
+        allDoctors.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mNavController.navigate(actionToAllDoctors);
+            }
+        });
+
+        allArticles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mNavController.navigate(actionToAllArticles);
+            }
+        });
+
 
         if (doctorItemsBookmarked.isEmpty()){
 
@@ -262,6 +288,50 @@ public class BookMarks extends Fragment {
 
         }
 
+        // Calling the View Model
+        mDoctorsViewModel = new ViewModelProvider(requireActivity()).get(DoctorsViewModel.class);
+        mDoctorsViewModel.initDoctors();
+
+        mDoctorsViewModel.getDoctors().observe(getViewLifecycleOwner(), new Observer<List<DoctorDataModel>>() {
+            @Override
+            public void onChanged(List<DoctorDataModel> doctorDataModels) {
+
+                Log.d("MVVM"," Adpter is being notified with any CHANGE");
+                mDoctorsAdapter.notifyDataSetChanged();
+                mDoctors = (ArrayList<DoctorDataModel>) doctorDataModels;
+                if (doctorItemsBookmarked.isEmpty()) {
+                    for (DoctorDataModel doctor : mDoctors) {
+                        if (doctor.isBookmark()) {
+                            doctorItemsBookmarked.add(doctor);
+                        }
+                    }
+                }
+                initRecycler();
+            }
+        });
+
+        mArticleViewModel = new ViewModelProvider(requireActivity()).get(ArticleViewModel.class);
+        mArticleViewModel.initArticles();
+
+        mArticleViewModel.getArticles().observe(getViewLifecycleOwner(), new Observer<List<ArticleDataModel>>() {
+            @Override
+            public void onChanged(List<ArticleDataModel> articleDataModels) {
+
+                mArticles = (ArrayList<ArticleDataModel>) articleDataModels;
+                mArticles = (ArrayList<ArticleDataModel>) mArticleViewModel.getArticles().getValue();
+//        Toast.makeText(getContext(), mDoctors + "", Toast.LENGTH_SHORT).show();
+                if (articleItemsBookmarked.isEmpty()) {
+                    for (ArticleDataModel article : mArticles) {
+                        if (article.isBookmark()) {
+                            articleItemsBookmarked.add(article);
+                        }
+                    }
+                }
+                mArticleAdapter.notifyDataSetChanged();
+//                initRecycler();
+            }
+
+        });
 
 
         ViewCompat.setLayoutDirection(bookmarksContent, ViewCompat.LAYOUT_DIRECTION_LTR);
@@ -269,10 +339,33 @@ public class BookMarks extends Fragment {
         initRecycler();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mDoctorsRecycler.setNestedScrollingEnabled(false);
+        mArticlesRecycler.setNestedScrollingEnabled(false);
+        mShopRecycler.setNestedScrollingEnabled(false);
+
+    }
+
     private void initRecycler() {
 
 
         // setting the adapter to recycler
+//        mDoctorsBookmarked = new ArrayList<>();
+//        mDoctors = (ArrayList<DoctorDataModel>) mDoctorsViewModel.getDoctors().getValue();
+//        Toast.makeText(getContext(), mDoctors + "", Toast.LENGTH_SHORT).show();
+
+//        articleItemsBookmarked = new ArrayList<>();
+//        mArticles = (ArrayList<ArticleDataModel>) mArticleViewModel.getArticles().getValue();
+////        Toast.makeText(getContext(), mDoctors + "", Toast.LENGTH_SHORT).show();
+//        for (ArticleDataModel article : mArticles) {
+//            if(article.isBookmark()) {
+//                articleItemsBookmarked.add(article);
+//            }
+//        }
+//        Toast.makeText(getContext(), mDoctorsBookmarked.size()+" ", Toast.LENGTH_SHORT).show();
         mDoctorsAdapter = new DoctorsAdapter(doctorItemsBookmarked, getContext(), mNavController, actionId, mDoctorsViewModel);
         mDoctorsRecycler.setAdapter(mDoctorsAdapter);
         mDoctorsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -287,4 +380,9 @@ public class BookMarks extends Fragment {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+//        initRecycler();
+    }
 }

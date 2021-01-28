@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import static com.fathom.nfs.SignUpActivity.USER;
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private ReviewDataModel review1 = new ReviewDataModel();
     private ReviewDataModel review2 = new ReviewDataModel();
     private ReviewDataModel review3 = new ReviewDataModel();
+    private UserDataModel user = new UserDataModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                checkIfDocumentExist();
                     SignIn();
 
 
@@ -186,4 +188,41 @@ public class LoginActivity extends AppCompatActivity {
         db.collection("Articles").document(article.getArticleTitle()).set(article);
     }
 
+    private void checkIfDocumentExist() {
+
+        SharedPreferences prefs = getSharedPreferences(USER, MODE_PRIVATE);
+        String userEmail = prefs.getString("Email", "");
+        String firstName = prefs.getString("FirstName", "");
+        String lastName = prefs.getString("LastName", "");
+
+        if (!userEmail.equals("")) {
+            db.collection("Users").document(userEmail).get().
+                    addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    Log.d("USER1", "Document exists!");
+                                    return;
+                                } else {
+                                    Log.d("USER1", "Document does not exist!");
+                                    user.setEmail(userEmail);
+                                    user.setFirstName(firstName);
+                                    user.setLastName(lastName);
+                                    db.collection("Users")
+                                            .document(user.getEmail()).set(user);
+                                    return;
+                                }
+                            } else {
+                                Log.d(TAG, "Failed with: ", task.getException());
+                            }
+                        }
+                    });
+        } else {
+            Toast.makeText(getApplicationContext(), "The email is not signed up", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
 }
