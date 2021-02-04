@@ -18,6 +18,12 @@ import java.util.ArrayList;
 
 public class FAQsAdapter extends RecyclerView.Adapter<FAQsAdapter.FAQHolder> {
 
+    /**
+     * @class FAQ adapter
+     * @desription  list FAQ and tying the data to UI elements in FAQ list
+     * @date 4 feb 2021
+     */
+    // Declare variables
     private ArrayList<FAQsDataModel> mFAQs = new ArrayList<>();
     private Context mContext;
     private NavController mNavController;
@@ -26,7 +32,7 @@ public class FAQsAdapter extends RecyclerView.Adapter<FAQsAdapter.FAQHolder> {
     private FAQsViewModel mFAQsViewModel;
 
 
-
+    // Constructor
     public FAQsAdapter(ArrayList<FAQsDataModel> FAQs, Context context, NavController navController, FAQsViewModel faQsViewModel) {
         mFAQs = FAQs;
         mContext = context;
@@ -44,11 +50,14 @@ public class FAQsAdapter extends RecyclerView.Adapter<FAQsAdapter.FAQHolder> {
 
     }
 
+
+
+    // setting the values of each list item
         @Override
         public void onBindViewHolder (@NonNull FAQHolder holder, final int position){
 
         holder.question.setText((mFAQs.get(position).getFAQCategory()) );
-
+        // click on card
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +76,8 @@ public class FAQsAdapter extends RecyclerView.Adapter<FAQsAdapter.FAQHolder> {
 
         }
 
-        @Override
+    // Tying the UI elements in the list item
+    @Override
         public int getItemCount () {
             return mFAQs.size();
         }

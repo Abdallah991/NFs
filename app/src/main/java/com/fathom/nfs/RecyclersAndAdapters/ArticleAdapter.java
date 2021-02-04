@@ -23,6 +23,11 @@ import static com.fathom.nfs.DataModels.BookmarkDataModel.articleItemsBookmarked
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleHolder> {
 
+    /**
+     * @class Article adapter
+     * @desription  list articles and tying the data to UI elements in article lists
+     * @date 4 feb 2021
+     */
     private static final String TAG = "Article Adapter";
 
     // Declare variables
@@ -57,13 +62,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
     @Override
     public void onBindViewHolder(@NonNull final ArticleAdapter.ArticleHolder holder, final int position) {
 
-        Log.d(TAG, "OnBindViewHolder: Called.");
         holder.articleImage.setImageBitmap(mArticles.get(position).getArticleImage());
-        // removing the author name from the article card
-//        holder.authorName.setText(mArticles.get(position).getAuthorName());
-        holder.authorName.setText("");
         holder.articleTitle.setText(mArticles.get(position).getArticleTitle());
 
+        // Clicking on card
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,22 +73,21 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
                 mArticleViewModel.selectArticle(mArticles, position);
             }
         });
-
+        // Clicking on bookmark
         holder.bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mArticles.get(position).isBookmark()){
                     mArticleViewModel.unBookmarkItem(mArticles.get(position));
                     holder.bookmark.setImageResource(R.drawable.bookmark_image);
-//                    mArticles.get(position).setBookmark(false);
-//                    articleItemsBookmarked.remove(mArticles.get(position));
+                    mArticleViewModel.saveBookmarkedArticles();
 
 
                 } else if (!mArticles.get(position).isBookmark()){
                     mArticleViewModel.bookmarkItem(mArticles.get(position));
                     holder.bookmark.setImageResource(R.drawable.bookmarked);
-//                    mArticles.get(position).setBookmark(true);
-//                    articleItemsBookmarked.add(mArticles.get(position));
+                    mArticleViewModel.saveBookmarkedArticles();
+
 
                     Log.d("ARTICLE1", "bookmark have been set");
 
@@ -107,6 +108,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleH
         return mArticles.size();
     }
 
+    // Tying elements to the list item
     public class ArticleHolder extends RecyclerView.ViewHolder{
         CardView card;
         ImageView articleImage;

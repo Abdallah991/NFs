@@ -2,6 +2,11 @@ package com.fathom.nfs.DataModels;
 
 public class ReviewDataModel {
 
+    /**
+     * @class review data model
+     * @desription  Hold review data for the doctors
+     * @date 4 feb 2021
+     */
     private int rating;
     private String reviewText;
     private String userEmail;

@@ -63,12 +63,8 @@ import static com.fathom.nfs.SignUpActivity.USER;
  */
 public class DoctorsDetails extends Fragment {
 
-    private ScrollView doctorsDetailsContent;
-    private Button overviewButton;
     private Button overviewUnderlineButton;
-    private Button contactButton;
     private Button contactUnderlineButton;
-    private Button reviewButton;
     private Button reviewUnderlineButton;
     private TextView firstName;
     private TextView lastName;
@@ -81,15 +77,12 @@ public class DoctorsDetails extends Fragment {
     private ReviewAdapter mReviewAdapter;
     private ArrayList<ReviewDataModel> mReviews = new ArrayList<>();
     private int position;
-    private int positionOfReview;
     private int positionOfBookmarked;
     private TextView aboutTitle;
     private TextView aboutContent;
     private TextView educationTitle;
     private TextView educationDegree1;
     private TextView educationDegree1Description;
-    private TextView educationDegree2;
-    private TextView educationDegree2Description;
     private TextView experienceTitle;
     private TextView experienceContent;
     private Button doctorLocation;
@@ -97,7 +90,6 @@ public class DoctorsDetails extends Fragment {
     private Button doctorEmail;
     private Button callButton;
     private Button writeReview;
-    private Button bookAppointment;
     private String phone;
     public static String doctorEmailId;
     public static String doctorId;
@@ -105,17 +97,13 @@ public class DoctorsDetails extends Fragment {
     public static String doctorFullName;
     public static String appointmentSpeciality;
     private NavController mNavController;
-    private ImageButton backButton;
     private Dialog mDialog;
     private ReviewViewModel mReviewViewModel;
     private ReviewDataModel review = new ReviewDataModel();
     private DoctorDataModel doctor = new DoctorDataModel();
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private TextView doctorName;
-    private ImageView cancel;
     private RatingBar reviewRating;
     private EditText reviewText;
-    private Button postReview;
     private TextView speciality;
     private static ProgressDialog myProgressDialog;
     private static DecimalFormat df = new DecimalFormat("0.0");
@@ -125,7 +113,6 @@ public class DoctorsDetails extends Fragment {
 
 
     public DoctorsDetails() {
-        // Required empty public constructor
     }
 
 
@@ -141,12 +128,12 @@ public class DoctorsDetails extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Trying with UI elements
-        doctorsDetailsContent = view.findViewById(R.id.doctors_details);
-        overviewButton = view.findViewById(R.id.overview);
+        ScrollView doctorsDetailsContent = view.findViewById(R.id.doctors_details);
+        Button overviewButton = view.findViewById(R.id.overview);
         overviewUnderlineButton = view.findViewById(R.id.overviewUnderline);
-        contactButton = view.findViewById(R.id.contact);
+        Button contactButton = view.findViewById(R.id.contact);
         contactUnderlineButton = view.findViewById(R.id.contactUnderline);
-        reviewButton = view.findViewById(R.id.reviews);
+        Button reviewButton = view.findViewById(R.id.reviews);
         reviewUnderlineButton = view.findViewById(R.id.reviewsUnderline);
         overviewContent = view.findViewById(R.id.overviewContent);
         contactContent = view.findViewById(R.id.contactContent);
@@ -157,32 +144,25 @@ public class DoctorsDetails extends Fragment {
         rating = view.findViewById(R.id.ratingValueDetailedDoctor);
         doctorImage = view.findViewById(R.id.DoctorImage);
         speciality = view.findViewById(R.id.specialty);
-
         aboutTitle = view.findViewById(R.id.aboutTitle);
         aboutContent = view.findViewById(R.id.aboutContent);
         educationTitle = view.findViewById(R.id.educationTitle);
         educationDegree1 = view.findViewById(R.id.educationDegree1);
         educationDegree1Description = view.findViewById(R.id.educationDegree1Description);
-        educationDegree2 = view.findViewById(R.id.educationDegree2);
-        educationDegree2Description = view.findViewById(R.id.educationDegree2Description);
         experienceTitle = view.findViewById(R.id.experienceTitle);
         experienceContent = view.findViewById(R.id.experienceContent);
-
         doctorLocation = view.findViewById(R.id.locationButton);
         doctorChat = view.findViewById(R.id.chatButton);
         doctorEmail = view.findViewById(R.id.emailButton);
         callButton = view.findViewById(R.id.callButton);
-
         writeReview = view.findViewById(R.id.writeReview);
+        Button bookAppointment = view.findViewById(R.id.bookAppointment);
+        ImageButton backButton = view.findViewById(R.id.backButtonToDoctors);
 
-        bookAppointment = view.findViewById(R.id.bookAppointment);
 
         mNavController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
-        backButton = view.findViewById(R.id.backButtonToDoctors);
-
         mDialog = new Dialog(getContext());
-
 
         ViewCompat.setLayoutDirection(doctorsDetailsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
@@ -195,68 +175,38 @@ public class DoctorsDetails extends Fragment {
         mDoctorsViewModel.getDoctors().observe(getViewLifecycleOwner(), new Observer<List<DoctorDataModel>>() {
             @Override
             public void onChanged(List<DoctorDataModel> doctorsList) {
-
                 // Retrieving the data model item from the list and updating the data
-                if (!isClickedFromBookmarks()) {
-                    DoctorDataModel doctor = doctorsList.get(position);
+//                if (!isClickedFromBookmarks()) {
+                DoctorDataModel doctor = doctorsList.get(position);
+                // Updating the UI of the Doctors details
+                firstName.setText(doctor.getDoctorFirstName());
+                lastName.setText(doctor.getDoctorLastName());
+                rating.setText(df.format(doctor.getRating()));
+                doctorImage.setImageBitmap(doctor.getDoctorImage());
+                aboutContent.setText(doctor.getAbout());
+                experienceContent.setText(doctor.getExperience());
+                educationDegree1.setText(doctor.getEducation());
+                speciality.setText(doctor.getSpecialty() + " ");
+                educationDegree1Description.setVisibility(View.GONE);
+                // Setting local variables
+                phone = doctor.getPhone();
+                longt = doctor.getLongt();
+                lat = doctor.getLat();
+                doctorEmailId = doctor.getEmail();
+                doctorId = doctor.getId();
+                gender = doctor.getGender();
+                doctorFullName = doctor.getDoctorFirstName() + " " + doctor.getDoctorLastName();
+                appointmentSpeciality = doctor.getSpecialty();
 
-//                    int reviewsNumber = doctor.getReviews().size();
-//
-//                    Toast.makeText(getContext(), "This doctor have "+reviewsNumber + " reviews", Toast.LENGTH_SHORT).show();
-                    // Updating the UI of the Doctors details
-                    firstName.setText(doctor.getDoctorFirstName());
-                    lastName.setText(doctor.getDoctorLastName());
-                    rating.setText(df.format(doctor.getRating()));
-                    doctorImage.setImageBitmap(doctor.getDoctorImage());
-                    aboutContent.setText(doctor.getAbout());
-                    experienceContent.setText(doctor.getExperience());
-                    educationDegree1.setText(doctor.getEducation());
-                    speciality.setText(doctor.getSpecialty());
-                    educationDegree1Description.setVisibility(View.GONE);
-                    educationDegree2.setVisibility(View.GONE);
-                    educationDegree2Description.setVisibility(View.GONE);
-                    phone = doctor.getPhone();
-                    longt = doctor.getLongt();
-                    lat = doctor.getLat();
-
-                    doctorEmailId = doctor.getEmail();
-                    doctorId = doctor.getId();
-                    gender = doctor.getGender();
-                    doctorFullName = "Dr. " + doctor.getDoctorFirstName() + " " + doctor.getDoctorLastName();
-                    appointmentSpeciality = doctor.getSpecialty();
-
-                    initRecycler();
-                }
 
                 mDoctorsViewModel.getAllDoctors();
-
-                // TODO: persist the book marks
-                if (isClickedFromBookmarks()) {
-                    positionOfBookmarked = getPositionOfBookMark();
-                    firstName.setText(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorFirstName());
-                    lastName.setText(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorLastName());
-                    rating.setText(Double.toString(doctorItemsBookmarked.get(positionOfBookmarked).getRating()));
-                    doctorImage.setImageBitmap(doctorItemsBookmarked.get(positionOfBookmarked).getDoctorImage());
-                    doctorEmailId = doctorItemsBookmarked.get(positionOfBookmarked).getEmail();
-
-
-                }
-
+                initRecycler();
 
             }
         });
 
         mReviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
-
-
-        // TODO: delay the call for the Reviews
-        mReviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
-
-//        Toast.makeText(getContext(), doctorEmailId, Toast.LENGTH_SHORT).show();
-
         mReviewViewModel.initReviews(doctorEmailId);
-        positionOfReview = mReviewViewModel.getPositionOfReview();
-
         mReviewViewModel.getReviews().observe(getViewLifecycleOwner(), new Observer<List<ReviewDataModel>>() {
             @Override
             public void onChanged(List<ReviewDataModel> reviewDataModels) {
@@ -281,29 +231,28 @@ public class DoctorsDetails extends Fragment {
 
 
         // updating the UI when you click on each tab of the doctor details
+        // updating the UI for Contact
         contactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Tabs UI
                 overviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 reviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 contactUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button));
-
+                // overview UI
                 overviewContent.setVisibility(View.GONE);
                 aboutTitle.setVisibility(View.GONE);
                 aboutContent.setVisibility(View.GONE);
                 educationTitle.setVisibility(View.GONE);
                 educationDegree1.setVisibility(View.GONE);
                 educationDegree1Description.setVisibility(View.GONE);
-                educationDegree2.setVisibility(View.GONE);
-                educationDegree2Description.setVisibility(View.GONE);
                 experienceTitle.setVisibility(View.GONE);
                 experienceContent.setVisibility(View.GONE);
-
+                // review UI
                 reviewContent.setVisibility(View.GONE);
                 writeReview.setVisibility(View.GONE);
                 mReviewRecycler.setVisibility(View.GONE);
-
-
+                // contact UI
                 contactContent.setVisibility(View.VISIBLE);
                 doctorLocation.setVisibility(View.VISIBLE);
                 doctorChat.setVisibility(View.VISIBLE);
@@ -313,33 +262,30 @@ public class DoctorsDetails extends Fragment {
 
             }
         });
-
+        // updating the UI for overview
         overviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // Tabs UI
                 overviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button));
                 contactUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 reviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
-
+                // overview UI
                 overviewContent.setVisibility(View.VISIBLE);
                 aboutTitle.setVisibility(View.VISIBLE);
                 aboutContent.setVisibility(View.VISIBLE);
                 educationTitle.setVisibility(View.VISIBLE);
                 educationDegree1.setVisibility(View.VISIBLE);
                 educationDegree1Description.setVisibility(View.VISIBLE);
-                educationDegree2.setVisibility(View.VISIBLE);
-                educationDegree2Description.setVisibility(View.VISIBLE);
                 experienceTitle.setVisibility(View.VISIBLE);
                 experienceContent.setVisibility(View.VISIBLE);
-
+                // contact UI
                 contactContent.setVisibility(View.GONE);
                 doctorLocation.setVisibility(View.GONE);
                 doctorChat.setVisibility(View.GONE);
                 doctorEmail.setVisibility(View.GONE);
                 callButton.setVisibility(View.GONE);
-
-
+                // review UI
                 reviewContent.setVisibility(View.GONE);
                 writeReview.setVisibility(View.GONE);
                 mReviewRecycler.setVisibility(View.GONE);
@@ -347,50 +293,47 @@ public class DoctorsDetails extends Fragment {
 
             }
         });
-
+        // updating the UI for review
         reviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Tabs UI
                 reviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button));
                 contactUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
                 overviewUnderlineButton.setBackground(getResources().getDrawable(R.drawable.button_light));
-
+                // review UI
                 reviewContent.setVisibility(View.VISIBLE);
                 writeReview.setVisibility(View.VISIBLE);
                 mReviewRecycler.setVisibility(View.VISIBLE);
-
+                // contact UI
                 contactContent.setVisibility(View.GONE);
                 doctorLocation.setVisibility(View.GONE);
                 doctorChat.setVisibility(View.GONE);
                 doctorEmail.setVisibility(View.GONE);
                 callButton.setVisibility(View.GONE);
-
+                // overview UI
                 overviewContent.setVisibility(View.GONE);
                 aboutTitle.setVisibility(View.GONE);
                 aboutContent.setVisibility(View.GONE);
                 educationTitle.setVisibility(View.GONE);
                 educationDegree1.setVisibility(View.GONE);
                 educationDegree1Description.setVisibility(View.GONE);
-                educationDegree2.setVisibility(View.GONE);
-                educationDegree2Description.setVisibility(View.GONE);
                 experienceTitle.setVisibility(View.GONE);
                 experienceContent.setVisibility(View.GONE);
                 calculateDoctorsReview();
             }
         });
 
-//        if (longt == 0 || lat == 0) {
-//            doctorLocation.setBackgroundResource(R.drawable.button_shadow);
-//        }
-
+        // doctor location button
         doctorLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (longt != 0 || lat != 0) {
-                    mNavController.navigate(R.id.action_doctorsDetails_to_doctorLocation);                }
+                    mNavController.navigate(R.id.action_doctorsDetails_to_doctorLocation);
+                }
             }
         });
-
+        // book appointment button
         bookAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -399,48 +342,28 @@ public class DoctorsDetails extends Fragment {
 
             }
         });
-
+        // back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mNavController.navigateUp();
             }
         });
-
+        // chat button
         doctorChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                mNavController.navigate(R.id.action_doctorsDetails_to_chat);
-
-                if (phone != null) {
+                if (phone != null && phone.length() > 11) {
                     PackageManager pm = getContext().getPackageManager();
-//                    try {
+                    String url = "https://api.whatsapp.com/send?phone=" + phone;
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
 
-
-                        String url = "https://api.whatsapp.com/send?phone="+phone;
-                        Intent i = new Intent(Intent.ACTION_VIEW);
-                        i.setData(Uri.parse(url));
-                        startActivity(i);
-//                        Intent waIntent = new Intent(Intent.ACTION_SEND);
-//                        waIntent.setType("text/plain");
-//                        String text = "YOUR TEXT HERE";
-//
-//                        PackageInfo info = pm.getPackageInfo("com.whatsapp", PackageManager.GET_META_DATA);
-//                        //Check if package exists or not. If not then code
-//                        //in catch block will be called
-//                        waIntent.setPackage("com.whatsapp");
-//
-//                        waIntent.putExtra(Intent.EXTRA_TEXT, text);
-//                        startActivity(Intent.createChooser(waIntent, "Share with"));
-
-//                    } catch (PackageManager.NameNotFoundException e) {
-//                        Toast.makeText(getContext(), "WhatsApp not Installed", Toast.LENGTH_SHORT)
-//                                .show();
-//                    }
                 }
             }
         });
-
+        // email button
         doctorEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -454,11 +377,11 @@ public class DoctorsDetails extends Fragment {
 
             }
         });
-
+        // call button
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (phone != null){
+                if (phone != null && (phone.length()) > 11) {
                     Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
                     startActivity(intent);
                 }
@@ -466,18 +389,15 @@ public class DoctorsDetails extends Fragment {
             }
         });
 
-
+        // write review button
         writeReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 openDialog();
-
             }
         });
 
-
-//        initRecycler();
+        // progress dialog
         myProgressDialog = new ProgressDialog(getContext());
         myProgressDialog.setProgressStyle(R.style.MyAlertDialogStyle);
         myProgressDialog.setCancelable(false);
@@ -501,53 +421,45 @@ public class DoctorsDetails extends Fragment {
     }
 
 
+    // Dialog open
     private void openDialog() {
 
         mDialog.setContentView(R.layout.write_review_dialoug);
-        doctorName = mDialog.findViewById(R.id.doctorNameInDialogue);
-        cancel = mDialog.findViewById(R.id.cancelReview);
+        TextView doctorName = mDialog.findViewById(R.id.doctorNameInDialogue);
+        ImageView cancel = mDialog.findViewById(R.id.cancelReview);
         reviewRating = mDialog.findViewById(R.id.rating);
         reviewText = mDialog.findViewById(R.id.reviewText);
-        postReview = mDialog.findViewById(R.id.postReview);
+        Button postReview = mDialog.findViewById(R.id.postReview);
 
         reviewRating.setRating(3.0f);
-        doctorName.setText("Dr. " + firstName.getText() + " " + lastName.getText());
+        doctorName.setText(firstName.getText() + " " + lastName.getText());
 
+        // post review button
         postReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (reviewText.getText().toString().equals("")) {
-
                     Toast.makeText(getContext(), "The Review have no content ", Toast.LENGTH_SHORT).show();
-
                 } else {
-
                     uploadReviews();
-
                 }
-
             }
         });
 
+        // cancel button
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDialog.dismiss();
-
-
             }
         });
-
         mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDialog.show();
 
 
     }
 
-    private void reviews(String email) {
-    }
-
+    // Loading reviews
     private void loadingReviews() {
 
         Handler myHandler;
@@ -556,15 +468,12 @@ public class DoctorsDetails extends Fragment {
 
         Log.d("Reviews", "testing if the variable will keep the eamil value");
 
-        // showing the Splash screen for two seconds then going to on boarding activity
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-//                Toast.makeText(getContext(), "Doctor email is  " + doctorEmailId , Toast.LENGTH_SHORT).show();
-
 
                 mReviewViewModel.initReviews(doctorEmailId);
-                positionOfReview = mReviewViewModel.getPositionOfReview();
+
                 mReviews = (ArrayList<ReviewDataModel>) mReviewViewModel.getReviews().getValue();
                 mReviewViewModel.getReviews().observe(getViewLifecycleOwner(), new Observer<List<ReviewDataModel>>() {
                     @Override
@@ -582,7 +491,7 @@ public class DoctorsDetails extends Fragment {
 
                         }
 
-                        if (phone == null) {
+                        if (phone == null || (phone.length()) < 8) {
 
                             callButton.setBackgroundResource(R.drawable.button_shadow);
                             doctorChat.setBackgroundResource(R.drawable.button_shadow);
@@ -599,30 +508,29 @@ public class DoctorsDetails extends Fragment {
         }, SPLASH_TIME_OUT);
     }
 
-
+    // upload review of doctor
+    //TODO: make the call from view model
     private void uploadReviews() {
 
         Log.d("Reviews", "Reviews method triggered");
-
         SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
-        String userEmail = prefs.getString("EMAIL", "");
-
+        String userEmail = prefs.getString("Email", "");
         review.setRating((int) reviewRating.getRating());
         review.setReviewText(reviewText.getText().toString());
         review.setDoctorEmail(doctorEmailId);
         review.setUserEmail(userEmail);
 
+        mReviewViewModel.addReview(review);
+
+        // uploading review
         db.collection("Reviews")
                 .document(userEmail + review.getDoctorEmail()).set(review);
-
         mDialog.dismiss();
-
-        Toast.makeText(getContext(), "Your Review been submitted and awaiting approval ", Toast.LENGTH_SHORT).show();
-
-//        calculateDoctorsReview();
 
     }
 
+    // calculate and update doctor reviews
+    //TODO: make the call from view model
     private void calculateDoctorsReview() {
 
         double numberOfReview = mReviews.size();
@@ -633,26 +541,8 @@ public class DoctorsDetails extends Fragment {
             reviewSum += (int) review.getRating();
         }
         averageReview = (reviewSum / numberOfReview);
-
-//        doctor.setDoctorFirstName((String) firstName.getText());
-//        doctor.setDoctorLastName((String) lastName.getText());
-//        doctor.setAbout((String) aboutContent.getText());
-//        doctor.setBookmark(false);
-//        doctor.setEducation((String) educationDegree1.getText());
-//        doctor.setEmail(doctorEmailId);
-//        doctor.setExperience((String) experienceContent.getText());
-//        doctor.setGender(gender);
-//        doctor.setRating(averageReview);
-//        doctor.setSpecialty((String) speciality.getText());
-//        db.collection("Doctors")
-//                .document(doctorEmailId).set(doctor);
-
-        db.collection("Doctors").document(doctorId).update("rating",averageReview);
-//        Toast.makeText(getContext(), "the Doctor average Review equals " + averageReview, Toast.LENGTH_SHORT).show();
-
+        db.collection("Doctors").document(doctorId).update("rating", averageReview);
         mDoctorsViewModel.changeRating(averageReview);
-
-
     }
 
     @Override

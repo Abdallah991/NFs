@@ -3,9 +3,12 @@ package com.fathom.nfs.DataModels;
 import java.util.ArrayList;
 
 public class ArticleCategoryDataModel {
-
-    // Categories are articles, videos, blogs and community
-
+    /**
+     * @class Article Category Data model
+     * @desription  Hold Article Category data
+     * @date 4 feb 2021
+     */
+    // Categories are articles, videos, blog and community
     private String articleCategory;
     private int categoryImage;
     private ArrayList<ArticleDataModel> articles;

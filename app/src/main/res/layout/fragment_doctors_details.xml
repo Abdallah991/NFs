@@ -32,14 +32,14 @@
                 android:elevation="1dp"
                 android:scaleType="fitXY"
                 android:background="@null"
-                android:src="@drawable/arrow_back">
+                android:src="@drawable/arrow_back_purple">
             </ImageButton>
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:layout_weight="8"
                 android:scaleType="fitXY"
-                android:src="@drawable/user"
+                android:src="@drawable/doctor1"
                 android:id="@+id/DoctorImage"/>
         </FrameLayout>
 
@@ -92,7 +92,7 @@
                             android:id="@+id/doctorFirstName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Dr. Khulood"
+                            android:text=""
                             android:layout_marginStart="20dp"
                             android:textColor="@color/colorPrimary"
                             android:textSize="20sp"
@@ -102,7 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="-10dp"
-                            android:text="Ebrahim"
+                            android:text=""
                             android:layout_marginStart="20dp"
                             android:textColor="@color/colorPrimary"
                             android:textSize="20sp"
@@ -115,7 +115,7 @@
                             android:background="#FEE4B7"
                             android:padding="8dp"
                             android:layout_marginTop="10dp"
-                            android:text="Psychiatrist "
+                            android:text=""
                             android:layout_marginStart="20dp"
                             android:textColor="@color/colorPrimary"
                             android:textSize="14sp"
@@ -154,7 +154,7 @@
                                 android:layout_marginTop="-6dp"
                                 android:gravity="start"
                                 android:padding="5dp"
-                                android:text="4.8"
+                                android:text=""
                                 android:textColor="@color/colorPrimary"
                                 android:textSize="16sp"
                                 android:textStyle="italic"
@@ -168,10 +168,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_gradient"
-                        android:text="Book Appointment"
+                        android:text="@string/book_appointment"
                         android:textAllCaps="false"
-                        android:layout_marginRight="50dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="40dp"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -195,7 +195,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:text="Overview"
+                android:text="@string/overview"
                 android:background="@color/white"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
@@ -207,7 +207,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Contact"
+                android:text="@string/contact"
                 android:background="@color/white"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
@@ -220,7 +220,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:text="Reviews"
+                android:text="@string/reviews"
                 android:background="@color/white"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
@@ -283,8 +283,8 @@
                 android:id="@+id/aboutTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="About"
-                android:layout_margin="20dp"
+                android:text="@string/about_title"
+                android:layout_margin="10dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 app:fontFamily="@font/poppins_regular"  />
@@ -292,8 +292,10 @@
                 android:id="@+id/aboutContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
-                android:layout_margin="20dp"
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/appGrey"
                 android:textSize="14sp"
                 app:fontFamily="@font/poppins_regular" />
@@ -301,8 +303,9 @@
                 android:id="@+id/educationTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Education"
-                android:layout_margin="20dp"
+                android:text="@string/education"
+                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 app:fontFamily="@font/poppins_regular"  />
@@ -310,59 +313,66 @@
                 android:id="@+id/educationDegree1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="B.cs in psychology with a minor in human Behiour "
-                android:layout_marginStart="20dp"
+                android:text=""
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/appGrey"
-                android:textSize="11sp"
+                android:textSize="14sp"
                 app:fontFamily="@font/poppins" />
             <TextView
                 android:id="@+id/educationDegree1Description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lorem Ipsum University "
-                android:layout_margin="20dp"
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/appGrey"
                 android:textSize="14sp"
                 android:textStyle="italic"
                 app:fontFamily="@font/poppins_light" />
-            <TextView
-                android:id="@+id/educationDegree2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="m.s in psychotherapy and cognitive Behavioral therapy "
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/appGrey"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                app:fontFamily="@font/poppins" />
-            <TextView
-                android:id="@+id/educationDegree2Description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lorem Ipsum University "
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/appGrey"
-                android:textSize="14sp"
-                android:textStyle="italic"
-                app:fontFamily="@font/poppins_light" />
+<!--            <TextView-->
+<!--                android:id="@+id/educationDegree2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text=""-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:textColor="@color/appGrey"-->
+<!--                android:textSize="11sp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:fontFamily="@font/poppins" />-->
+<!--            <TextView-->
+<!--                android:id="@+id/educationDegree2Description"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text=""-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:textColor="@color/appGrey"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textStyle="italic"-->
+<!--                app:fontFamily="@font/poppins_light" />-->
             <TextView
                 android:id="@+id/experienceTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Experience"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
+                android:text="@string/experience"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 app:fontFamily="@font/poppins_regular" />
+
             <TextView
                 android:id="@+id/experienceContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. "
-                android:layout_margin="20dp"
+                android:text=""
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:textColor="@color/appGrey"
                 android:textSize="14sp"
                 app:fontFamily="@font/poppins_regular" />
@@ -383,7 +393,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:background="@drawable/button_gradient"
-                android:text="Call"
+                android:text="@string/call"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -395,7 +405,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:background="@drawable/button_gradient"
-                android:text="Email"
+                android:text="@string/email"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -407,7 +417,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:background="@drawable/button_gradient"
-                android:text="Location"
+                android:text="@string/location"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -419,7 +429,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:background="@drawable/button_gradient"
-                android:text="Chat"
+                android:text="@string/chat"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -462,7 +472,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:background="@drawable/button_gradient"
-                android:text="Write a review"
+                android:text="@string/write_a_review"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"

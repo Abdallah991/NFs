@@ -14,6 +14,11 @@ import java.util.ArrayList;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewHolder> {
 
+    /**
+     * @class Review adapter
+     * @desription  list reviews in doctor profile (doctor-detailed) screen and tying the data to UI elements
+     * @date 4 feb 2021
+     */
     private ArrayList<ReviewDataModel> mReviews = new ArrayList<>();
     private Context mContext;
 

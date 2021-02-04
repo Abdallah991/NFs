@@ -24,6 +24,12 @@ import java.util.ArrayList;
 
 public class ChatListAdapter extends BaseAdapter {
 
+    /**
+     * @class chat list adapter
+     * @desription  list messages inside the chat
+     * the chatting feature will be implemented in future
+     * @date 4 feb 2021
+     */
     private DatabaseReference mDatabaseReference;
     private String displayName;
     private ArrayList<DataSnapshot> mDataSnapshotsList;

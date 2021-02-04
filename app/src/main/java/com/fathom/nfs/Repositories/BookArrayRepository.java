@@ -31,6 +31,12 @@ import java.util.List;
 
 public class BookArrayRepository {
 
+    /**
+     * @class Book Repository
+     * @desription  fetching books from backend
+     * the shop is currently offline
+     * @date 4 feb 2021
+     */
     // Creating one instance
     private static BookArrayRepository instance;
 

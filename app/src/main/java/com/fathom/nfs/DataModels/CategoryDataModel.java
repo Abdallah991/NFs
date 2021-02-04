@@ -5,7 +5,11 @@ import java.util.ArrayList;
 
 // this class is for the doctors category
 public class CategoryDataModel {
-
+    /**
+     * @class category data model
+     * @desription  Hold cart items
+     * @date 4 feb 2021
+     */
     private String category;
     private String categoryDescription;
     private int categoryMonster;

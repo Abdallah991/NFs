@@ -447,7 +447,7 @@ public class Home extends Fragment {
 
             if (mDoctors.isEmpty()) {
                 myProgressDialog = new ProgressDialog(getContext());
-                myProgressDialog.setProgressStyle(R.style.MyAlertDialogStyle);
+//                myProgressDialog.setProgressStyle(R.style.MyAlertDialogStyle);
                 myProgressDialog.setCancelable(false);
                 myProgressDialog.setMessage("Please Wait ...");
                 myProgressDialog.show();
@@ -643,9 +643,10 @@ public class Home extends Fragment {
                 // will be added when the shop is added
 //                k = mShopItems.size();
 
-
-                homeDoctors.subList(3, i).clear();
-                homeArticles.subList(3, j).clear();
+                if(mDoctors.size() > 2) {
+                    homeDoctors.subList(3, i).clear();
+                    homeArticles.subList(3, j).clear();
+                }
                 // will be added when the shop is added
 //                homeShopItems.subList(3, k).clear();
 
@@ -658,6 +659,9 @@ public class Home extends Fragment {
 
                 myProgressDialog.dismiss();
                 setUpDisplayName();
+                mDoctorsViewModel.getUserBookmarks(user, getContext());
+                mArticleViewModel.getUserBookmarks(user, getContext());
+
             }
         }, SPLASH_TIME_OUT);
     }

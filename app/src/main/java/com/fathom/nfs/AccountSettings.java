@@ -57,11 +57,17 @@ import static android.content.Context.MODE_PRIVATE;
 import static com.fathom.nfs.SignUpActivity.USER;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class AccountSettings extends Fragment {
 
+    /**
+     * @class Account Settings
+     * @desription  Change user profile image
+     * change user first name, last name, password
+     * @date 4 feb 2021
+     */
+
+    // declaring variables
     private ConstraintLayout accountSettingsContent;
     private ImageView userImage;
     private TextView editProfile;
@@ -73,7 +79,7 @@ public class AccountSettings extends Fragment {
     private Button confirmButton;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private UserDataModel user = new UserDataModel();
-    private final String TAG = "Account";
+    private final String TAG = "ACCOUNT";
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
     private FirebaseUser mFirebaseUser;
@@ -102,6 +108,7 @@ public class AccountSettings extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // linking variables to UI elements
         userImage = view.findViewById(R.id.userImage);
         editProfile = view.findViewById(R.id.editAccountSettings);
         firstName = view.findViewById(R.id.firstNameAccount);
@@ -115,35 +122,34 @@ public class AccountSettings extends Fragment {
         mDialog = new Dialog(getContext());
         monsterDialog = new Dialog(getContext());
 
+        // declaring backend variables
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
-        // naming the path as email
+        // path of the image is the email
         SharedPreferences prefs = getActivity().getSharedPreferences(USER, MODE_PRIVATE);
         String docName = prefs.getString("EMAIL", "No name");
-
         userImageRef = storageRef.child(docName+"ProfileImage.jpeg");
 
 
+        // accounting for the side menu to be on the right side
         ViewCompat.setLayoutDirection(accountSettingsContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
-        confirmPassword.setVisibility(View.GONE);
-        confirmButton.setVisibility(View.GONE);
 
+        // pull the data from the backend
         pullData();
         getImage();
 
-        firstName.setEnabled(false);
-        lastName.setEnabled(false);
-        email.setEnabled(false);
-        password.setEnabled(false);
+        // disabling fields from editing
+        disableProfileFields();
 
-
+        // edit profile functionality
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 if (editProfile.getText().toString().equals("Edit")) {
+                    // enabling fields to be editable
                     firstName.setEnabled(true);
                     lastName.setEnabled(true);
                     email.setEnabled(true);
@@ -152,16 +158,19 @@ public class AccountSettings extends Fragment {
                     confirmButton.setVisibility(View.VISIBLE);
                     editProfile.setText("Edit photo");
                 } else if (editProfile.getText().toString().equals("Edit photo")) {
+                    // open dialog to upload photo
                     openDialog();
                     editProfile.setText("Edit");
                 }
             }
         });
 
+        // confirm button functionality
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                // Adjusting shared preference fields
                 UserDataModel user = new UserDataModel();
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(USER , Context.MODE_PRIVATE).edit();
                 editor.putString("Email", email.getText().toString());
@@ -169,6 +178,8 @@ public class AccountSettings extends Fragment {
                 editor.putString("LastName", lastName.getText().toString());
                 editor.putString("Password", password.getText().toString());
                 editor.apply();
+                // adjusting the user data model
+                //TODO: Adding the changes to the view model
                 user.setFirstName(firstName.getText().toString());
                 user.setLastName(lastName.getText().toString());
                 user.setEmail(email.getText().toString());
@@ -184,6 +195,8 @@ public class AccountSettings extends Fragment {
 
                 else if (password.getText().toString().equals(confirmPassword.getText().toString())
                         && password.getText().toString().length() >= 6) {
+                    // uploading to the backend
+                    // TODO: This function should be in the user repository
                     db.collection("Users")
                             .document(user.getEmail()).set(user);
 
@@ -194,17 +207,15 @@ public class AccountSettings extends Fragment {
 
                 uploadUserImage();
 
-                firstName.setEnabled(false);
-                lastName.setEnabled(false);
-                email.setEnabled(false);
-                password.setEnabled(false);
-                confirmPassword.setVisibility(View.GONE);
-                confirmButton.setVisibility(View.GONE);
+                // disabling and hiding the respective fields fields
+                disableProfileFields();
 
             }
         });
     }
 
+    // change password for the user
+    // TODO: this function should be in a service
     private void changePassword() {
 
         String newPassword = password.getText().toString();
@@ -223,6 +234,7 @@ public class AccountSettings extends Fragment {
     }
 
 
+    // pulling the data from the view model
     private void pullData() {
 
         mUserViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
@@ -257,12 +269,15 @@ public class AccountSettings extends Fragment {
         });
     }
 
+    // open gallery to pick an image
     private void openGallery()
     {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    // uploading the user new image
+    //TODO: the call to the backend should be in user repository
     private void uploadUserImage() {
 
         userImageRef = storageRef.child(user.getEmail()+"ProfileImage.jpeg");
@@ -293,6 +308,7 @@ public class AccountSettings extends Fragment {
 
     }
 
+    // getting the image selected from the gallery
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -305,6 +321,7 @@ public class AccountSettings extends Fragment {
 
     }
 
+    // open dialog to upload or select photo
     private void openDialog() {
 
         ImageView selectedImage;
@@ -318,6 +335,7 @@ public class AccountSettings extends Fragment {
         uploadUserPhoto = mDialog.findViewById(R.id.uploadImage);
         selectMonster = mDialog.findViewById(R.id.selectMonster);
 
+        // select photo from gallery
         uploadUserPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -325,6 +343,7 @@ public class AccountSettings extends Fragment {
             }
         });
 
+        // select monster
         selectMonster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -332,16 +351,18 @@ public class AccountSettings extends Fragment {
             }
         });
 
+        // click cancel
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDialog.dismiss();
-                firstName.setEnabled(false);
-                lastName.setEnabled(false);
-                email.setEnabled(false);
-                password.setEnabled(false);
-                confirmPassword.setVisibility(View.GONE);
-                confirmButton.setVisibility(View.GONE);
+                disableProfileFields();
+//                firstName.setEnabled(false);
+//                lastName.setEnabled(false);
+//                email.setEnabled(false);
+//                password.setEnabled(false);
+//                confirmPassword.setVisibility(View.GONE);
+//                confirmButton.setVisibility(View.GONE);
 
             }
         });
@@ -353,6 +374,7 @@ public class AccountSettings extends Fragment {
     }
 
 
+    // get the image from view model
     private void getImage () {
 
         mUserViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
@@ -368,6 +390,8 @@ public class AccountSettings extends Fragment {
         });
     }
 
+    // monster dialog implementation
+    //TODO: this function is terrible XD
     private void openMonsterDialog() {
 
         mDialog.dismiss();
@@ -530,6 +554,7 @@ public class AccountSettings extends Fragment {
         });
 
 
+        // confirm monster button
         confirmMonster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -539,16 +564,12 @@ public class AccountSettings extends Fragment {
             }
         });
 
+        // confirm monster button
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 monsterDialog.dismiss();
-                firstName.setEnabled(false);
-                lastName.setEnabled(false);
-                email.setEnabled(false);
-                password.setEnabled(false);
-                confirmPassword.setVisibility(View.GONE);
-                confirmButton.setVisibility(View.GONE);
+                disableProfileFields();
 
             }
         });
@@ -556,7 +577,18 @@ public class AccountSettings extends Fragment {
         monsterDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         monsterDialog.show();
 
+    }
 
+    private void disableProfileFields() {
+        firstName.setEnabled(false);
+        lastName.setEnabled(false);
+        email.setEnabled(false);
+        password.setEnabled(false);
+        confirmPassword.setVisibility(View.GONE);
+        confirmButton.setVisibility(View.GONE);
+    }
+
+    private void enableProfileFields() {
 
     }
 }

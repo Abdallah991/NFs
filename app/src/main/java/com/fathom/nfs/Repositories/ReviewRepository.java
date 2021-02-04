@@ -21,6 +21,11 @@ import static com.fathom.nfs.DoctorsDetails.doctorEmailId;
 
 public class ReviewRepository {
 
+    /**
+     * @class Review Repository
+     * @desription  fetching reviews from the backend
+     * @date 4 feb 2021
+     */
     // Creating one instance
     private static ReviewRepository instance;
     private ArrayList<ReviewDataModel> mReviews = new ArrayList<>();

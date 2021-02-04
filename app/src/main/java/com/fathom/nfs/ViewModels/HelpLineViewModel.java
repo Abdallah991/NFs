@@ -13,6 +13,11 @@ import java.util.List;
 
 public class HelpLineViewModel extends ViewModel {
 
+    /**
+     * @class Helpline View model
+     * @desription  setting helplines as live data
+     * @date 4 feb 2021
+     */
     // Live data that can be changed
     private MutableLiveData<List<HelpLinesDataModel>> mHelpLines;
     private HelpLineRepository mRepository;

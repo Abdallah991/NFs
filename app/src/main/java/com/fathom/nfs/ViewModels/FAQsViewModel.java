@@ -11,6 +11,11 @@ import java.util.List;
 
 public class FAQsViewModel extends ViewModel {
 
+    /**
+     * @class FAQ View model
+     * @desription  setting FAQ as live data
+     * @date 4 feb 2021
+     */
     private MutableLiveData<List<FAQsDataModel>> mFAQs;
     private FAQsRepository mRepository;
     private int positionOfItems;

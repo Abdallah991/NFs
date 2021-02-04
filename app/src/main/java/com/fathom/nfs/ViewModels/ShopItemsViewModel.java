@@ -10,6 +10,12 @@ import java.util.List;
 
 public class ShopItemsViewModel extends ViewModel {
 
+    /**
+     * @class shop item View model
+     * @desription  setting shop items as live data
+     *  the shop is currently offline
+     * @date 4 feb 2021
+     */
     private MutableLiveData<List<ShopItemDataModel>> mShopItems;
     private ShopItemsRepository mRepository;
     private int positionOfItems;

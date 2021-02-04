@@ -22,8 +22,16 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fathom.nfs.DataModels.BookmarkDataModel.articleItemsBookmarked;
+import static com.fathom.nfs.DataModels.BookmarkDataModel.doctorItemsBookmarked;
+
 public class ArticlesRepository {
 
+    /**
+     * @class Articles Repository
+     * @desription  fetching Articles from backend
+     * @date 4 feb 2021
+     */
     // Creating one instance
     private static ArticlesRepository instance;
     private ArrayList<ArticleDataModel> mArticles = new ArrayList<>();
@@ -35,6 +43,9 @@ public class ArticlesRepository {
 
 
 
+
+
+    // getting static instance
     public static ArticlesRepository getInstance() {
 
         if (instance == null) {
@@ -78,7 +89,10 @@ public class ArticlesRepository {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                     if (mArticles.size() <= task.getResult().size()) {
-                                        mArticles.add(document.toObject(ArticleDataModel.class));
+                                        ArticleDataModel article = document.toObject(ArticleDataModel.class);
+                                        article.setId(document.getId());
+                                        mArticles.add(article);
+
                                     }
 
                                     Log.d(TAG, "Task size " + task.getResult().size());
@@ -105,16 +119,15 @@ public class ArticlesRepository {
 
     }
 
+    // getting article image
     private void getImage (QuerySnapshot query) {
 
 
 
+        // validating the image path
         for (int position = 0; position < query.size(); position++) {
 
-            // old way of getting the image
-//            userImageRef = storageRef.child(mArticles.get(position).getArticleTitle()+".png");
-
-            userImageRef = storageRef.child(mArticles.get(position).getImagePath());
+            validatingImageReference(position);
 
 
 
@@ -142,4 +155,25 @@ public class ArticlesRepository {
 
 
     }
+
+    // validating image reference
+    private void validatingImageReference(int position) {
+
+
+        if (mArticles.get(position).getImagePath() == null || mArticles.get(position).getImagePath().equals("")) {
+            userImageRef = storageRef.child(mArticles.get(position).getArticleTitle() + ".jpg");
+        } else {
+            userImageRef = storageRef.child(mArticles.get(position).getImagePath());
+        }
+    }
+
+    // bookmark and un-bookmark articles
+    public void saveBookmarkedArticles(String email) {
+        List<String> articleIDs = new ArrayList<String>();
+        for (ArticleDataModel articleDataModel: articleItemsBookmarked) {
+            articleIDs.add(articleDataModel.getId());
+        }
+        db.collection("Users").document(email).update("bookmarkedArticles",articleIDs );
+    }
+
 }

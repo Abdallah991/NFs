@@ -27,6 +27,11 @@ import static com.fathom.nfs.Articles.showVideos;
 
 public class HoizontalArticleAdapter extends RecyclerView.Adapter<HoizontalArticleAdapter.ArticleCardsHolder> {
 
+    /**
+     * @class Horizontal article adapter
+     * @desription  list article categories and tying the data to UI elements in articles section
+     * @date 4 feb 2021
+     */
     private ArrayList<ArticleCategoryDataModel> mArticleCategories;
     private Context mContext;
     private int actionArticleId;

@@ -21,6 +21,11 @@ import java.util.ArrayList;
 public class HorizontalRecyclerView extends RecyclerView.Adapter<HorizontalRecyclerView.ViewHolder> {
 
 
+    /**
+     * @class Horizontal adapter
+     * @desription  list categories in home screen and tying the data to UI elements
+     * @date 4 feb 2021
+     */
     private static final String TAG = "Recycler View";
 
     // Declaring variables

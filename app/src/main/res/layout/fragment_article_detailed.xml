@@ -28,7 +28,7 @@
             android:elevation="1dp"
             android:scaleType="fitXY"
             android:background="@null"
-            android:src="@drawable/arrow_back">
+            android:src="@drawable/arrow_back_purple">
         </ImageButton>
 
         <ImageView

@@ -25,6 +25,12 @@ import java.util.List;
 
 public class ShopItemsRepository {
 
+    /**
+     * @class shop item Repository
+     * @desription  fetching shop items from the backend
+     * the shop is currently offline
+     * @date 4 feb 2021
+     */
     // Creating one instance
     private static ShopItemsRepository instance;
     private String TAG = "MVVM";
@@ -98,7 +104,7 @@ public class ShopItemsRepository {
 
         }
 
-
+        // getting image
     private void getImage (QuerySnapshot query) {
 
 

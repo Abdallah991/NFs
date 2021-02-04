@@ -15,6 +15,11 @@ import java.util.List;
 
 public class AppointmentViewModel extends ViewModel {
 
+    /**
+     * @class Appointment View model
+     * @desription  setting appointments as live data
+     * @date 4 feb 2021
+     */
     private MutableLiveData<List<AppointmentDataModel>> mAppointments;
     private AppointmentRepository mRepository;
     private int positionOfItems;
@@ -29,6 +34,7 @@ public class AppointmentViewModel extends ViewModel {
         return positionOfItems;
     }
 
+    // getting appointments from repo
     public void initAppointments(String email){
 
         Log.d("MVVM"," init in ViewModel called.");
@@ -50,7 +56,7 @@ public class AppointmentViewModel extends ViewModel {
 
 
     // Delete appointment from the backend
-    // Remove the appointment from the mAppointments
+    // Remove the appointment from the live data
     public void deleteAppointment(AppointmentDataModel appointment) {
         Log.d("APPOINT","Delete appointment triggered!");
         mRepository.deleteAppointment(appointment);

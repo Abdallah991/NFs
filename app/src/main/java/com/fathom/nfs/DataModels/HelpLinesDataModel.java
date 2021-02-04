@@ -3,6 +3,11 @@ package com.fathom.nfs.DataModels;
 
 public class HelpLinesDataModel  {
 
+    /**
+     * @class helplines data model
+     * @desription  Hold helpline data
+     * @date 4 feb 2021
+     */
     private int helpLineImage;
     private int descriptionImage;
     private String helpLineDescription;

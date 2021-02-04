@@ -19,6 +19,13 @@ import java.util.ArrayList;
 import static com.fathom.nfs.DataModels.CartDataModel.shoppingCartItems;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
+
+    /**
+     * @class cart adapter
+     * @desription  list shop items inside the cart
+     * the shop is currently offline
+     * @date 4 feb 2021
+     */
     // Declare variables
     private ArrayList<ShopItemDataModel> mCartItems = new ArrayList<>();
     private Context mContext;
@@ -54,8 +61,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
                         .setTitle("Delete Item")
                         .setMessage("Are you sure you want to delete this Item?")
 
-                        // Specifying a listener allows you to take an action before dismissing the dialog.
-                        // The dialog is automatically dismissed when a dialog button is clicked.
+
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // Continue with delete operation
@@ -64,7 +70,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
                             }
                         })
 
-                        // A null listener allows the button to dismiss the dialog and take no further action.
                         .setNegativeButton(android.R.string.no, null)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();

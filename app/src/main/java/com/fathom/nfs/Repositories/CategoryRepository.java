@@ -12,7 +12,11 @@ import java.util.List;
 
 public class CategoryRepository {
 
-
+    /**
+     * @class category Repository
+     * @desription  fetching categories
+     * @date 4 feb 2021
+     */
     // Creating one instance
     private static CategoryRepository instance;
 

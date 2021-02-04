@@ -5,6 +5,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fathom.nfs.SignUpActivity.USER;
+
 public class OnBoarding extends AppCompatActivity {
 
     // init member variables
@@ -40,6 +43,7 @@ public class OnBoarding extends AppCompatActivity {
     private ImageButton btnNext;
     private TextView skipView;
     private int position = 0;
+    public static String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +95,16 @@ public class OnBoarding extends AppCompatActivity {
             }
         });
 
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(USER, MODE_PRIVATE);
+        userEmail = prefs.getString("Email", "");
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
 
             String name = user.getDisplayName();
             boolean emailVerified = user.isEmailVerified();
+
+
 
 
 //            Toast.makeText(getApplicationContext(), name +" "+ emailVerified, Toast.LENGTH_SHORT).show();

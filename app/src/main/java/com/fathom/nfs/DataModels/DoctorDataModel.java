@@ -6,6 +6,11 @@ import java.util.ArrayList;
 
 public class DoctorDataModel {
 
+    /**
+     * @class category data model
+     * @desription  Hold cart items
+     * @date 4 feb 2021
+     */
     private String doctorFirstName;
     private String doctorLastName;
     private String email;

@@ -27,15 +27,18 @@ import static com.fathom.nfs.DataModels.BookmarkDataModel.setPositionOfBookMark;
 
 public class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.DoctorHolder> {
 
+    /**
+     * @class doctor adapter
+     * @desription  list doctors and tying to the UI elements
+     * @date 4 feb 2021
+     */
 private static final String TAG = "Doctors Adapter";
 
 // Declare variables
 private ArrayList<DoctorDataModel> mDoctors;
 private Context mContext;
 private NavController mNavController;
-// The navigation action Id constant
 private int actionId;
-// Injecting the View Model
 private DoctorsViewModel mModel;
 
 
@@ -52,28 +55,6 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
         mModel = model;
 
         }
-//    public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
-//                          Context context,
-//                          NavController navController,
-//                          int action,
-//                          DoctorsViewModel model,
-//                          boolean bookmarks,
-//                          ArrayList<DoctorDataModel> DoctorsBookmarked) {
-//        mDoctors = DoctorsDetails;
-//        mContext = context;
-//        mNavController = navController;
-//        actionId = action;
-//        mModel = model;
-//        bookmarkpage = bookmarks;
-//        mDoctorsBookmarks = DoctorsBookmarked;
-//
-////        for (DoctorDataModel doctor : DoctorsDetails) {
-////            if(doctor.isBookmark()) {
-////                mDoctorsBookmarks.add(doctor);
-////            }
-////        }
-//
-//    }
 
 
 
@@ -88,6 +69,7 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
         return new DoctorHolder(view);
     }
 
+    // Setting the values of items in the list
     @Override
     public void onBindViewHolder(@NonNull final DoctorHolder holder, final int position) {
 
@@ -101,34 +83,32 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
             holder.doctorImage.setImageBitmap(mDoctors.get(position).getDoctorImage());
 
 
+            // card click implementation
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                     mNavController.navigate(actionId);
                     mModel.selectDoctor(mDoctors, position);
-//                    mModel.initDoctors();
 
             }
         });
 
+        // bookmark click implementation
         holder.bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mDoctors.get(position).isBookmark()){
                     mModel.unBookmarkItem(mDoctors.get(position));
                     holder.bookmark.setImageResource(R.drawable.bookmark_image);
-//                    mModel.saveBookmarkedDoctors(mContext);
-//                    mDoctors.get(position).setBookmark(false);
-//                    doctorItemsBookmarked.remove(mDoctors.get(position));
+                    mModel.saveBookmarkedDoctors();
 
 
                 } else if (!mDoctors.get(position).isBookmark()){
                     mModel.bookmarkItem(mDoctors.get(position));
                     holder.bookmark.setImageResource(R.drawable.bookmarked);
-//                    mModel.saveBookmarkedDoctors(mContext);
-//                    mDoctors.get(position).setBookmark(true);
-//                    doctorItemsBookmarked.add(mDoctors.get(position));
+                    mModel.saveBookmarkedDoctors();
+
                 }
             }
         });
@@ -136,10 +116,7 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
             if (mDoctors.get(position).isBookmark()) {
 
                 holder.bookmark.setImageResource(R.drawable.bookmarked);
-
         }
-
-
 
     }
 
@@ -147,12 +124,11 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
     public int getItemCount() {
 
 
-        Log.d("DOCTOR", "bookmark have been removed" + mDoctors.size());
+        Log.d(TAG, "bookmark have been removed" + mDoctors.size());
         return mDoctors.size();
-
-
     }
 
+    //  Tying to the UI elements in the list item
     public class DoctorHolder extends RecyclerView.ViewHolder{
         CardView card;
         TextView firstName;
@@ -164,7 +140,6 @@ public DoctorsAdapter(ArrayList<DoctorDataModel> DoctorsDetails,
         public DoctorHolder (View itemView){
             super(itemView);
 
-            // binding the views with the list items
             card = itemView.findViewById(R.id.doctorsCard);
             firstName = itemView.findViewById(R.id.doctorFirstName);
             lastName = itemView.findViewById(R.id.doctorLastName);

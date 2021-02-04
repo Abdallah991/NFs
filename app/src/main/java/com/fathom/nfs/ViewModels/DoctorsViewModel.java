@@ -1,41 +1,46 @@
 package com.fathom.nfs.ViewModels;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.fathom.nfs.DataModels.DoctorDataModel;
-import com.fathom.nfs.MainActivity;
+import com.fathom.nfs.DataModels.UserDataModel;
 import com.fathom.nfs.Repositories.DoctorsRepository;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.Context.MODE_PRIVATE;
 import static com.fathom.nfs.DataModels.BookmarkDataModel.doctorItemsBookmarked;
 import static com.fathom.nfs.DoctorsDetails.doctorEmailId;
+import static com.fathom.nfs.OnBoarding.userEmail;
 
 public class DoctorsViewModel extends ViewModel {
 
+    /**
+     * @class doctor View model
+     * @desription  setting doctors arrays as live data
+     * @date 4 feb 2021
+     */
     private MutableLiveData<List<DoctorDataModel>> mDoctors;
     private DoctorsRepository mRepository;
     private int positionOfItems;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private MutableLiveData<UserDataModel> User = new MutableLiveData<>();
+    private ArrayList<DoctorDataModel> doctorsBookmarked = new ArrayList<>();
+
+
 
     // select the data list and pass the position of list item
     public void selectDoctor (List Items, int position) {
 
         mDoctors.setValue(Items);
         positionOfItems = position;
-        // To hold the doctors to the original value
-//        mDoctors = mRepository.getDoctors();
+
     }
 
     // Getting the position of the item in the list selected
@@ -56,6 +61,7 @@ public class DoctorsViewModel extends ViewModel {
 
         mRepository = DoctorsRepository.getInstance();
         mDoctors = mRepository.getDoctors();
+
     }
 
     public void getAllDoctors() {
@@ -69,10 +75,10 @@ public class DoctorsViewModel extends ViewModel {
         return mDoctors;
     }
 
+    // Change the rating of the doctor
     public void changeRating(double  newRating) {
         ArrayList<DoctorDataModel> doctors = new ArrayList<>();
         for (DoctorDataModel doctor: mDoctors.getValue()) {
-
             if (doctor.getEmail().equals(doctorEmailId)) {
                 doctor.setRating(newRating);
             }
@@ -83,6 +89,7 @@ public class DoctorsViewModel extends ViewModel {
 
     }
 
+    // bookmark doctor
     public void bookmarkItem(DoctorDataModel doctor) {
         ArrayList<DoctorDataModel> doctors = new ArrayList<>();
         for (DoctorDataModel d: mDoctors.getValue()) {
@@ -97,7 +104,7 @@ public class DoctorsViewModel extends ViewModel {
 
 
     }
-
+    // un-bookmark doctor
     public void unBookmarkItem(DoctorDataModel doctor) {
         ArrayList<DoctorDataModel> doctors = new ArrayList<>();
         for (DoctorDataModel d: mDoctors.getValue()) {
@@ -115,46 +122,41 @@ public class DoctorsViewModel extends ViewModel {
 
     }
 
+    // write bookmarked doctor to the backend
+    public void saveBookmarkedDoctors() {
 
-    public void saveBookmarkedDoctors(Context context) {
-        SharedPreferences shared = context.getSharedPreferences("doctorBookmarked", MODE_PRIVATE);
-        SharedPreferences.Editor editor = shared.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(doctorItemsBookmarked);
-        editor.putString("doctors", json);
-//        doctorsFromShared = loadBookmarkedDoctors(context) ;
-        String json1 = shared.getString("doctors", null);
-        Type type = new TypeToken<ArrayList<DoctorDataModel>>() {}.getType();
-        ArrayList<DoctorDataModel> doctorsFromShared = new ArrayList<>();
-        doctorsFromShared = gson.fromJson(json1, type);
-        Toast.makeText(context, doctorsFromShared.toString()+"", Toast.LENGTH_SHORT).show();
-
-    }
-
-    public void loadBookmarkedDoctors(Context context) {
-        SharedPreferences shared = context.getSharedPreferences("doctorBookmarked", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = shared.getString("doctors", null);
-        Type type = new TypeToken<ArrayList<DoctorDataModel>>() {}.getType();
-        doctorItemsBookmarked = gson.fromJson(json, type);
-        if(doctorItemsBookmarked == null) {
-            doctorItemsBookmarked = new ArrayList<>();
+        if (!(userEmail.isEmpty())) {
+            mRepository.saveBookmarkedDoctors(userEmail);
         }
-//        return doctorItemsBookmarked;
+
     }
 
-//    public ArrayList<DoctorDataModel> getBookmarkedDoctors() {
-//
-//        ArrayList<DoctorDataModel> doctors = new ArrayList<>();
-//
-//        for (DoctorDataModel d: mDoctors.getValue()) {
-//            if (d.isBookmark()) {
-//                doctors.add(d);
-//            }
-//        }
-////        bookmarkedDoctors.setValue(doctors);
-//
-//        return doctors;
-//    }
+
+
+
+
+    // persist the doctor bookmarks
+    public void getUserBookmarks(UserDataModel user, Context context) {
+
+                ArrayList<String> bookmarkedDoctors = new ArrayList<>();
+                bookmarkedDoctors = user.getBookmarkedDoctors();
+                doctorsBookmarked = (ArrayList<DoctorDataModel>) mDoctors.getValue();
+                if(bookmarkedDoctors != null) {
+                    for (DoctorDataModel doctor : doctorsBookmarked) {
+                        for (String id : bookmarkedDoctors) {
+
+                            if (id.equals(doctor.getId())) {
+                                doctor.setBookmark(true);
+                                doctorItemsBookmarked.add(doctor);
+
+                            }
+                        }
+                    }
+
+                    mDoctors.setValue(doctorsBookmarked);
+                }
+
+    }
+
 
 }

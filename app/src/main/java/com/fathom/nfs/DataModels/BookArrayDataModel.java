@@ -5,6 +5,11 @@ import java.util.List;
 
 public class BookArrayDataModel extends ShopItemDataModel{
 
+    /**
+     * @class Book array data model
+     * @desription  Hold book arrays
+     * @date 4 feb 2021
+     */
     // depends on data received
     private ArrayList<BookRowDataModel> booksArray;
 

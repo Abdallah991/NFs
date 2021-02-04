@@ -11,6 +11,12 @@ import java.util.List;
 
 public class BookArrayViewModel  extends ViewModel {
 
+    /**
+     * @class book array View model
+     * @desription  setting book arrays as live data
+     * the shop is currently offline
+     * @date 4 feb 2021
+     */
     private MutableLiveData<List<BookRowDataModel>> mBookArrays;
     private MutableLiveData<List<ShopItemDataModel>> mBooks;
     private BookArrayRepository mRepository;

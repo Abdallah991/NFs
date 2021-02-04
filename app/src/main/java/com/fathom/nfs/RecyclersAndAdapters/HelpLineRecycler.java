@@ -20,6 +20,11 @@ import java.util.ArrayList;
 
 public class HelpLineRecycler extends RecyclerView.Adapter<HelpLineRecycler.ItemHolder> {
 
+    /**
+     * @class Helpline adapter
+     * @desription  list Helplines and tying the data to UI elements
+     * @date 4 feb 2021
+     */
     private static final String TAG = "HelpLineRecycler";
 
     // Declare variables

@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void persistImage() {
 
-try {
+
     mUserViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     mUserViewModel.initUser(getApplicationContext());
 
@@ -174,17 +174,19 @@ try {
         @Override
         public void onChanged(UserDataModel userDataModel) {
             user = userDataModel;
+            try {
             userName.setText(userDataModel.getFirstName());
-            accountType.setText(userDataModel.getAccountType() + "");
+            } catch (Exception e) {
+                logout();
+
+
+            }
+            accountType.setText("");
             loadingImage(user);
 
         }
     });
-} catch (Exception e) {
-     logout();
 
-
-}
     }
 
     // Setting Up One Time Navigation
@@ -321,7 +323,7 @@ try {
 
     private void logout() {
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         FirebaseAuth.getInstance().signOut();
 
 

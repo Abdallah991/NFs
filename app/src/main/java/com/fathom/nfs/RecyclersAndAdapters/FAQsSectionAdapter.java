@@ -16,6 +16,11 @@ import java.util.ArrayList;
 
 public class FAQsSectionAdapter extends RecyclerView.Adapter<FAQsSectionAdapter.QuestionHolder> {
 
+    /**
+     * @class FAQ section adapter
+     * @desription  list FAQ questions and answers and tying the data to UI elements in FAQ detailed list
+     * @date 4 feb 2021
+     */
     private ArrayList<QuestionDataModel> mQuestions;
     private Context mContext;
 

@@ -14,6 +14,7 @@ public class ArticleDataModel {
     private String articleType;
     private String authorEducation;
     private String imagePath;
+    private String id;
 
 
     public ArticleDataModel(int imageUrl, String articleTitle, String authorName) {
@@ -107,5 +108,13 @@ public class ArticleDataModel {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,8 +13,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
     private UserDataModel user = new UserDataModel();
     public static final String USER = "User";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ProgressBar myProgressDialog;
 
 
 
@@ -66,9 +70,8 @@ public class SignUpActivity extends AppCompatActivity {
         lastName = findViewById(R.id.lastName);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+        myProgressDialog = findViewById(R.id.progressBar1);
         mAuth = FirebaseAuth.getInstance();
-
-
 
         // go back to Login Activity
         login.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +92,12 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+//                myProgressDialog.(false);
+//                myProgressDialog.setMessage("Please Wait ...");
+//                myProgressDialog.show();
                 SharedPreferences.Editor editor = getSharedPreferences(USER ,Context.MODE_PRIVATE).edit();
-                editor.putString("Email", email.getText().toString());
+                editor.putString("Email", email.getText().toString().toLowerCase());
                 editor.putString("FirstName", firstName.getText().toString());
                 editor.putString("LastName", lastName.getText().toString());
                 editor.putString("Password", password.getText().toString());
@@ -102,6 +109,10 @@ public class SignUpActivity extends AppCompatActivity {
                         && isPasswordValid(password.getText().toString())) {
                     SignUp();
                     uploadUser();
+
+                    myProgressDialog.setVisibility(View.VISIBLE);
+//                    getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 //                    uploadUser();
 //                    signUp.setEnabled(false);
 
@@ -131,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void SignUp() {
 
-        String username = email.getText().toString();
+        String username = email.getText().toString().toLowerCase();
         String userPassword = password.getText().toString();
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -153,6 +164,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             if (task.isSuccessful()) {
                                                 Log.d(TAG, "User profile updated.");
                                                 sendVerificationEmail();
+                                                myProgressDialog.setVisibility(View.GONE);
                                                 Intent intent = new Intent(getApplicationContext(),
                                     LoginActivity.class);
                             startActivity(intent);
@@ -168,6 +180,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(getApplicationContext(), "Oops! the email is already registered!",
                                     Toast.LENGTH_SHORT).show();
+                            myProgressDialog.setVisibility(View.GONE);
                             Dialog mDialog;
                             mDialog = new Dialog(SignUpActivity.this);
                             mDialog.setCancelable(true);
@@ -195,7 +208,7 @@ public class SignUpActivity extends AppCompatActivity {
     private boolean isEmailValid(String email) {
 
         if (email.contains("@")) {
-            user.setEmail(email);
+            user.setEmail(email.toLowerCase());
             user.setFirstName(firstName.getText().toString());
             user.setLastName(lastName.getText().toString());
 //            user.setPassword(password.getText().toString());

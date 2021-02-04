@@ -14,7 +14,12 @@ import java.util.List;
 
 public class ArticleCategoryRepository {
 
-    // Creating one instance
+    /**
+     * @class Article category Repository
+     * @desription   Article category from backend
+     * currently its being hardcoded since no functionality from the admin dashboard
+     * @date 4 feb 2021
+     */
     private static ArticleCategoryRepository instance;
 
     private ArrayList<ArticleCategoryDataModel> mArticleCategories = new ArrayList<>();
@@ -43,7 +48,7 @@ public class ArticleCategoryRepository {
     }
 
 
-    // Getting live data from webservice
+    // Article category data
     private  void setArticleCategories () {
 
         if (mArticles.isEmpty()) {

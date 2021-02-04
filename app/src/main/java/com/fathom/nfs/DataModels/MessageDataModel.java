@@ -2,6 +2,11 @@ package com.fathom.nfs.DataModels;
 
 public class MessageDataModel {
 
+    /**
+     * @class message data model
+     * @desription  Hold message data
+     * @date 4 feb 2021
+     */
     private String subject;
     private String text;
 

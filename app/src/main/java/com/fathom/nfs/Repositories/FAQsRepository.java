@@ -13,6 +13,11 @@ import java.util.List;
 public class FAQsRepository {
     // Creating one instance
 
+    /**
+     * @class FAQs Repository
+     * @desription  fetching FAQs
+     * @date 4 feb 2021
+     */
     private static FAQsRepository instance;
     private ArrayList<FAQsDataModel> mFAQs = new ArrayList<>();
 

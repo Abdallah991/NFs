@@ -22,6 +22,11 @@ import java.util.List;
 import static com.fathom.nfs.SignUpActivity.USER;
 
 public class AppointmentRepository {
+    /**
+     * @class Appointment Repository
+     * @desription  fetching appointments from backend
+     * @date 4 feb 2021
+     */
 
     private static AppointmentRepository instance;
     private String TAG = "MVVM";
@@ -52,6 +57,7 @@ public class AppointmentRepository {
         return data;
     }
 
+    // get appointment from firebase
     private  void setAppointments (String email) {
 
         storage = FirebaseStorage.getInstance();
@@ -91,6 +97,7 @@ public class AppointmentRepository {
 
     }
 
+    // delete appointment in backend
     public void deleteAppointment(AppointmentDataModel appointment) {
 
         db.collection("Appointments").document(appointment.getDocumentId()).delete();

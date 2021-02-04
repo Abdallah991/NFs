@@ -25,7 +25,11 @@ public class AboutNfs extends Fragment {
     private ConstraintLayout aboutContent;
     private ImageButton backButton;
 
-
+    /**
+     * @class About
+     * @desription  About the app description
+     * @date 4 feb 2021
+     */
 
     public AboutNfs() {
         // Required empty public constructor

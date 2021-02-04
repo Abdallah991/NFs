@@ -11,6 +11,11 @@ import com.fathom.nfs.Repositories.UserRepository;
 
 public class UserViewModel extends ViewModel {
 
+    /**
+     * @class user View model
+     * @desription  setting user as live data
+     * @date 4 feb 2021
+     */
     private MutableLiveData<UserDataModel> mUser;
     private UserRepository mRepository;
     private String TAG = "MVVM";
@@ -21,6 +26,7 @@ public class UserViewModel extends ViewModel {
         mUser.setValue(user);
     }
 
+    // get user data from repo
     public void initUser(Context context){
 
         Log.d(TAG," init in ViewModel called.");
@@ -36,6 +42,7 @@ public class UserViewModel extends ViewModel {
         mUser = mRepository.getUser(mContext);
     }
 
+    // get user method
     public MutableLiveData<UserDataModel> getUser( Context context) {
         mContext = context;
         return mUser;

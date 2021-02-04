@@ -22,6 +22,11 @@ import static com.fathom.nfs.SignUpActivity.USER;
 
 public class UserRepository {
 
+    /**
+     * @class User Repository
+     * @desription  fetching reviews from the backend
+     * @date 4 feb 2021
+     */
     // Creating one instance
     private static UserRepository instance;
     private String TAG = "MVVM";
@@ -84,6 +89,7 @@ public class UserRepository {
 
     }
 
+    // getting the user image
     private void getImage (MutableLiveData<UserDataModel> user) {
 
         SharedPreferences preferences = mContext.getSharedPreferences(USER, 0);

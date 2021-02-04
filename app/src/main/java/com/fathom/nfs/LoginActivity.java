@@ -5,8 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,13 +46,10 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private final String TAG = "SIGN IN";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DoctorDataModel doctor = new DoctorDataModel();
-    private ShopItemDataModel shopItem = new ShopItemDataModel();
     private ArticleDataModel article = new ArticleDataModel();
-    private ReviewDataModel review1 = new ReviewDataModel();
-    private ReviewDataModel review2 = new ReviewDataModel();
-    private ReviewDataModel review3 = new ReviewDataModel();
     private UserDataModel user = new UserDataModel();
+    private ProgressBar myProgressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.lastName);
         signUp = findViewById(R.id.signUp);
         login = findViewById(R.id.login);
+        myProgressDialog = findViewById(R.id.progressBar1);
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
@@ -93,6 +93,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 checkIfDocumentExist();
                     SignIn();
+                myProgressDialog.setVisibility(View.VISIBLE);
+//                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
 
 //                uploadArticle();
@@ -115,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void SignIn() {
 
-        String username = userName.getText().toString();
+        String username = userName.getText().toString().toLowerCase();
         String userPassword = password.getText().toString();
 
         SharedPreferences userPrefs = getSharedPreferences(USER, 0);
@@ -136,12 +139,14 @@ public class LoginActivity extends AppCompatActivity {
                                 FirebaseUser signedUpUser = FirebaseAuth.getInstance().getCurrentUser();
                                 boolean emailVerified = signedUpUser.isEmailVerified();
                                 if (emailVerified) {
+                                    myProgressDialog.setVisibility(View.GONE);
                                     Intent intent = new Intent(getApplicationContext(),
                                             MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 } else  {
                                     Toast.makeText(getApplicationContext(), "Please Verify the email that have been sent to you", Toast.LENGTH_SHORT).show();
+                                    myProgressDialog.setVisibility(View.GONE);
                                 }
 
                             } else {
@@ -149,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
                                 Toast.makeText(getApplicationContext(), "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
+                                myProgressDialog.setVisibility(View.GONE);
                             }
 
                             // ...
@@ -207,7 +213,7 @@ public class LoginActivity extends AppCompatActivity {
                                     return;
                                 } else {
                                     Log.d("USER1", "Document does not exist!");
-                                    user.setEmail(userEmail);
+                                    user.setEmail(userEmail.toLowerCase());
                                     user.setFirstName(firstName);
                                     user.setLastName(lastName);
                                     db.collection("Users")

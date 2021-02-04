@@ -25,8 +25,12 @@ import java.util.ArrayList;
 
 public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder> {
 
+    /**
+     * @class Appointment adapter
+     * @desription  list appointments and tying the data to UI elements in appointment list
+     * @date 4 feb 2021
+     */
     private static final String TAG = "Appointment Adapter";
-
     // Declare variables
     private ArrayList<AppointmentDataModel> mAppointments = new ArrayList<>();
     private Context mContext;
@@ -45,7 +49,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
     public AppointmentAdapter.AppointmentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // Tying the list Item
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.appointment_list_item,parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.appointment_list_item, parent, false);
 
         return new AppointmentAdapter.AppointmentHolder(view);
     }
@@ -67,7 +71,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "clicked on: " + mAppointments.get(position));
-//                Toast.makeText(mContext, "clicked "+ mAppointments.get(position) , Toast.LENGTH_SHORT).show();
 
                 FirebaseFirestore.getInstance().collection("Appointments").document(mAppointments.get(position).getDocumentId())
                         .delete()
@@ -105,7 +108,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
 
 
     // Tying the the variables to list item UI elements
-    public class AppointmentHolder extends RecyclerView.ViewHolder{
+    public class AppointmentHolder extends RecyclerView.ViewHolder {
         CardView card;
         ImageView deleteAppointment;
         TextView day;
@@ -114,7 +117,7 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
         TextView specialty;
         TextView timing;
 
-        public AppointmentHolder (View itemView){
+        public AppointmentHolder(View itemView) {
             super(itemView);
 
             // binding the views with the list items
@@ -126,7 +129,6 @@ public class AppointmentAdapter extends RecyclerView.Adapter<AppointmentAdapter.
             specialty = itemView.findViewById(R.id.specialty);
             timing = itemView.findViewById(R.id.timing);
         }
-
 
 
     }

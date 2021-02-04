@@ -26,6 +26,12 @@ import static com.fathom.nfs.ShopItemDetailed.mShopItemDataModel;
 
 public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopItemHolder> {
 
+    /**
+     * @class Shop Item adapter
+     * @desription  list shop items in shop screen and tying the data to UI elements
+     * this section is disabled because the store is not ready
+     * @date 4 feb 2021
+     */
     private static final String TAG = "ShopItem Adapter";
 
     // Declare variables

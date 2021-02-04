@@ -16,6 +16,11 @@ import java.util.List;
 public class ArticleCategoryViewModel extends ViewModel {
 
 
+    /**
+     * @class Article Category View model
+     * @desription  setting article categories as live data
+     * @date 4 feb 2021
+     */
     private MutableLiveData<List<ArticleCategoryDataModel>> mArticleCategories;
     private ArticleCategoryRepository mRepository;
     private int positionOfItems;

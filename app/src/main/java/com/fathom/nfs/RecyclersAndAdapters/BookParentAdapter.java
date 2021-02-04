@@ -21,6 +21,12 @@ import java.util.ArrayList;
 
 public class BookParentAdapter extends RecyclerView.Adapter<BookParentAdapter.BookHolder> {
 
+    /**
+     * @class book parent adapter
+     * @desription  list rows of books and tying the data book array in the child
+     * the shop is currently offline
+     * @date 4 feb 2021
+     */
     private Context mContext;
     private ArrayList<BookRowDataModel> mBooks;
     private BookChildAdapter mBookChildAdapter;

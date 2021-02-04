@@ -2,6 +2,11 @@ package com.fathom.nfs.DataModels;
 
 public class AppointmentDataModel {
 
+    /**
+     * @class Appointment Data model
+     * @desription  Hold appointment data
+     * @date 4 feb 2021
+     */
     private String day;
     private String month;
     private String doctorName;

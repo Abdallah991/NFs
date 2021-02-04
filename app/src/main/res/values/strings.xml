@@ -13,7 +13,7 @@
     <string name="login">Login</string>
     <string name="login_space">Log In</string>
     <string name="password">Password</string>
-    <string name="email">Email</string>
+<!--    <string name="email">Email</string>-->
     <string name="username">Username</string>
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
@@ -153,7 +153,19 @@ FIVE different types of abuse
 </string>
     <string name="about_nfs">About Nfs</string>
     <string name="contact_us">Contact Us</string>
-    <string name="report_bug_text">Contact us through our support email “nfs.fthm.app@gmail.com” to report any bug in the app.</string>
-    <string name="book_appointment">Book Appointment</string>
+    <string name="report_bug_text">Contact us through our support email to report any bug in the app.</string>
+<!--    <string name="book_appointment">Book Appointment</string>-->
     <string name="report_a_problem">Report a problem</string>
+    <string name="book_appointment">Book Appointment</string>
+    <string name="overview">Overview</string>
+    <string name="contact">Contact</string>
+    <string name="reviews">Reviews</string>
+    <string name="about_title">About</string>
+    <string name="education">Education</string>
+    <string name="call">Call</string>
+    <string name="email">Email</string>
+    <string name="location">Location</string>
+    <string name="chat">Chat</string>
+    <string name="write_a_review">Write a review</string>
+    <string name="experience">Experience</string>
 </resources>

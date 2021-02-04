@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * Singleton pattern
- *
- **/
+ * @class Helpline Repository
+ * @desription  fetching helplines
+ * @date 4 feb 2021
+ */
 
 public class HelpLineRepository {
 

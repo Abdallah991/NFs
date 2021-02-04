@@ -21,6 +21,11 @@ import java.util.ArrayList;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoHolder> {
 
+    /**
+     * @class video adapter
+     * @desription  list video items in video section in articles screen and tying the data to UI elements
+     * @date 4 feb 2021
+     */
     private static final String TAG = "Article Adapter";
 
     // Declare variables

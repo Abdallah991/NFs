@@ -6,7 +6,11 @@ import java.util.ArrayList;
 
 public class UserDataModel {
 
-
+    /**
+     * @class user data model
+     * @desription  Hold shop item data
+     * @date 4 feb 2021
+     */
     private String firstName;
     private String lastName;
     private String email;
@@ -14,9 +18,9 @@ public class UserDataModel {
     private String accountType;
     private int imgUrl;
     private Bitmap userImage;
-    private ArrayList<DoctorDataModel> bookmarkedDoctors;
-    private ArrayList<ShopItemDataModel> bookmarkedShopItems;
-    private ArrayList<ArticleDataModel> bookmarkedArticles;
+    private ArrayList<String> bookmarkedDoctors;
+    private ArrayList<String> bookmarkedShopItems;
+    private ArrayList<String> bookmarkedArticles;
     private ArrayList<AppointmentDataModel> bookedAppointments;
     private ArrayList<CartDataModel> orders;
 
@@ -56,15 +60,15 @@ public class UserDataModel {
         return imgUrl;
     }
 
-    public ArrayList<DoctorDataModel> getBookmarkedDoctors() {
+    public ArrayList<String> getBookmarkedDoctors() {
         return bookmarkedDoctors;
     }
 
-    public ArrayList<ShopItemDataModel> getBookmarkedShopItems() {
+    public ArrayList<String> getBookmarkedShopItems() {
         return bookmarkedShopItems;
     }
 
-    public ArrayList<ArticleDataModel> getBookmarkedArticles() {
+    public ArrayList<String> getBookmarkedArticles() {
         return bookmarkedArticles;
     }
 
@@ -96,15 +100,15 @@ public class UserDataModel {
         this.imgUrl = imgUrl;
     }
 
-    public void setBookmarkedDoctors(ArrayList<DoctorDataModel> bookmarkedDoctors) {
+    public void setBookmarkedDoctors(ArrayList<String> bookmarkedDoctors) {
         this.bookmarkedDoctors = bookmarkedDoctors;
     }
 
-    public void setBookmarkedShopItems(ArrayList<ShopItemDataModel> bookmarkedShopItems) {
+    public void setBookmarkedShopItems(ArrayList<String> bookmarkedShopItems) {
         this.bookmarkedShopItems = bookmarkedShopItems;
     }
 
-    public void setBookmarkedArticles(ArrayList<ArticleDataModel> bookmarkedArticles) {
+    public void setBookmarkedArticles(ArrayList<String> bookmarkedArticles) {
         this.bookmarkedArticles = bookmarkedArticles;
     }
 
@@ -127,4 +131,5 @@ public class UserDataModel {
     public void setOrders(ArrayList<CartDataModel> orders) {
         this.orders = orders;
     }
+
 }

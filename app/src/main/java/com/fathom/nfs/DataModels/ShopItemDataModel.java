@@ -4,7 +4,11 @@ import android.graphics.Bitmap;
 
 public class ShopItemDataModel {
 
-    // TODO: add ShopItem name
+    /**
+     * @class shop item data model
+     * @desription  Hold shop item data
+     * @date 4 feb 2021
+     */
     private int imageUrl;
     private Bitmap shopItemImage;
     private String price;
