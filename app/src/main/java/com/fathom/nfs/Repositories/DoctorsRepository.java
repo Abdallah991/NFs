@@ -125,6 +125,7 @@ public class DoctorsRepository {
 
         for (int position = 0; position < query.size(); position++) {
 
+//            Log.d(TAG, " Loading the Image starting");
 
             validatingImageReference(position);
 

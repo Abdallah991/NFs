@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fathom.nfs.DataModels.ArticleDataModel;
 import com.fathom.nfs.ViewModels.ArticleViewModel;
@@ -122,6 +123,9 @@ public class ArticleDetailed extends Fragment {
                 authorEducation.setText(article.getAuthorEducation()+" ");
             }
         });
+
+        // scroll the article to the top
+        articleDetailedContent.fullScroll(ScrollView.FOCUS_UP);
 
         ViewCompat.setLayoutDirection(articleDetailedContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 

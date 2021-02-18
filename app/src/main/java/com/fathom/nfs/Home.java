@@ -403,6 +403,8 @@ public class Home extends Fragment {
             public void onClick(View v) {
                 mNavController.navigate(R.id.action_homeFragment_to_doctors);
 
+
+
             }
         });
 

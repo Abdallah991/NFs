@@ -150,6 +150,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     drawerLayout.closeDrawer(GravityCompat.START);
 
 
+//                     Forcing crash
+//                    throw new RuntimeException("Test Crash");
+
+
                 }
 
             }

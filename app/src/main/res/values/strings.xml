@@ -5,9 +5,9 @@
     <string name="question1">Need help?</string>
     <string name="question2">What?</string>
     <string name="question3">Why?</string>
-    <string name="description1">The purpose of this application is to fulfill psychiatric needs as well as creating a knowledge base and network for the psychiatry and psychology community.</string>
-    <string name="description2">The purpose of this application is to fulfill psychiatric needs as well as creating a knowledge base and network for the psychiatry and psychology community. </string>
-    <string name="description3">The purpose of this application is to fulfill psychiatric needs as well as creating a knowledge base and network for the psychiatry and psychology community. </string>
+    <string name="description1">If you or someone you care about is dealing with mental illness, we’re here to help. NFS is a safe place to find the help you need whenever you decide to seek it.</string>
+    <string name="description2">NFS is a platform made to spread awareness about mental health and connect patients with therapists. Whether you want to locate a specific type of therapist, read articles, or access helplines, NFS is the app for you. </string>
+    <string name="description3">Our purpose is to fulfill psychiatric needs and create a knowledge base and network for the psychiatry and psychology community. </string>
     <string name="skip">Skip</string>
     <string name="singUp">Sign Up</string>
     <string name="login">Login</string>

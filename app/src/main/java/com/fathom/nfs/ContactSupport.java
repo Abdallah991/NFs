@@ -1,6 +1,7 @@
 package com.fathom.nfs;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -57,13 +58,13 @@ public class ContactSupport extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent email = new Intent(Intent.ACTION_SEND);
-                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"nfs.fthm.app@gmail.com"});
-                email.putExtra(Intent.EXTRA_SUBJECT, "Inquiry");
-                email.putExtra(Intent.EXTRA_TEXT, "I want to report about");
-                email.setType("message/rfc822");
+//                Intent email = new Intent(Intent.ACTION_SENDTO);
+//                email.putExtra(Intent.EXTRA_EMAIL, new String[]{"nfs.fthm.app@gmail.com"});
+//                email.putExtra(Intent.EXTRA_SUBJECT, "Inquiry");
+//                email.putExtra(Intent.EXTRA_TEXT, "I want to report about");
+//                email.setType("message/rfc822");
 
-                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                startActivity( new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:nfs.fthm.app@gmail.com")));
             }
         });
 

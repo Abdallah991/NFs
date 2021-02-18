@@ -3,6 +3,7 @@ package com.fathom.nfs;
 
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import android.util.Log;
@@ -23,6 +26,8 @@ import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.fathom.nfs.DataModels.AppointmentDataModel;
 import com.fathom.nfs.DataModels.MessageDataModel;
+import com.fathom.nfs.DataModels.UserDataModel;
+import com.fathom.nfs.ViewModels.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -71,6 +76,13 @@ public class SetAppointment extends Fragment {
     private String speciality;
     // confirmation dialog
     private Dialog mDialog;
+    private static ProgressDialog myProgressDialog;
+    private UserViewModel mUserViewModel;
+    private String firstName;
+    private String lastName;
+    private String email;
+
+
 
 
     public SetAppointment() {
@@ -129,8 +141,10 @@ public class SetAppointment extends Fragment {
 
         showAppointmentsForTheDay(calendar.getTime());
 
-//        Toast.makeText(getContext(),"Calender is "+ calendar.getTime()   , Toast.LENGTH_SHORT).show();
-
+        // disabling selection of previous dates
+        Calendar calendar = Calendar.getInstance();
+        mCalendarView.setMinimumDate(calendar);
+//
         mCalendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
             public void onDayClick(EventDay eventDay) {
@@ -197,14 +211,28 @@ public class SetAppointment extends Fragment {
         ViewCompat.setLayoutDirection(setAppointmentContent, ViewCompat.LAYOUT_DIRECTION_LTR);
 
 
+        mUserViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        mUserViewModel.initUser(getContext());
+
+        // getting the user info from the model and not SharedPreferences
+        mUserViewModel.getUser(getContext()).observe(getViewLifecycleOwner(), new Observer<UserDataModel>() {
+            @Override
+            public void onChanged(UserDataModel userDataModel) {
+                firstName = userDataModel.getFirstName();
+                lastName = userDataModel.getLastName();
+                email = userDataModel.getEmail();
+
+            }
+        });
+
         bookAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                SharedPreferences preferences = getActivity().getSharedPreferences(USER, 0);
-                String firstName = preferences.getString("FirstName", "");
-                String lastName = preferences.getString("LastName", "");
-                String email = preferences.getString("Email", "");
+//                SharedPreferences preferences = getActivity().getSharedPreferences(USER, 0);
+//                String firstName = preferences.getString("FirstName", "");
+//                String lastName = preferences.getString("LastName", "");
+//                String email = preferences.getString("Email", "");
 
 //                Toast.makeText(getContext(),
 //                        "Appointment is " +startTime.getSelectedItem().toString()+ " "+ startAmPm.getSelectedItem().toString() +
@@ -282,6 +310,11 @@ public class SetAppointment extends Fragment {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myProgressDialog = new ProgressDialog(getContext());
+                myProgressDialog.setProgressStyle(R.style.MyAlertDialogStyle);
+                myProgressDialog.setCancelable(false);
+                myProgressDialog.setMessage("Please Wait ...");
+                myProgressDialog.show();
                 FirebaseFirestore.getInstance().
                         collection("Appointments").add(appointment).
                         addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -290,11 +323,16 @@ public class SetAppointment extends Fragment {
                                 Log.d("Appointment", "Appointment set Success");
                                 mDialog.dismiss();
                                 Toast.makeText(getContext(), "Appointment will be validated by the doctor", Toast.LENGTH_SHORT).show();
+                                myProgressDialog.dismiss();
+                                NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                                navController.navigateUp();
+
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d("Appointment", "Appointment set Failure");
+                        myProgressDialog.dismiss();
 
                     }
                 });
